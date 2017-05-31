@@ -4,6 +4,8 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -12,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 @SpringUI
 @Theme("valo")
 public class testUI extends UI{
+
+
 
     @Autowired
     private Service service;
@@ -27,7 +31,10 @@ public class testUI extends UI{
         layout.setSpacing(true);
         setContent(layout);
 
-        button.addClickListener(e -> Notification.show(service.sayHello(name.getValue())));
+
+
+        button.addClickListener(e ->
+                Notification.show(service.sayHello(name.getValue())));
     }
 
 
