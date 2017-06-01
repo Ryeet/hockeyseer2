@@ -1,6 +1,13 @@
 spring:
     application:
         name: hockeyseer
+    profiles:
+        active: alekstu
+    devtools:
+        restart:
+            enabled: true
+        livereload:
+            enabled: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.jdbc.Driver

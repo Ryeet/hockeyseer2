@@ -20,15 +20,15 @@ public class Team implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "conference")
+    @Column(name = "conference", nullable = false)
     private Conference conference;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "division")
+    @Column(name = "division", nullable = false)
     private Division division;
 
 
