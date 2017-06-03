@@ -38,7 +38,6 @@ public class HockeyseerApplication {
 	public static void main(String[] args) throws UnknownHostException {
         SpringApplication application =  new SpringApplication(HockeyseerApplication.class);
         ProfileUtil.addDefaultProfile(application);
-
         Environment env = application.run(args).getEnvironment();
             String protocol = "http";
         log.info("\n----------------------------------------------------------\n\t" +
