@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Theme("valo")
 public class testUI extends UI {
 
+
+
     @Autowired
     private Service service;
 
@@ -34,8 +36,6 @@ public class testUI extends UI {
         layout.setMargin(true);
         layout.setSpacing(true);
         setContent(layout);
-
-
 
         button.addClickListener(e -> Notification.show(service.sayHello(name.getValue())));
     }
