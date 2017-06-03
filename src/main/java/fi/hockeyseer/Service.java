@@ -19,4 +19,6 @@ public class Service {
         log.debug("logging works");
         return "Hello, " + name;
     }
+
+    public String sayBye(String name){ return "Bye, " + name; }
 }

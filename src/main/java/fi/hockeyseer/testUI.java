@@ -4,8 +4,7 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -13,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @SpringUI
 @Theme("valo")
-public class testUI extends UI{
+public class testUI extends UI {
 
 
 
@@ -23,19 +22,21 @@ public class testUI extends UI{
     @Override
     protected void init(VaadinRequest request)
     {
+
         TextField name = new TextField("Enter your name:");
         Button button = new Button("Send");
 
-        VerticalLayout layout = new VerticalLayout(name, button);
+
+        FormLayout form = new FormLayout();
+        form.addComponent(name);
+        form.addComponent(button);
+
+
+        VerticalLayout layout = new VerticalLayout(form);
         layout.setMargin(true);
         layout.setSpacing(true);
         setContent(layout);
 
-
-
-        button.addClickListener(e ->
-                Notification.show(service.sayHello(name.getValue())));
+        button.addClickListener(e -> Notification.show(service.sayHello(name.getValue())));
     }
-
-
 }
