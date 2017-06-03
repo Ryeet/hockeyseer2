@@ -13,4 +13,6 @@ public class Service {
     {
         return "Hello, " + name;
     }
+
+    public String sayBye(String name){ return "Bye, " + name; }
 }
