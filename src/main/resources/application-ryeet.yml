@@ -2,7 +2,7 @@ spring:
     application:
         name: hockeyseer
     profiles:
-        active: ryyeet
+        active: ryeet
     devtools:
         restart:
             enabled: true
@@ -11,9 +11,9 @@ spring:
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.jdbc.Driver
-        url: jdbc:mysql://localhost/hockerseer?useUnicode=true&characterEncoding=utf8&useSSL=false
-        username: root
-        password:
+        url: jdbc:mysql://localhost:3306/siman873_nhl_stats?useUnicode=true&characterEncoding=utf8&useSSL=false
+        username: siman873
+        password: OlliEetu8693
         hikari:
             data-source-properties:
                 cachePrepStmts: true
