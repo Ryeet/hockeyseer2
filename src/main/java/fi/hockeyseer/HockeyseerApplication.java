@@ -4,7 +4,9 @@ package fi.hockeyseer;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fi.hockeyseer.config.ProfileUtil;
+import fi.hockeyseer.constants.SeasonUrl;
 import fi.hockeyseer.repository.TeamRepository;
+import fi.hockeyseer.service.SeasonService;
 import fi.hockeyseer.service.json.JsonSeason;
 import fi.hockeyseer.utility.ConnUtil;
 import org.slf4j.Logger;
@@ -16,6 +18,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
@@ -41,24 +45,21 @@ public class HockeyseerApplication {
     }
 
     @Bean
-    public CommandLineRunner testing(TeamRepository teamRepository) {
+    public CommandLineRunner testing(TeamRepository teamRepository, SeasonService seasonService) {
         return (args) -> {
             log.debug("------------------------");
-            log.debug("tadaaa");
-            log.debug("team 1 = " + teamRepository.findOne(1L));
+
+            Arrays.asList(SeasonUrl.S2016_2017)
+                    .stream()
+                    .forEach(season -> {
+                        try {
+                            seasonService.addFullSeasonResults(season);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
 
 
-
-            String json = ConnUtil.getResponseBody("https://statsapi.web.nhl.com/api/v1/schedule?"
-                    +         "startDate=2016-10-12&endDate=2017-04-11" +
-                            "&expand=schedule.linescore");
-
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            JsonSeason season = mapper.readValue(json, JsonSeason.class);
-
-           log.debug("team home = " + season.toString());
-            //     log.debug("json :" + ));
 
         };
     }

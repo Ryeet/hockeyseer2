@@ -1,5 +1,7 @@
 package fi.hockeyseer.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -48,6 +50,11 @@ public class Result implements Serializable {
 
     @Column(name = "visitor_shots", nullable = false)
     private Integer visitor_shots;
+
+
+    @OneToOne(mappedBy = "result")
+    @JsonIgnore
+    private Game game;
 
     public Long getId() {
         return id;
@@ -135,6 +142,14 @@ public class Result implements Serializable {
 
     public void setVisitor_shots(Integer visitor_shots) {
         this.visitor_shots = visitor_shots;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     @Override

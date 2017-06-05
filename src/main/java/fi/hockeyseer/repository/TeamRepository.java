@@ -12,4 +12,6 @@ import java.util.List;
 public interface TeamRepository extends JpaRepository<Team, Long> {
 
     List<Team> findByConference(Conference conference);
+
+    Team findByName(String name);
 }

@@ -1,8 +1,10 @@
 package fi.hockeyseer.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+
 
 /**
  * Created by LickiLicki on 03-Jun-17.
@@ -21,9 +23,11 @@ public class Game implements Serializable {
     private Long id;
 
     @ManyToOne
+    @NotNull
     private Team homeTeam;
 
     @ManyToOne
+    @NotNull
     private Team visitorTeam;
 
     @Column(name = "date", nullable = false)
@@ -35,7 +39,13 @@ public class Game implements Serializable {
     @Column(name = "winner")
     private Integer winner; // 0=draw, 1=home, 2=visitor
 
+
+    @Column(name = "season", nullable = false)
+    @NotNull
+    private String season;
+
     @OneToOne
+    @JoinColumn(unique = true)
     private Result result;
 
     @OneToOne
@@ -71,6 +81,30 @@ public class Game implements Serializable {
         return date;
     }
 
+    public String getSeason() {
+        return season;
+    }
+
+    public void setSeason(String season) {
+        this.season = season;
+    }
+
+    public Result getResult() {
+        return result;
+    }
+
+    public void setResult(Result result) {
+        this.result = result;
+    }
+
+    public Stats getStats() {
+        return stats;
+    }
+
+    public void setStats(Stats stats) {
+        this.stats = stats;
+    }
+
     public void setDate(LocalDate date) {
         this.date = date;
     }
@@ -92,6 +126,21 @@ public class Game implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "Game{" +
+                "id=" + id +
+                ", homeTeam=" + homeTeam +
+                ", visitorTeam=" + visitorTeam +
+                ", date=" + date +
+                ", played=" + played +
+                ", winner=" + winner +
+                ", season=" + season +
+                ", result=" + result +
+                ", stats=" + stats +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -106,15 +155,4 @@ public class Game implements Serializable {
         return id.hashCode();
     }
 
-    @Override
-    public String toString() {
-        return "JsonGame{" +
-                "id=" + id +
-                ", homeTeam=" + homeTeam +
-                ", visitorTeam=" + visitorTeam +
-                ", date=" + date +
-                ", played=" + played +
-                ", winner=" + winner +
-                '}';
-    }
 }
