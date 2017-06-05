@@ -46,6 +46,9 @@ public class HockeyseerApplication {
             log.debug("------------------------");
             log.debug("tadaaa");
             log.debug("team 1 = " + teamRepository.findOne(1L));
+
+
+
             String json = ConnUtil.getResponseBody("https://statsapi.web.nhl.com/api/v1/schedule?"
                     +         "startDate=2016-10-12&endDate=2017-04-11" +
                             "&expand=schedule.linescore");
