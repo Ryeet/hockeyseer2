@@ -2,10 +2,13 @@ package fi.hockeyseer;
 
 
 import fi.hockeyseer.config.ProfileUtil;
+import fi.hockeyseer.repository.TeamRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -33,6 +36,17 @@ public class HockeyseerApplication {
         Collection<String> profiles = Arrays.asList(env.getActiveProfiles());
         log.debug("profiles" + profiles.toString());
 
+    }
+
+    @Bean
+    public CommandLineRunner testing(TeamRepository teamRepository) {
+        return (args) -> {
+            log.debug("------------------------");
+            log.debug("tadaaa");
+            log.debug("team 1 = " + teamRepository.findOne(1L));
+            //     log.debug("json :" + ConnUtil.getResponseBody("https://statsapi.web.nhl.com/api/v1/schedule?startDate=2016-10-12&endDate=2017-04-11&expand=schedule.linescore"));
+
+        };
     }
 
 	public static void main(String[] args) throws UnknownHostException {
