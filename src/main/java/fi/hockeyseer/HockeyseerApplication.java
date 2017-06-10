@@ -49,7 +49,7 @@ public class HockeyseerApplication {
         return (args) -> {
             log.debug("------------------------");
 
-            Arrays.asList(SeasonUrl.S2016_2017)
+            Arrays.asList(SeasonUrl.S2014_2015, SeasonUrl.S2016_2017)
                     .stream()
                     .forEach(season -> {
                         try {

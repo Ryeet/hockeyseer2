@@ -6,14 +6,14 @@ INSERT INTO team(id,name,conference,division) VALUES (5,'Montreal Canadiens','Ea
 INSERT INTO team(id,name,conference,division) VALUES (6,'Ottawa Senators','Eastern','Atlantic');
 INSERT INTO team(id,name,conference,division) VALUES (7,'Tampa Bay Lightning','Eastern','Atlantic');
 INSERT INTO team(id,name,conference,division) VALUES (8,'Toronto Maple Leafs','Eastern','Atlantic');
-INSERT INTO team(id,name,conference,division) VALUES (9,'Carolina Hurricanes','Eastern','Atlantic');
-INSERT INTO team(id,name,conference,division) VALUES (10,'Columbus Blue Jackets','Eastern','Atlantic');
-INSERT INTO team(id,name,conference,division) VALUES (11,'New Jersey Devils','Eastern','Atlantic');
-INSERT INTO team(id,name,conference,division) VALUES (12,'New York Islanders','Eastern','Atlantic');
-INSERT INTO team(id,name,conference,division) VALUES (13,'New York Rangers','Eastern','Atlantic');
-INSERT INTO team(id,name,conference,division) VALUES (14,'Philadelphia Flyers','Eastern','Atlantic');
-INSERT INTO team(id,name,conference,division) VALUES (15,'Pittsburgh Penguins','Eastern','Atlantic');
-INSERT INTO team(id,name,conference,division) VALUES (16,'Washington Capitals','Eastern','Atlantic');
+INSERT INTO team(id,name,conference,division) VALUES (9,'Carolina Hurricanes','Eastern','Metropolitan');
+INSERT INTO team(id,name,conference,division) VALUES (10,'Columbus Blue Jackets','Eastern','Metropolitan');
+INSERT INTO team(id,name,conference,division) VALUES (11,'New Jersey Devils','Eastern','Metropolitan');
+INSERT INTO team(id,name,conference,division) VALUES (12,'New York Islanders','Eastern','Metropolitan');
+INSERT INTO team(id,name,conference,division) VALUES (13,'New York Rangers','Eastern','Metropolitan');
+INSERT INTO team(id,name,conference,division) VALUES (14,'Philadelphia Flyers','Eastern','Metropolitan');
+INSERT INTO team(id,name,conference,division) VALUES (15,'Pittsburgh Penguins','Eastern','Metropolitan');
+INSERT INTO team(id,name,conference,division) VALUES (16,'Washington Capitals','Eastern','Metropolitan');
 INSERT INTO team(id,name,conference,division) VALUES (17,'Anaheim Ducks','Western','Pacific');
 INSERT INTO team(id,name,conference,division) VALUES (18,'Arizona Coyotes','Western','Pacific');
 INSERT INTO team(id,name,conference,division) VALUES (19,'Calgary Flames','Western','Pacific');
@@ -29,3 +29,10 @@ INSERT INTO team(id,name,conference,division) VALUES (28,'Minnesota Wild','Weste
 INSERT INTO team(id,name,conference,division) VALUES (29,'Nashville Predators','Western','Central');
 INSERT INTO team(id,name,conference,division) VALUES (30,'St. Louis Blues','Western','Central');
 INSERT INTO team(id,name,conference,division) VALUES (31,'Winnipeg Jets','Western','Central');
+INSERT INTO team(id,name,conference,division) VALUES (100,'Team Atlantic','Eastern','Atlantic');
+INSERT INTO team(id,name,conference,division) VALUES (101,'Team Metropolitan','Eastern','Metropolitan');
+INSERT INTO team(id,name,conference,division) VALUES (102,'Team Pacific','Western','Pacific');
+INSERT INTO team(id,name,conference,division) VALUES (103,'Team Central','Western','Central');
+INSERT INTO team(id,name,conference,division) VALUES (104,'Team Toews','Western','Central');
+INSERT INTO team(id,name,conference,division) VALUES (105,'Team Foligno','Western','Central');
+
