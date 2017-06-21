@@ -1,6 +1,5 @@
 package fi.hockeyseer.config;
 
-import com.vaadin.spring.annotation.EnableVaadin;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootConfiguration
 @ComponentScan
-@EnableVaadin
 @EnableAutoConfiguration
 @EntityScan(basePackages = "fi.hockeyseer.domain")
 @EnableJpaRepositories(basePackages = "fi.hockeyseer.repository")
