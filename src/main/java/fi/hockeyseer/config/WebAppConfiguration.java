@@ -1,5 +1,6 @@
 package fi.hockeyseer.config;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.Bean;

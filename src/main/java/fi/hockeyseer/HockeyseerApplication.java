@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fi.hockeyseer.config.ProfileUtil;
 import fi.hockeyseer.constants.SeasonUrl;
+import fi.hockeyseer.domain.enumeration.Season;
 import fi.hockeyseer.repository.TeamRepository;
 import fi.hockeyseer.service.SeasonService;
 import fi.hockeyseer.service.json.JsonSeason;
@@ -48,19 +49,15 @@ public class HockeyseerApplication {
     public CommandLineRunner testing(TeamRepository teamRepository, SeasonService seasonService) {
         return (args) -> {
             log.debug("------------------------");
-
-          /*  Arrays.asList(null)
-                    .stream()
-                    .forEach(season -> {
-                        try {
-                            seasonService.addFullSeasonResults(season);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    });
-
-
-            */
+//            Arrays.asList(SeasonUrl.S2017_2018)
+//                    .stream()
+//                    .forEach(season -> {
+//                        try {
+//                            seasonService.addFullSeasonResults(season);
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    });
         };
     }
 

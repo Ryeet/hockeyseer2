@@ -1,0 +1,7 @@
+div#teamContainer,
+div#divisionContainer,
+div#conferenceContainer,
+div#leagueContainer
+{
+    display: none;
+}

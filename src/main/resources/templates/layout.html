@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th          = "http://www.thymeleaf.org"
+      xmlns:layout      ="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:fragment   = "page"
+      th:with           = "model = (${model} ?: null),
+                           title = (${title} ?: 'HockeySeer')">
+
+
+
+    <body>
+
+
+
+        <th:block th:fragment="content"/>
+
+    </body>
+
+</html>

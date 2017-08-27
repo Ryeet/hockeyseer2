@@ -59,23 +59,25 @@ public class SeasonService {
                 .stream()
                 .forEach(dates ->
                         dates.getJsonGames()
-                                .stream()
-                                .forEach(date -> {
-                                    Game game = new Game();
-                                     game.setDate(ZonedDateTime.parse(date.getGameDate()).toLocalDate());
+                        .stream()
+                        .forEach(date -> {
+                            Game game = new Game();
+                            game.setDate(ZonedDateTime.parse(date.getGameDate()).toLocalDate());
 
-                                     game.setHomeTeam(teamRepository.findByName(date.getJsonGameScore().getTeams().getHome().getTeam().getName()));
-                                     game.setVisitorTeam(teamRepository.findByName(date.getJsonGameScore().getTeams().getAway().getTeam().getName()));
+                            game.setHomeTeam(teamRepository.findByName(date.getJsonGameScore().getTeams().getHome().getTeam().getName()));
+                            game.setVisitorTeam(teamRepository.findByName(date.getJsonGameScore().getTeams().getAway().getTeam().getName()));
 
-                                     game.setSeason(date.getSeason());
-                                     game.setPlayed(true);
-                                     game.setResult(resultService.getGameResult(date.getJsonGameScore()));
-                                     game.setWinner( determineWinner(game.getResult().getHome_total(), game.getResult().getVisitor_total()));
-
-
-                                    Game saved = gameRepository.save(game);
-                                    log.debug("Game> " + saved.getId() + "/" + totalGames);
-                                })
+                            game.setSeason(date.getSeason());
+                            game.setPlayed(false);
+                            if (date.getJsonGameScore().getJsonGamePeriods().size() != 0)
+                            {
+                                game.setPlayed(true);
+                                game.setResult(resultService.getGameResult(date.getJsonGameScore()));
+                                game.setWinner( determineWinner(game.getResult().getHome_total(), game.getResult().getVisitor_total()));
+                            }
+                            Game saved = gameRepository.save(game);
+                            log.debug("Game> " + saved.getId() + "/" + totalGames);
+                        })
                 );
 
     }

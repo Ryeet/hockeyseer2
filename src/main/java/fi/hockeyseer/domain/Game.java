@@ -59,8 +59,6 @@ public class Game implements Serializable {
         this.id = id;
     }
 
-    //public Team conference(Conference conference) {this.conference = conference; return this;} todo: do this for every attribute under this comment
-
     public Team getHomeTeam() {
         return homeTeam;
     }

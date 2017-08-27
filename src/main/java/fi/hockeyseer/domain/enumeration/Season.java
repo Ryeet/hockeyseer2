@@ -5,6 +5,7 @@ package fi.hockeyseer.domain.enumeration;
  */
 public enum Season {
 
+    S2017_2018,
     S2016_2017,
     S2015_2016,
     S2014_2015,
