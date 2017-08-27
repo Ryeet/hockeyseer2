@@ -27,7 +27,18 @@
     $(document).ready(function() {
 
 
+        showAndHideAgainstContainers();
         $("#againstSelect").change(showAndHideAgainstContainers);
+
+        $('.datepicker').pickadate({
+            selectMonths: true,
+            selectYears: 5,
+            today: 'Today',
+            clear: 'Clear',
+            close: 'Ok',
+            closeOnSelect: true
+          });
+
 
     });
 

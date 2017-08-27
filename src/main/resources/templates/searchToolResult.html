@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th          = "http://www.thymeleaf.org">
+
+    <head>
+        <th:block th:replace="fragments/default::head"/>
+
+        <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/searchTool.css}"/>
+
+        <script th:src="@{/js/searchTool.js}"/>
+
+    </head>
+
+    <body>
+
+        <th:block th:replace="fragments/default::navbar"/>
+
+        <th:block th:replace="fragments/searchTool::searchToolForm"/>
+
+        <table class="bordered">
+            <thead>
+                <tr>
+                    <th th:text="'Date'"/>
+                    <th th:text="'Home'"/>
+                    <th th:text="'Away'"/>
+                </tr>
+            </thead>
+
+            <tbody>
+                <th:block th:each="game : ${games}">
+                    <tr>
+                        <td th:text="${game.date}"/>
+                        <td th:text="${game.homeTeam.name}"/>
+                        <td th:text="${game.visitorTeam.name}"/>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+
+    </body>
+</html>

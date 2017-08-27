@@ -1,5 +1,6 @@
 package fi.hockeyseer.web;
 
+import com.sun.org.apache.bcel.internal.generic.SWITCH;
 import fi.hockeyseer.repository.GameRepository;
 import fi.hockeyseer.repository.TeamRepository;
 import fi.hockeyseer.service.ResultService;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 /**
  * Created by LickiLicki on 06-Jul-17.
@@ -42,8 +45,24 @@ public class SearchToolController {
     }
 
     @PostMapping("/searchtool")
-    public String postSearchTool(@ModelAttribute SearchToolForm searchToolForm)
+    public String postSearchTool(Model model, @ModelAttribute SearchToolForm searchToolForm)
     {
+        model.addAttribute("teams", teamRepository.findAllByIdLessThan100ByOrderByNameAsc());
+        model.addAttribute("searchToolForm", new SearchToolForm());
+
+        long againstSelect= searchToolForm.getAgainstSelect();
+        switch ((int) againstSelect) {
+            case 1:
+                model.addAttribute("games", gameRepository.getGamesForTeamByAgainstTeam(searchToolForm.getTeam(), searchToolForm.getAgainstTeam()));
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+        }
+
         return "searchToolResult";
     }
 }

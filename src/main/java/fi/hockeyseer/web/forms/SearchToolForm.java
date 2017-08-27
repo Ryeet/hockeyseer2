@@ -8,7 +8,7 @@ import java.util.List;
 public class SearchToolForm {
 
     private String team;
-    private Long againstSelect;
+    private long againstSelect;
     private List<String> againstTeam;
     private List<String> againstDivision;
     private List<String> againstConference;
@@ -21,11 +21,11 @@ public class SearchToolForm {
         this.team = team;
     }
 
-    public Long getAgainstSelect() {
+    public long getAgainstSelect() {
         return againstSelect;
     }
 
-    public void setAgainstSelect(Long againstSelect) {
+    public void setAgainstSelect(long againstSelect) {
         this.againstSelect = againstSelect;
     }
 

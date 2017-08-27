@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+
+    </head>
+
+    <body>
+        <th:block th:fragment="searchToolForm">
+            <div class="row">
+                <form class="col s12" th:action="@{/searchtool}" th:object="${searchToolForm}" method="post">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <select th:field="*{team}">
+                                <option value="" disabled="disabled" selected="selected">Choose team:</option>
+                                <th:block th:each="team : ${teams}">
+                                    <option th:value="${team.id}" th:text="${team.name}"/>
+                                </th:block>
+                            </select>
+                            <label>Team</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <select id="againstSelect" th:field="*{againstSelect}">
+                                <option value="0" disabled="disabled" selected="selected" th:text="'Against:'"/>
+                                <option value="1" th:text="'Team'"/>
+                                <option value="2" th:text="'Division'"/>
+                                <option value="3" th:text="'Conference'"/>
+                                <option value="4" th:text="'League'"/>
+                            </select>
+                            <label>Against</label>
+                        </div>
+
+                        <div id="teamContainer" class="input-field col s3 againstContainer">
+                            <select multiple="multiple" th:field="*{againstTeam}">
+                                <option value="" disabled="disabled" selected="selected" th:text="'Choose team:'"/>
+                                <th:block th:each="team : ${teams}">
+                                    <option th:value="${team.id}" th:text="${team.name}"/>
+                                </th:block>
+                            </select>
+                        </div>
+                        <div id="divisionContainer" class="input-field col s3 againstContainer">
+                            <select multiple="multiple" th:field="*{againstDivision}">
+                                <option value="" disabled="disabled" selected="selected" th:text="'Choose division:'"/>
+                                <option value="Metropolitan" th:text="'Metropolitan'"/>
+                                <option value="Atlantic" th:text="'Atlantic'"/>
+                                <option value="Central" th:text="'Central'"/>
+                                <option value="Pacific" th:text="'Pacific'"/>
+                            </select>
+                        </div>
+                        <div id="conferenceContainer" class="input-field col s3 againstContainer">
+                            <select th:field="*{againstConference}">
+                                <option value="" disabled="disabled" selected="selected" th:text="'Choose conference:'"/>
+                                <option value="Eastern" th:text="'Eastern'"/>
+                                <option value="Western" th:text="'Western'"/>
+                            </select>
+                        </div>
+                        <div id="leagueContainer" class="input-field col s3 againstContainer">
+                            <select>
+                                <option value="" selected="selected" th:text="League"/>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <input type="text" class="datepicker"/>
+                    </div>
+
+                    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+                </form>
+            </div>
+        </th:block>
+    </body>
+</html>
