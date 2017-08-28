@@ -2,6 +2,7 @@ package fi.hockeyseer.service;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fi.hockeyseer.constants.SeasonUrl;
 import fi.hockeyseer.domain.Game;
 import fi.hockeyseer.repository.GameRepository;
 import fi.hockeyseer.repository.TeamRepository;
@@ -42,49 +43,57 @@ public class SeasonService {
         this.resultService = resultService;
     }
 
-    public void addFullSeasonResults(String seasonUrl) throws IOException {
+    public void addFullSeasonResults(String url) throws IOException {
 
-        String json = ConnUtil.getResponseBody(
-                "https://statsapi.web.nhl.com/api/v1/schedule?"
-                    + seasonUrl
-                    + "&expand=schedule.linescore");
 
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        JsonSeason season = mapper.readValue(json, JsonSeason.class);
-        Integer totalGames = getSeasonGameAmount(season);
+        if (!seasonIsInDatabase(url)) {
 
-        final DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MMM-dd");
-        season.getJsonGameDates()
-                .stream()
-                .forEach(dates ->
-                        dates.getJsonGames()
-                        .stream()
-                        .forEach(date -> {
-                            Game game = new Game();
-                            game.setDate(ZonedDateTime.parse(date.getGameDate()).toLocalDate());
+            String json = ConnUtil.getResponseBody(
+                    "https://statsapi.web.nhl.com/api/v1/schedule?"
+                            + url
+                            + "&expand=schedule.linescore");
 
-                            game.setHomeTeam(teamRepository.findByName(date.getJsonGameScore().getTeams().getHome().getTeam().getName()));
-                            game.setVisitorTeam(teamRepository.findByName(date.getJsonGameScore().getTeams().getAway().getTeam().getName()));
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            JsonSeason season = mapper.readValue(json, JsonSeason.class);
+            Integer totalGames = getSeasonGameAmount(season);
 
-                            game.setSeason(date.getSeason());
-                            game.setPlayed(false);
-                            if (date.getJsonGameScore().getJsonGamePeriods().size() != 0)
-                            {
-                                game.setPlayed(true);
-                                game.setResult(resultService.getGameResult(date.getJsonGameScore()));
-                                game.setWinner( determineWinner(game.getResult().getHome_total(), game.getResult().getVisitor_total()));
-                            }
-                            Game saved = gameRepository.save(game);
-                            log.debug("Game> " + saved.getId() + "/" + totalGames);
-                        })
-                );
+            final DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MMM-dd");
+            season.getJsonGameDates()
+                    .stream()
+                    .forEach(dates ->
+                            dates.getJsonGames()
+                                    .stream()
+                                    .forEach(date -> {
+                                        Game game = new Game();
+                                        game.setDate(ZonedDateTime.parse(date.getGameDate()).toLocalDate());
+
+                                        game.setHomeTeam(teamRepository.findByName(date.getJsonGameScore().getTeams().getHome().getTeam().getName()));
+                                        game.setVisitorTeam(teamRepository.findByName(date.getJsonGameScore().getTeams().getAway().getTeam().getName()));
+
+                                        game.setSeason(date.getSeason());
+                                        game.setPlayed(false);
+                                        if (date.getJsonGameScore().getJsonGamePeriods().size() != 0) {
+                                            game.setPlayed(true);
+                                            game.setResult(resultService.getGameResult(date.getJsonGameScore()));
+                                            game.setWinner(determineWinner(game.getResult().getHome_total(), game.getResult().getVisitor_total()));
+                                        }
+                                        Game saved = gameRepository.save(game);
+                                        log.debug("Game> " + saved.getId() + "/" + totalGames);
+                                    })
+                    );
+
+
+        }
+
 
     }
 
+
+
     private Integer determineWinner(Integer home_total, Integer visitor_total) {
         if (home_total == visitor_total) return 0;
-        return (home_total > visitor_total) ?  1 : 2;
+        return (home_total > visitor_total) ? 1 : 2;
     }
 
     private Integer getSeasonGameAmount(JsonSeason season) {
@@ -98,6 +107,26 @@ public class SeasonService {
         Integer i = repSize != null ? repSize.intValue() : null;
         return count + i;
 
+    }
+
+    private Boolean seasonIsInDatabase(String url) {
+
+        switch (url.toString()) {
+
+            case SeasonUrl.S2017_2018:
+                return !gameRepository.findBySeason("20172018").isEmpty();
+            case SeasonUrl.S2016_2017:
+                return !gameRepository.findBySeason("20162017").isEmpty();
+            case SeasonUrl.S2015_2016:
+                return !gameRepository.findBySeason("20152016").isEmpty();
+            case SeasonUrl.S2014_2015:
+                return !gameRepository.findBySeason("20142015").isEmpty();
+            case SeasonUrl.S2013_2014:
+                return !gameRepository.findBySeason("20132014").isEmpty();
+        }
+
+
+        return true;
     }
 
 }

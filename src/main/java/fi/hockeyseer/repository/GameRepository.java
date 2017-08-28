@@ -20,4 +20,6 @@ public interface GameRepository extends JpaRepository<Game,Long>{
     List<Game> getGamesForTeamByAgainstTeam(@Param("team") String team,
                                             @Param("againstTeam")List<String> againstTeam);
 
+
+    List<Game> findBySeason(String season);
 }
