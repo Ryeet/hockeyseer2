@@ -57,38 +57,32 @@ public class SeasonService {
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             JsonSeason season = mapper.readValue(json, JsonSeason.class);
             Integer totalGames = getSeasonGameAmount(season);
-
             final DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MMM-dd");
+
             season.getJsonGameDates()
                     .stream()
-                    .forEach(dates ->
-                            dates.getJsonGames()
-                                    .stream()
-                                    .forEach(date -> {
-                                        Game game = new Game();
-                                        game.setDate(ZonedDateTime.parse(date.getGameDate()).toLocalDate());
+                    .map(dates -> dates.getJsonGames())
+                    .flatMap(games -> games.stream())
+                    .forEach(game -> {
+                        Game newGame =
+                                new Game()
+                                        .date(ZonedDateTime.parse(game.getGameDate()).toLocalDate())
+                                        .homeTeam(teamRepository.findByName(game.getJsonGameScore().getTeams().getHome().getTeam().getName()))
+                                        .visitorTeam(teamRepository.findByName(game.getJsonGameScore().getTeams().getAway().getTeam().getName()))
+                                        .season(game.getSeason())
+                                        .played(false);
 
-                                        game.setHomeTeam(teamRepository.findByName(date.getJsonGameScore().getTeams().getHome().getTeam().getName()));
-                                        game.setVisitorTeam(teamRepository.findByName(date.getJsonGameScore().getTeams().getAway().getTeam().getName()));
+                        if (game.getJsonGameScore().getJsonGamePeriods().size() != 0) {
 
-                                        game.setSeason(date.getSeason());
-                                        game.setPlayed(false);
-                                        if (date.getJsonGameScore().getJsonGamePeriods().size() != 0) {
-                                            game.setPlayed(true);
-                                            game.setResult(resultService.getGameResult(date.getJsonGameScore()));
-                                            game.setWinner(determineWinner(game.getResult().getHome_total(), game.getResult().getVisitor_total()));
-                                        }
-                                        Game saved = gameRepository.save(game);
-                                        log.debug("Game> " + saved.getId() + "/" + totalGames);
-                                    })
-                    );
-
-
+                            newGame.played(true)
+                                    .result(resultService.getGameResult(game.getJsonGameScore()))
+                                    .winner(determineWinner(newGame.getResult().getHome_total(), newGame.getResult().getVisitor_total()));
+                        }
+                        Game saved = gameRepository.save(newGame);
+                        log.debug("Game> " + saved.getId() + "/" + totalGames);
+                    });
         }
-
-
     }
-
 
 
     private Integer determineWinner(Integer home_total, Integer visitor_total) {

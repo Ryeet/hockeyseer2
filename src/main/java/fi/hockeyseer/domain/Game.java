@@ -51,6 +51,7 @@ public class Game implements Serializable {
     @OneToOne
     private Stats stats;
 
+
     public Long getId() {
         return id;
     }
@@ -123,6 +124,44 @@ public class Game implements Serializable {
         this.winner = winner;
     }
 
+
+    public Game homeTeam(Team homeTeam) { this.homeTeam = homeTeam; return this;}
+
+    public Game visitorTeam(Team visitorTeam) {
+        this.visitorTeam = visitorTeam;
+        return this;
+    }
+
+    public Game date(LocalDate date) {
+        this.date = date;
+        return this;
+    }
+
+    public Game played(Boolean played) {
+        this.played = played;
+        return this;
+    }
+
+    public Game winner(Integer winner) {
+        this.winner = winner;
+        return this;
+    }
+
+    public Game season(String season) {
+        this.season = season;
+        return this;
+    }
+
+    public Game result(Result result) {
+        this.result = result;
+        return this;
+    }
+
+    public Game stats(Stats stats) {
+        this.stats = stats;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "Game{" +
@@ -152,5 +191,6 @@ public class Game implements Serializable {
     public int hashCode() {
         return id.hashCode();
     }
+
 
 }
