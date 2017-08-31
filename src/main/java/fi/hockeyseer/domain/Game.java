@@ -1,5 +1,7 @@
 package fi.hockeyseer.domain;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -33,8 +35,10 @@ public class Game implements Serializable {
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    @Column(name = "played", nullable = false)
-    private Boolean played;
+
+    @Column(name = "played", nullable = false, columnDefinition = "TINYINT")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean played;
 
     @Column(name = "winner")
     private Integer winner; // 0=draw, 1=home, 2=visitor
