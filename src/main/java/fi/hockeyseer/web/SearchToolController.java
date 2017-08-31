@@ -29,7 +29,8 @@ public class SearchToolController {
     private final TeamRepository teamRepository;
 
     @Autowired
-    public SearchToolController(GameRepository gameRepository, ResultService resultService, TeamRepository teamRepository) {
+    public SearchToolController(GameRepository gameRepository, ResultService resultService, TeamRepository teamRepository)
+    {
         this.gameRepository = gameRepository;
         this.teamRepository = teamRepository;
         this.resultService = resultService;
@@ -50,16 +51,20 @@ public class SearchToolController {
         model.addAttribute("teams", teamRepository.findAllByIdLessThan100ByOrderByNameAsc());
         model.addAttribute("searchToolForm", new SearchToolForm());
 
-        long againstSelect= searchToolForm.getAgainstSelect();
-        switch ((int) againstSelect) {
+        long againstSelect = searchToolForm.getAgainstSelect();
+        switch ((int) againstSelect)
+        {
             case 1:
                 model.addAttribute("games", gameRepository.getGamesForTeamByAgainstTeam(searchToolForm.getTeam(), searchToolForm.getAgainstTeam()));
                 break;
             case 2:
+                model.addAttribute("games", gameRepository.getGamesForTeamByAgainstDivision(searchToolForm.getTeam(), searchToolForm.getAgainstDivision()));
                 break;
             case 3:
+                model.addAttribute("games", gameRepository.getGamesForTeamByAgainstConference(searchToolForm.getTeam(), searchToolForm.getAgainstConference()));
                 break;
             case 4:
+                model.addAttribute("games", gameRepository.getGamesForTeamByAgainstLeague(searchToolForm.getTeam()));
                 break;
         }
 

@@ -7,17 +7,17 @@ import java.util.List;
  */
 public class SearchToolForm {
 
-    private String team;
+    private Long team;
     private long againstSelect;
     private List<String> againstTeam;
     private List<String> againstDivision;
     private List<String> againstConference;
 
-    public String getTeam() {
+    public Long getTeam() {
         return team;
     }
 
-    public void setTeam(String team) {
+    public void setTeam(Long team) {
         this.team = team;
     }
 
