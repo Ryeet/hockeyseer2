@@ -35,4 +35,5 @@ INSERT INTO team(id,name,conference,division) VALUES (102,'Team Pacific','Wester
 INSERT INTO team(id,name,conference,division) VALUES (103,'Team Central','Western','Central');
 INSERT INTO team(id,name,conference,division) VALUES (104,'Team Toews','Western','Central');
 INSERT INTO team(id,name,conference,division) VALUES (105,'Team Foligno','Western','Central');
+INSERT INTO team(id,name,conference,division) VALUES (106,'Phoenix Coyotes','Western','Pacific');
 
