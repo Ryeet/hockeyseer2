@@ -16,7 +16,34 @@
 
         <th:block th:replace="fragments/searchTool::searchToolForm"/>
 
-        <table class="bordered">
+
+        <div class="container">
+            <div>
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+
+        <script th:inline="javascript">
+            var ctx = document.getElementById("myChart").getContext('2d');
+            var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ["Win","Tie","Loss"],
+                datasets: [{
+                backgroundColor: [
+                "#2ecc71",
+                "#34495e",
+                "#e74c3c"
+                ],
+                data: [12, 5, 9]
+                }]
+            }
+            });
+        </script>
+
+
+
+        <table class="bordered centered">
             <thead>
                 <tr>
                     <th th:text="'Date'"/>
@@ -29,8 +56,8 @@
                 <th:block th:each="game : ${games}">
                     <tr>
                         <td th:text="${game.date}"/>
-                        <td th:text="${game.homeTeam.name}"/>
-                        <td th:text="${game.visitorTeam.name}"/>
+                        <td th:text="|${game.homeTeam.name} - ${game.result.home_total}|"/>
+                        <td th:text="|${game.visitorTeam.name} - ${game.result.visitor_total}|"/>
                     </tr>
                 </th:block>
             </tbody>

@@ -53,7 +53,7 @@ public class SearchToolController {
     public String postSearchTool(Model model, @ModelAttribute SearchToolForm searchToolForm)
     {
         model.addAttribute("teams", teamRepository.findAllByIdLessThan100ByOrderByNameAsc());
-        model.addAttribute("searchToolForm", new SearchToolForm());
+        model.addAttribute("searchToolForm", searchToolForm);
 
         List<Game> games = searchToolService.resolveSearchedGames(searchToolForm);
 

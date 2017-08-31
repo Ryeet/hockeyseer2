@@ -32,7 +32,7 @@
 
         $('.datepicker').pickadate({
             selectMonths: true,
-            selectYears: 5,
+            selectYears: 10,
             today: 'Today',
             clear: 'Clear',
             close: 'Ok',

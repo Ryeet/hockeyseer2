@@ -74,7 +74,7 @@ public class SearchToolService {
 
     private List<Game> filterOutNotPlayedGames(List<Game> games)
     {
-        return games.stream().filter(game -> game.getPlayed() == false).collect(Collectors.toList());
+        return games.stream().filter(game -> game.getPlayed() != false).collect(Collectors.toList());
     }
 
 }
