@@ -61,7 +61,15 @@
                         </div>
                     </div>
                     <div class="row">
-                        <input type="text" class="datepicker"/>
+                        <h2 th:text="'Select seasons:'"/>
+                        <select multiple="multiple" th:field="*{season}">
+                            <option value="" disabled="disabled" selected="selected" th:text="'Choose team:'"/>
+                                <option th:value="${team.id}" th:text="${team.name}"/>
+                        </select>
+
+                        <div class="row">
+                            <input type="text" class="datepicker"/>
+                        </div>
                     </div>
 
                     <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>

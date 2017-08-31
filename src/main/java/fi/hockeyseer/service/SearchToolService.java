@@ -54,4 +54,21 @@ public class SearchToolService {
         return null;
     }
 
+    public List<Game> resolveWinner(SearchToolForm searchToolForm)
+    {
+//        long againstSelect = searchToolForm.getAgainstSelect();
+//        switch ((int) againstSelect)
+//        {
+//            case 1:
+//                return gameRepository.getGamesForTeamByAgainstTeam(searchToolForm.getTeam(), searchToolForm.getAgainstTeam());
+//            case 2:
+//                return gameRepository.getGamesForTeamByAgainstDivision(searchToolForm.getTeam(), searchToolForm.getAgainstDivision());
+//            case 3:
+//                return gameRepository.getGamesForTeamByAgainstConference(searchToolForm.getTeam(), searchToolForm.getAgainstConference());
+//            case 4:
+//                return gameRepository.getGamesForTeamByAgainstLeague(searchToolForm.getTeam());
+//        }
+        return null;
+    }
+
 }

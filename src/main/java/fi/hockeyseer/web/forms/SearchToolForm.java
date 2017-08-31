@@ -12,6 +12,7 @@ public class SearchToolForm {
     private List<String> againstTeam;
     private List<String> againstDivision;
     private List<String> againstConference;
+    private List<String> season;
 
     public Long getTeam() {
         return team;
@@ -53,14 +54,23 @@ public class SearchToolForm {
         this.againstConference = againstConference;
     }
 
+    public List<String> getSeason() {
+        return season;
+    }
+
+    public void setSeason(List<String> season) {
+        this.season = season;
+    }
+
     @Override
     public String toString() {
         return "SearchToolForm{" +
-                "team='" + team + '\'' +
+                "team=" + team +
                 ", againstSelect=" + againstSelect +
                 ", againstTeam=" + againstTeam +
                 ", againstDivision=" + againstDivision +
                 ", againstConference=" + againstConference +
+                ", season=" + season +
                 '}';
     }
 }
