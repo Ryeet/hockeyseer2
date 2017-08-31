@@ -11,36 +11,35 @@
                 <form class="col s12" th:action="@{/searchtool}" th:object="${searchToolForm}" method="post">
                     <div class="row">
                         <div class="input-field col s6">
+                            <h4 th:text="'Team'"/>
                             <select th:field="*{team}">
                                 <option value="" disabled="disabled" selected="selected">Choose team:</option>
                                 <th:block th:each="team : ${teams}">
                                     <option th:value="${team.id}" th:text="${team.name}"/>
                                 </th:block>
                             </select>
-                            <label>Team</label>
                         </div>
                         <div class="input-field col s3">
+                            <h4 th:text="'Against'"/>
                             <select id="againstSelect" th:field="*{againstSelect}">
-                                <option value="0" disabled="disabled" selected="selected" th:text="'Against:'"/>
                                 <option value="1" th:text="'Team'"/>
                                 <option value="2" th:text="'Division'"/>
                                 <option value="3" th:text="'Conference'"/>
                                 <option value="4" th:text="'League'"/>
                             </select>
-                            <label>Against</label>
                         </div>
 
                         <div id="teamContainer" class="input-field col s3 againstContainer">
+                            <h4 th:text="'Team'"/>
                             <select multiple="multiple" th:field="*{againstTeam}">
-                                <option value="" disabled="disabled" selected="selected" th:text="'Choose team:'"/>
                                 <th:block th:each="team : ${teams}">
                                     <option th:value="${team.id}" th:text="${team.name}"/>
                                 </th:block>
                             </select>
                         </div>
                         <div id="divisionContainer" class="input-field col s3 againstContainer">
+                            <h4 th:text="'Division'"/>
                             <select multiple="multiple" th:field="*{againstDivision}">
-                                <option value="" disabled="disabled" selected="selected" th:text="'Choose division:'"/>
                                 <option value="Metropolitan" th:text="'Metropolitan'"/>
                                 <option value="Atlantic" th:text="'Atlantic'"/>
                                 <option value="Central" th:text="'Central'"/>
@@ -48,27 +47,35 @@
                             </select>
                         </div>
                         <div id="conferenceContainer" class="input-field col s3 againstContainer">
+                            <h4 th:text="'Conference'"/>
                             <select th:field="*{againstConference}">
-                                <option value="" disabled="disabled" selected="selected" th:text="'Choose conference:'"/>
                                 <option value="Eastern" th:text="'Eastern'"/>
                                 <option value="Western" th:text="'Western'"/>
                             </select>
                         </div>
                         <div id="leagueContainer" class="input-field col s3 againstContainer">
+                            <h4 th:text="'League'"/>
                             <select>
                                 <option value="" selected="selected" th:text="League"/>
                             </select>
                         </div>
                     </div>
                     <div class="row">
-                        <h2 th:text="'Select seasons:'"/>
-                        <select multiple="multiple" th:field="*{season}">
-                            <option value="" disabled="disabled" selected="selected" th:text="'Choose team:'"/>
-                                <option th:value="${team.id}" th:text="${team.name}"/>
-                        </select>
-
-                        <div class="row">
-                            <input type="text" class="datepicker"/>
+                        <div class="col s12">
+                            <div class="input-field col s6">
+                                <h4 th:text="'Season'"/>
+                                <select multiple="multiple" th:field="*{season}">
+                                    <option th:value="'20172018'" th:text="'2017 - 2018'"/>
+                                    <option th:value="'20162017'" th:text="'2016 - 2017'"/>
+                                    <option th:value="'20152016'" th:text="'2015 - 2016'"/>
+                                    <option th:value="'20142015'" th:text="'2014 - 2015'"/>
+                                    <option th:value="'20132014'" th:text="'2013 - 2014'"/>
+                                </select>
+                            </div>
+                            <div class="input-field col s6">
+                                <h4 th:text="'Date'"/>
+                                <input type="text" class="datepicker"/>
+                            </div>
                         </div>
                     </div>
 

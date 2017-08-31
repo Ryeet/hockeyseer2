@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by LickiLicki on 31-Aug-17.
@@ -43,13 +44,13 @@ public class SearchToolService {
         switch ((int) againstSelect)
         {
             case 1:
-                return gameRepository.getGamesForTeamByAgainstTeam(searchToolForm.getTeam(), searchToolForm.getAgainstTeam());
+                return filterOutNotPlayedGames(gameRepository.getGamesForTeamByAgainstTeam(searchToolForm.getTeam(), searchToolForm.getAgainstTeam(), searchToolForm.getSeason()));
             case 2:
-                return gameRepository.getGamesForTeamByAgainstDivision(searchToolForm.getTeam(), searchToolForm.getAgainstDivision());
+                return filterOutNotPlayedGames(gameRepository.getGamesForTeamByAgainstDivision(searchToolForm.getTeam(), searchToolForm.getAgainstDivision(), searchToolForm.getSeason()));
             case 3:
-                return gameRepository.getGamesForTeamByAgainstConference(searchToolForm.getTeam(), searchToolForm.getAgainstConference());
+                return filterOutNotPlayedGames(gameRepository.getGamesForTeamByAgainstConference(searchToolForm.getTeam(), searchToolForm.getAgainstConference(), searchToolForm.getSeason()));
             case 4:
-                return gameRepository.getGamesForTeamByAgainstLeague(searchToolForm.getTeam());
+                return filterOutNotPlayedGames(gameRepository.getGamesForTeamByAgainstLeague(searchToolForm.getTeam(), searchToolForm.getSeason()));
         }
         return null;
     }
@@ -69,6 +70,11 @@ public class SearchToolService {
 //                return gameRepository.getGamesForTeamByAgainstLeague(searchToolForm.getTeam());
 //        }
         return null;
+    }
+
+    private List<Game> filterOutNotPlayedGames(List<Game> games)
+    {
+        return games.stream().filter(game -> game.getPlayed() == false).collect(Collectors.toList());
     }
 
 }
