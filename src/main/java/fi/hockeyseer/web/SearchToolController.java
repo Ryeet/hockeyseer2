@@ -1,9 +1,11 @@
 package fi.hockeyseer.web;
 
 import com.sun.org.apache.bcel.internal.generic.SWITCH;
+import fi.hockeyseer.domain.Game;
 import fi.hockeyseer.repository.GameRepository;
 import fi.hockeyseer.repository.TeamRepository;
 import fi.hockeyseer.service.ResultService;
+import fi.hockeyseer.service.SearchToolService;
 import fi.hockeyseer.web.forms.SearchToolForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ import java.util.List;
 @Controller
 public class SearchToolController {
 
+    private final SearchToolService searchToolService;
 
     private final GameRepository gameRepository;
 
@@ -29,8 +32,9 @@ public class SearchToolController {
     private final TeamRepository teamRepository;
 
     @Autowired
-    public SearchToolController(GameRepository gameRepository, ResultService resultService, TeamRepository teamRepository)
+    public SearchToolController(SearchToolService searchToolService, GameRepository gameRepository, ResultService resultService, TeamRepository teamRepository)
     {
+        this.searchToolService = searchToolService;
         this.gameRepository = gameRepository;
         this.teamRepository = teamRepository;
         this.resultService = resultService;
@@ -51,22 +55,9 @@ public class SearchToolController {
         model.addAttribute("teams", teamRepository.findAllByIdLessThan100ByOrderByNameAsc());
         model.addAttribute("searchToolForm", new SearchToolForm());
 
-        long againstSelect = searchToolForm.getAgainstSelect();
-        switch ((int) againstSelect)
-        {
-            case 1:
-                model.addAttribute("games", gameRepository.getGamesForTeamByAgainstTeam(searchToolForm.getTeam(), searchToolForm.getAgainstTeam()));
-                break;
-            case 2:
-                model.addAttribute("games", gameRepository.getGamesForTeamByAgainstDivision(searchToolForm.getTeam(), searchToolForm.getAgainstDivision()));
-                break;
-            case 3:
-                model.addAttribute("games", gameRepository.getGamesForTeamByAgainstConference(searchToolForm.getTeam(), searchToolForm.getAgainstConference()));
-                break;
-            case 4:
-                model.addAttribute("games", gameRepository.getGamesForTeamByAgainstLeague(searchToolForm.getTeam()));
-                break;
-        }
+        List<Game> games = searchToolService.resolveSearchedGames(searchToolForm);
+
+        model.addAttribute("games", games);
 
         return "searchToolResult";
     }
