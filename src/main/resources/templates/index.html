@@ -18,35 +18,30 @@
 <div class="row">
     <div class="col s4">6-columns (one-half)</div>
     <div class="col s4">
-        testt
+
+
     </div>
     <div class="col s4">
 
-        <table>
+        <h2>Upcoming games</h2>
+
+        <table class="bordered">
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Item Name</th>
-                <th>Item Price</th>
+                <th th:text="'Date'"/>
+                <th th:text="'Home'"/>
+                <th th:text="'Away'"/>
             </tr>
             </thead>
 
             <tbody>
-            <tr>
-                <td>Alvin</td>
-                <td>Eclair</td>
-                <td>$0.87</td>
-            </tr>
-            <tr>
-                <td>Alan</td>
-                <td>Jellybean</td>
-                <td>$3.76</td>
-            </tr>
-            <tr>
-                <td>Jonathan</td>
-                <td>Lollipop</td>
-                <td>$7.00</td>
-            </tr>
+            <th:block th:each="game : ${games}">
+                <tr>
+                    <td th:text="${game.date}"/>
+                    <td th:text="${game.homeTeam.name}"/>
+                    <td th:text="${game.visitorTeam.name}"/>
+                </tr>
+            </th:block>
             </tbody>
         </table>
     </div>
