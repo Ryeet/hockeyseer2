@@ -1,6 +1,8 @@
 package fi.hockeyseer.service;
 
 import fi.hockeyseer.domain.Game;
+import fi.hockeyseer.domain.SearchToolStats;
+import fi.hockeyseer.domain.Team;
 import fi.hockeyseer.repository.GameRepository;
 import fi.hockeyseer.repository.TeamRepository;
 import fi.hockeyseer.web.forms.SearchToolForm;
@@ -9,7 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -55,26 +59,32 @@ public class SearchToolService {
         return null;
     }
 
-    public List<Game> resolveWinner(SearchToolForm searchToolForm)
+    public Map<String,SearchToolStats> resolveSearchToolStats(List<Game> games, Long team)
     {
-//        long againstSelect = searchToolForm.getAgainstSelect();
-//        switch ((int) againstSelect)
-//        {
-//            case 1:
-//                return gameRepository.getGamesForTeamByAgainstTeam(searchToolForm.getTeam(), searchToolForm.getAgainstTeam());
-//            case 2:
-//                return gameRepository.getGamesForTeamByAgainstDivision(searchToolForm.getTeam(), searchToolForm.getAgainstDivision());
-//            case 3:
-//                return gameRepository.getGamesForTeamByAgainstConference(searchToolForm.getTeam(), searchToolForm.getAgainstConference());
-//            case 4:
-//                return gameRepository.getGamesForTeamByAgainstLeague(searchToolForm.getTeam());
-//        }
-        return null;
+        Map<String, SearchToolStats> searchToolStats = new HashMap<String, SearchToolStats>();
+
+        searchToolStats.put("allGames",resolveWTL(games, team, "allGames"));
+
+        return searchToolStats;
     }
 
     private List<Game> filterOutNotPlayedGames(List<Game> games)
     {
         return games.stream().filter(game -> game.getPlayed() != false).collect(Collectors.toList());
+    }
+
+    private SearchToolStats resolveWTL(List<Game> games, Long team, String type)
+    {
+        SearchToolStats stats = new SearchToolStats();
+
+        if("allGames".equals(type))
+        {
+            stats.setWin(games.stream().filter(game -> (game.getHomeTeam().getId() == team && game.getWinner() == 1) || (game.getVisitorTeam().getId() == team && game.getWinner() == 2)).count());
+            stats.setTie(games.stream().filter(game -> (game.getWinner() == 0)).count());
+            stats.setLoss(games.stream().filter(game -> (game.getHomeTeam().getId() == team && game.getWinner() == 2) || (game.getVisitorTeam().getId() == team && game.getWinner() == 1)).count());
+        }
+
+        return stats;
     }
 
 }

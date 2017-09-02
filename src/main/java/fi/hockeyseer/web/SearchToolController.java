@@ -56,8 +56,10 @@ public class SearchToolController {
         model.addAttribute("searchToolForm", searchToolForm);
 
         List<Game> games = searchToolService.resolveSearchedGames(searchToolForm);
-
         model.addAttribute("games", games);
+
+        model.addAttribute("searchToolStats", searchToolService.resolveSearchToolStats(games, searchToolForm.getTeam()));
+
 
         return "searchToolResult";
     }
