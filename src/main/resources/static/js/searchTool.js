@@ -2,7 +2,6 @@
 
     function showAndHideAgainstContainers()
     {
-        console.log("changed");
         $(".againstContainer").hide();
         var selected = $("#againstSelect option:selected").val();
         if(selected == 1)

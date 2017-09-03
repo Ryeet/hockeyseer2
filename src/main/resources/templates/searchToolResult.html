@@ -16,29 +16,43 @@
 
         <th:block th:replace="fragments/searchTool::searchToolForm"/>
 
-        <th:block th:text="${searchToolStats.get('allGames')}"/>
-
-
         <div class="row">
             <div class="col s12">
                 <div class="row">
-                    <div class="col s3">
-                        <h5 th:text="|Games: ${#arrays.length(games)}|"/>
-                        <div class="container">
-                            <div>
-                                <canvas id="myChart"></canvas>
-                            </div>
-                        </div>
-                        <script th:src="@{/js/WTLpie.js}"/>
+                    <div class="col s4" th:with="stats = ${searchToolStats.get('allGames')}">
+                        <th:block th:replace="fragments/searchTool::WTLpie(chartName='W-T-L-all',header='Win-Tie-Loss all games')"/>
                     </div>
-                    <div class="col s3">
-
+                    <div class="col s4" th:with="stats = ${searchToolStats.get('homeGames')}">
+                        <th:block th:replace="fragments/searchTool::WTLpie(chartName='W-T-L-home',header='Win-Tie-Loss home games')"/>
                     </div>
-                    <div class="col s3">
-
+                    <div class="col s4" th:with="stats = ${searchToolStats.get('visitorGames')}">
+                        <th:block th:replace="fragments/searchTool::WTLpie(chartName='W-T-L-visitor',header='Win-Tie-Loss away games')"/>
                     </div>
-                    <div class="col s3">
-
+                </div>
+            </div>
+            <div class="col s12">
+                <div class="row">
+                    <div class="col s4" th:with="stats = ${searchToolStats.get('allGames')}">
+                        <th:block th:replace="fragments/searchTool::winMarginPie(chartName='winMargin-all',header='Win Margin all games')"/>
+                    </div>
+                    <div class="col s4" th:with="stats = ${searchToolStats.get('homeGames')}">
+                        <th:block th:replace="fragments/searchTool::winMarginPie(chartName='winMargin-home',header='Win Margin home games')"/>
+                    </div>
+                    <div class="col s4" th:with="stats = ${searchToolStats.get('visitorGames')}">
+                        <th:block th:replace="fragments/searchTool::winMarginPie(chartName='winMargin-visitor',header='Win Margin away games')"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12">
+                <div class="row">
+                    <div class="col s4" th:with="stats = ${searchToolStats.get('allGames')}">
+                        <th:block th:replace="fragments/searchTool::lossMarginPie(chartName='lossMargin-all',header='Loss Margin all games')"/>
+                    </div>
+                    <div class="col s4" th:with="stats = ${searchToolStats.get('homeGames')}">
+                        <th:block th:replace="fragments/searchTool::lossMarginPie(chartName='lossMargin-home',header='Loss Margin home games')"/>
+                    </div>
+                    <div class="col s4" th:with="stats = ${searchToolStats.get('visitorGames')}">
+                        <th:block th:replace="fragments/searchTool::lossMarginPie(chartName='lossMargin-visitor',header='Loss Margin away games')"/>
                     </div>
                 </div>
             </div>

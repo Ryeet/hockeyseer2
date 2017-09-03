@@ -18,19 +18,19 @@ public interface GameRepository extends JpaRepository<Game,Long>{
                                             @Param("againstTeam")List<String> againstTeam,
                                             @Param("season")List<String> season);
 
-    @Query(value = "SELECT * FROM game WHERE (homeTeam_id = :team AND visitorTeam_id IN (SELECT id FROM team WHERE division IN :againstDivision)) " +
-                    "OR (homeTeam_id IN (SELECT id FROM team WHERE division IN :againstDivision) AND visitorTeam_id = :team) AND season IN :season ORDER BY date ASC", nativeQuery = true)
+    @Query(value = "SELECT * FROM game WHERE (homeTeam_id = :team AND visitorTeam_id IN (SELECT id FROM team WHERE division IN :againstDivision) AND season IN :season) " +
+                    "OR (homeTeam_id IN (SELECT id FROM team WHERE division IN :againstDivision) AND visitorTeam_id = :team AND season IN :season) ORDER BY date ASC", nativeQuery = true)
     List<Game> getGamesForTeamByAgainstDivision(@Param("team") Long team,
                                                 @Param("againstDivision")List<String> againstDivision,
                                                 @Param("season")List<String> season);
 
-    @Query(value = "SELECT * FROM game WHERE (homeTeam_id = :team AND visitorTeam_id IN (SELECT id FROM team WHERE conference IN :againstConference)) " +
-                    "OR (homeTeam_id IN (SELECT id FROM team WHERE conference IN :againstConference) AND visitorTeam_id = :team) AND season IN :season ORDER BY date ASC", nativeQuery = true)
+    @Query(value = "SELECT * FROM game WHERE (homeTeam_id = :team AND visitorTeam_id IN (SELECT id FROM team WHERE conference IN :againstConference) AND season IN :season) " +
+                    "OR (homeTeam_id IN (SELECT id FROM team WHERE conference IN :againstConference) AND visitorTeam_id = :team AND season IN :season) ORDER BY date ASC", nativeQuery = true)
     List<Game> getGamesForTeamByAgainstConference(@Param("team") Long team,
                                                   @Param("againstConference")List<String> againstConference,
                                                   @Param("season")List<String> season);
 
-    @Query(value = "SELECT * FROM game WHERE homeTeam_id = :team OR visitorTeam_id = :team AND season IN :season ORDER BY date ASC", nativeQuery = true)
+    @Query(value = "SELECT * FROM game WHERE (homeTeam_id = :team AND season IN :season) OR (visitorTeam_id = :team AND season IN :season) ORDER BY date ASC", nativeQuery = true)
     List<Game> getGamesForTeamByAgainstLeague(@Param("team") Long team,
                                               @Param("season")List<String> season);
 

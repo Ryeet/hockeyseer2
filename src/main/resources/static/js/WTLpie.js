@@ -1,5 +1,6 @@
 /*<![CDATA[*/
 
+    var stats = [# th:utext="${stats.win}" /]
     var ctx = document.getElementById("myChart").getContext('2d');
     var myChart = new Chart(ctx, {
     type: 'pie',

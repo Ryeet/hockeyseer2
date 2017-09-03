@@ -88,5 +88,99 @@
             </div>
             <hr/>
         </th:block>
+
+        <th:block th:fragment="WTLpie">
+            <h5 th:text="${header}"/>
+            <h6 th:text="|Games: ${stats.gameCount}|"/>
+            <div class="container">
+                <div>
+                    <canvas th:id="${chartName}"></canvas>
+                </div>
+            </div>
+            <script th:inline="javascript">
+                /*<![CDATA[*/
+
+                    var ctx = document.getElementById([[${chartName}]]).getContext('2d');
+                    var myChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                    labels: ["Win","Tie","Loss"],
+                    datasets: [{
+                    backgroundColor: [
+                    "#2ecc71",
+                    "#34495e",
+                    "#e74c3c"
+                    ],
+                    data: [ [[${stats.win}]], [[${stats.tie}]], [[${stats.loss}]]]
+                    }]
+                    }
+                    });
+
+                /*]]>*/
+            </script>
+        </th:block>
+
+        <th:block th:fragment="winMarginPie">
+            <h5 th:text="${header}"/>
+            <h6 th:text="|Games: ${stats.win}|"/>
+            <div class="container">
+                <div>
+                    <canvas th:id="${chartName}"></canvas>
+                </div>
+            </div>
+            <script th:inline="javascript">
+                /*<![CDATA[*/
+
+                    var ctx = document.getElementById([[${chartName}]]).getContext('2d');
+                    var myChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                    labels: ["1","2","More"],
+                    datasets: [{
+                    backgroundColor: [
+                    "#99ff99",
+                    "#00ff00",
+                    "#009900"
+                    ],
+                    data: [ [[${stats.winMargin1}]], [[${stats.winMargin2}]], [[${stats.winMarginMore}]]]
+                    }]
+                    }
+                    });
+
+                /*]]>*/
+            </script>
+        </th:block>
+
+        <th:block th:fragment="lossMarginPie">
+            <h5 th:text="${header}"/>
+            <h6 th:text="|Games: ${stats.loss}|"/>
+            <div class="container">
+                <div>
+                    <canvas th:id="${chartName}"></canvas>
+                </div>
+            </div>
+            <script th:inline="javascript">
+                /*<![CDATA[*/
+
+                    var ctx = document.getElementById([[${chartName}]]).getContext('2d');
+                    var myChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                    labels: ["1","2","More"],
+                    datasets: [{
+                    backgroundColor: [
+                    "#ff9999",
+                    "#ff0000",
+                    "#990000"
+                    ],
+                    data: [ [[${stats.lossMargin1}]], [[${stats.lossMargin2}]], [[${stats.lossMarginMore}]]]
+                    }]
+                    }
+                    });
+
+                /*]]>*/
+            </script>
+        </th:block>
+
     </body>
 </html>
