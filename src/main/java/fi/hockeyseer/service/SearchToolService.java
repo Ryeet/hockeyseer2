@@ -48,13 +48,13 @@ public class SearchToolService {
         switch ((int) againstSelect)
         {
             case 1:
-                return filterOutNotPlayedGames(gameRepository.getGamesForTeamByAgainstTeam(searchToolForm.getTeam(), searchToolForm.getAgainstTeam(), searchToolForm.getSeason()));
+                return gameRepository.getGamesForTeamByAgainstTeam(searchToolForm.getTeam(), searchToolForm.getAgainstTeam(), searchToolForm.getSeason(),true);
             case 2:
-                return filterOutNotPlayedGames(gameRepository.getGamesForTeamByAgainstDivision(searchToolForm.getTeam(), searchToolForm.getAgainstDivision(), searchToolForm.getSeason()));
+                return gameRepository.getGamesForTeamByAgainstDivision(searchToolForm.getTeam(), searchToolForm.getAgainstDivision(), searchToolForm.getSeason(),true);
             case 3:
-                return filterOutNotPlayedGames(gameRepository.getGamesForTeamByAgainstConference(searchToolForm.getTeam(), searchToolForm.getAgainstConference(), searchToolForm.getSeason()));
+                return gameRepository.getGamesForTeamByAgainstConference(searchToolForm.getTeam(), searchToolForm.getAgainstConference(), searchToolForm.getSeason(),true);
             case 4:
-                return filterOutNotPlayedGames(gameRepository.getGamesForTeamByAgainstLeague(searchToolForm.getTeam(), searchToolForm.getSeason()));
+                return gameRepository.getGamesForTeamByAgainstLeague(searchToolForm.getTeam(), searchToolForm.getSeason(),true);
         }
         return null;
     }
@@ -174,11 +174,6 @@ public class SearchToolService {
         return searchToolStats;
     }
 
-    private List<Game> filterOutNotPlayedGames(List<Game> games)
-    {
-        return games.stream().filter(game -> game.getPlayed() != false).collect(Collectors.toList());
-    }
-
 //    private Map<String, Long> countResults(List<Game> games, Long team)
 //    {
 //        Map<String, Long> results = null;
@@ -194,7 +189,7 @@ public class SearchToolService {
 //
 //        return results;
 //    }
-
+//
 //    private Long filterOutWrongResults(int )
 //    {
 //        return games.stream().filter(game -> game.getPlayed() != false).collect(Collectors.toList());
