@@ -1,5 +1,7 @@
 package fi.hockeyseer.domain;
 
+import java.util.Map;
+
 /**
  * Created by LickiLicki on 02-Sep-17.
  */
@@ -17,6 +19,8 @@ public class SearchToolStats {
     private long lossMargin1;
     private long lossMargin2;
     private long lossMarginMore;
+
+    private Map<String, Long> results;
 
     public long getGameCount() {
         return gameCount;
@@ -96,6 +100,14 @@ public class SearchToolStats {
 
     public void addLossMarginMore() {
         this.lossMarginMore ++;
+    }
+
+    public Map<String, Long> getResults() {
+        return results;
+    }
+
+    public void setResults(Map<String, Long> results) {
+        this.results = results;
     }
 
     @Override

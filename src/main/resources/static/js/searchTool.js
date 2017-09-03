@@ -36,7 +36,9 @@
             clear: 'Clear',
             close: 'Ok',
             closeOnSelect: true
-          });
+        });
+
+        $('.collapsible').collapsible();
 
 
     });

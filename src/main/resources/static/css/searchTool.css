@@ -5,3 +5,7 @@ div#leagueContainer
 {
     display: none;
 }
+.centered
+{
+    text-align: center;
+}

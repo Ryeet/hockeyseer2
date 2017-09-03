@@ -86,12 +86,11 @@
                     </p>
                 </form>
             </div>
-            <hr/>
+            <div class="divider"></div>
         </th:block>
 
-        <th:block th:fragment="WTLpie">
-            <h5 th:text="${header}"/>
-            <h6 th:text="|Games: ${stats.gameCount}|"/>
+        <th:block th:fragment="WTLbar">
+            <h5 class="centered" th:text="${header}"/>
             <div class="container">
                 <div>
                     <canvas th:id="${chartName}"></canvas>
@@ -102,27 +101,37 @@
 
                     var ctx = document.getElementById([[${chartName}]]).getContext('2d');
                     var myChart = new Chart(ctx, {
-                    type: 'pie',
-                    data: {
-                    labels: ["Win","Tie","Loss"],
-                    datasets: [{
-                    backgroundColor: [
-                    "#2ecc71",
-                    "#34495e",
-                    "#e74c3c"
-                    ],
-                    data: [ [[${stats.win}]], [[${stats.tie}]], [[${stats.loss}]]]
-                    }]
-                    }
+                        type: 'bar',
+                        data:
+                        {
+                            labels: ["All games - [[${stats.gameCount}]]", "Home games - [[${homeStats.gameCount}]]" ,"Away games - [[${visitorStats.gameCount}]]"],
+                            datasets:
+                            [
+                            {
+                                label: "Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${stats.win}]], [[${homeStats.win}]], [[${visitorStats.win}]]]
+                            },
+                            {
+                                label: "Tie",
+                                backgroundColor: "#34495e",
+                                data: [ [[${stats.tie}]], [[${homeStats.tie}]], [[${visitorStats.tie}]]]
+                            },
+                            {
+                                label: "Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${stats.loss}]], [[${homeStats.loss}]], [[${visitorStats.loss}]]]
+                            }
+                            ]
+                        }
                     });
 
                 /*]]>*/
             </script>
         </th:block>
 
-        <th:block th:fragment="winMarginPie">
-            <h5 th:text="${header}"/>
-            <h6 th:text="|Games: ${stats.win}|"/>
+        <th:block th:fragment="winMarginBar">
+            <h5 class="centered" th:text="${header}"/>
             <div class="container">
                 <div>
                     <canvas th:id="${chartName}"></canvas>
@@ -133,27 +142,37 @@
 
                     var ctx = document.getElementById([[${chartName}]]).getContext('2d');
                     var myChart = new Chart(ctx, {
-                    type: 'pie',
-                    data: {
-                    labels: ["1","2","More"],
-                    datasets: [{
-                    backgroundColor: [
-                    "#99ff99",
-                    "#00ff00",
-                    "#009900"
-                    ],
-                    data: [ [[${stats.winMargin1}]], [[${stats.winMargin2}]], [[${stats.winMarginMore}]]]
-                    }]
-                    }
+                        type: 'bar',
+                        data:
+                        {
+                            labels: ["All wins - [[${stats.win}]]", "Home wins - [[${homeStats.win}]]" ,"Away wins - [[${visitorStats.win}]]"],
+                            datasets:
+                            [
+                            {
+                                label: "One",
+                                backgroundColor: "#99ffbb",
+                                data: [ [[${stats.winMargin1}]], [[${homeStats.winMargin1}]], [[${visitorStats.winMargin1}]]]
+                            },
+                            {
+                                label: "Two",
+                                backgroundColor: "#00ff55",
+                                data: [ [[${stats.winMargin2}]], [[${homeStats.winMargin2}]], [[${visitorStats.winMargin2}]]]
+                            },
+                            {
+                                label: "More",
+                                backgroundColor: "#006622",
+                                data: [ [[${stats.winMarginMore}]], [[${homeStats.winMarginMore}]], [[${visitorStats.winMarginMore}]]]
+                            }
+                            ]
+                        }
                     });
 
                 /*]]>*/
             </script>
         </th:block>
 
-        <th:block th:fragment="lossMarginPie">
-            <h5 th:text="${header}"/>
-            <h6 th:text="|Games: ${stats.loss}|"/>
+        <th:block th:fragment="lossMarginBar">
+            <h5 class="centered" th:text="${header}"/>
             <div class="container">
                 <div>
                     <canvas th:id="${chartName}"></canvas>
@@ -164,18 +183,29 @@
 
                     var ctx = document.getElementById([[${chartName}]]).getContext('2d');
                     var myChart = new Chart(ctx, {
-                    type: 'pie',
-                    data: {
-                    labels: ["1","2","More"],
-                    datasets: [{
-                    backgroundColor: [
-                    "#ff9999",
-                    "#ff0000",
-                    "#990000"
-                    ],
-                    data: [ [[${stats.lossMargin1}]], [[${stats.lossMargin2}]], [[${stats.lossMarginMore}]]]
-                    }]
-                    }
+                        type: 'bar',
+                        data:
+                        {
+                            labels: ["All losses - [[${stats.loss}]]", "Home losses - [[${homeStats.loss}]]" ,"Away losses - [[${visitorStats.loss}]]"],
+                            datasets:
+                            [
+                            {
+                                label: "One",
+                                backgroundColor: "#ff9999",
+                                data: [ [[${stats.lossMargin1}]], [[${homeStats.lossMargin1}]], [[${visitorStats.lossMargin1}]]]
+                            },
+                            {
+                                label: "Two",
+                                backgroundColor: "#ff0000",
+                                data: [ [[${stats.lossMargin2}]], [[${homeStats.lossMargin2}]], [[${visitorStats.lossMargin2}]]]
+                            },
+                            {
+                                label: "More",
+                                backgroundColor: "#660000",
+                                data: [ [[${stats.lossMarginMore}]], [[${homeStats.lossMarginMore}]], [[${visitorStats.lossMarginMore}]]]
+                            }
+                            ]
+                        }
                     });
 
                 /*]]>*/

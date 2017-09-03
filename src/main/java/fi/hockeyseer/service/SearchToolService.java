@@ -179,5 +179,26 @@ public class SearchToolService {
         return games.stream().filter(game -> game.getPlayed() != false).collect(Collectors.toList());
     }
 
+//    private Map<String, Long> countResults(List<Game> games, Long team)
+//    {
+//        Map<String, Long> results = null;
+//        for(int i = 0; i <= 6; i++)
+//        {
+//            for(int ii = 0; ii <= 6; ii++)
+//            {
+//             results.put("result"+i+ii,filterOutWrongResults());
+//            }
+//        }
+//
+//
+//
+//        return results;
+//    }
+
+//    private Long filterOutWrongResults(int )
+//    {
+//        return games.stream().filter(game -> game.getPlayed() != false).collect(Collectors.toList());
+//    }
+
 
 }
