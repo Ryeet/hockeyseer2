@@ -104,23 +104,23 @@
                         type: 'bar',
                         data:
                         {
-                            labels: ["All games - [[${stats.gameCount}]]", "Home games - [[${homeStats.gameCount}]]" ,"Away games - [[${visitorStats.gameCount}]]"],
+                            labels: ["All games - [[${stats.get('gameCount')}]]", "Home games - [[${homeStats.get('gameCount')}]]" ,"Away games - [[${visitorStats.get('gameCount')}]]"],
                             datasets:
                             [
                             {
                                 label: "Win",
                                 backgroundColor: "#2ecc71",
-                                data: [ [[${stats.win}]], [[${homeStats.win}]], [[${visitorStats.win}]]]
+                                data: [ [[${stats.get('win')}]], [[${homeStats.get('win')}]], [[${visitorStats.get('win')}]]]
                             },
                             {
                                 label: "Tie",
                                 backgroundColor: "#34495e",
-                                data: [ [[${stats.tie}]], [[${homeStats.tie}]], [[${visitorStats.tie}]]]
+                                data: [ [[${stats.get('tie')}]], [[${homeStats.get('tie')}]], [[${visitorStats.get('tie')}]]]
                             },
                             {
                                 label: "Loss",
                                 backgroundColor: "#e74c3c",
-                                data: [ [[${stats.loss}]], [[${homeStats.loss}]], [[${visitorStats.loss}]]]
+                                data: [ [[${stats.get('loss')}]], [[${homeStats.get('loss')}]], [[${visitorStats.get('loss')}]]]
                             }
                             ]
                         }
@@ -145,23 +145,23 @@
                         type: 'bar',
                         data:
                         {
-                            labels: ["All wins - [[${stats.win}]]", "Home wins - [[${homeStats.win}]]" ,"Away wins - [[${visitorStats.win}]]"],
+                            labels: ["All wins - [[${stats.get('win')}]]", "Home wins - [[${homeStats.get('win')}]]" ,"Away wins - [[${visitorStats.get('win')}]]"],
                             datasets:
                             [
                             {
                                 label: "One",
                                 backgroundColor: "#99ffbb",
-                                data: [ [[${stats.winMargin1}]], [[${homeStats.winMargin1}]], [[${visitorStats.winMargin1}]]]
+                                data: [ [[${stats.get('winMargin1')}]], [[${homeStats.get('winMargin1')}]], [[${visitorStats.get('winMargin1')}]]]
                             },
                             {
                                 label: "Two",
                                 backgroundColor: "#00ff55",
-                                data: [ [[${stats.winMargin2}]], [[${homeStats.winMargin2}]], [[${visitorStats.winMargin2}]]]
+                                data: [ [[${stats.get('winMargin2')}]], [[${homeStats.get('winMargin2')}]], [[${visitorStats.get('winMargin2')}]]]
                             },
                             {
                                 label: "More",
                                 backgroundColor: "#006622",
-                                data: [ [[${stats.winMarginMore}]], [[${homeStats.winMarginMore}]], [[${visitorStats.winMarginMore}]]]
+                                data: [ [[${stats.get('winMarginMore')}]], [[${homeStats.get('winMarginMore')}]], [[${visitorStats.get('winMarginMore')}]]]
                             }
                             ]
                         }
@@ -186,23 +186,64 @@
                         type: 'bar',
                         data:
                         {
-                            labels: ["All losses - [[${stats.loss}]]", "Home losses - [[${homeStats.loss}]]" ,"Away losses - [[${visitorStats.loss}]]"],
+                            labels: ["All losses - [[${stats.get('loss')}]]", "Home losses - [[${homeStats.get('loss')}]]" ,"Away losses - [[${visitorStats.get('loss')}]]"],
                             datasets:
                             [
                             {
                                 label: "One",
                                 backgroundColor: "#ff9999",
-                                data: [ [[${stats.lossMargin1}]], [[${homeStats.lossMargin1}]], [[${visitorStats.lossMargin1}]]]
+                                data: [ [[${stats.get('lossMargin1')}]], [[${homeStats.get('lossMargin1')}]], [[${visitorStats.get('lossMargin1')}]]]
                             },
                             {
                                 label: "Two",
                                 backgroundColor: "#ff0000",
-                                data: [ [[${stats.lossMargin2}]], [[${homeStats.lossMargin2}]], [[${visitorStats.lossMargin2}]]]
+                                data: [ [[${stats.get('lossMargin2')}]], [[${homeStats.get('lossMargin2')}]], [[${visitorStats.get('lossMargin2')}]]]
                             },
                             {
                                 label: "More",
                                 backgroundColor: "#660000",
-                                data: [ [[${stats.lossMarginMore}]], [[${homeStats.lossMarginMore}]], [[${visitorStats.lossMarginMore}]]]
+                                data: [ [[${stats.get('lossMarginMore')}]], [[${homeStats.get('lossMarginMore')}]], [[${visitorStats.get('lossMarginMore')}]]]
+                            }
+                            ]
+                        }
+                    });
+
+                /*]]>*/
+            </script>
+        </th:block>
+
+        <th:block th:fragment="resultsBar">
+            <h5 class="centered" th:text="${header}"/>
+            <div class="container">
+                <div>
+                    <canvas th:id="${chartName}"></canvas>
+                </div>
+            </div>
+            <script th:inline="javascript">
+                /*<![CDATA[*/
+
+                    var ctx = document.getElementById([[${chartName}]]).getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'horizontalBar',
+                        data:
+                        {
+                            labels: ["All games - [[${stats.gameCount}]]", "Home games - [[${homeStats.gameCount}]]" ,"Away games - [[${visitorStats.gameCount}]]"],
+                            datasets:
+                            [
+                            {
+                                label: "Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${stats.win}]], [[${homeStats.win}]], [[${visitorStats.win}]]]
+                            },
+                            {
+                                label: "Tie",
+                                backgroundColor: "#34495e",
+                                data: [ [[${stats.tie}]], [[${homeStats.tie}]], [[${visitorStats.tie}]]]
+                            },
+                            {
+                                label: "Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${stats.loss}]], [[${homeStats.loss}]], [[${visitorStats.loss}]]]
                             }
                             ]
                         }

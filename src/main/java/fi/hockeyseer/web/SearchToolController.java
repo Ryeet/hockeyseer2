@@ -1,11 +1,10 @@
 package fi.hockeyseer.web;
 
-import com.sun.org.apache.bcel.internal.generic.SWITCH;
 import fi.hockeyseer.domain.Game;
 import fi.hockeyseer.repository.GameRepository;
 import fi.hockeyseer.repository.TeamRepository;
 import fi.hockeyseer.service.ResultService;
-import fi.hockeyseer.service.SearchToolService;
+import fi.hockeyseer.service.CalculatedStatsService;
 import fi.hockeyseer.web.forms.SearchToolForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,9 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by LickiLicki on 06-Jul-17.
@@ -23,7 +23,7 @@ import java.util.List;
 @Controller
 public class SearchToolController {
 
-    private final SearchToolService searchToolService;
+    private final CalculatedStatsService calculatedStatsService;
 
     private final GameRepository gameRepository;
 
@@ -32,9 +32,9 @@ public class SearchToolController {
     private final TeamRepository teamRepository;
 
     @Autowired
-    public SearchToolController(SearchToolService searchToolService, GameRepository gameRepository, ResultService resultService, TeamRepository teamRepository)
+    public SearchToolController(CalculatedStatsService calculatedStatsService, GameRepository gameRepository, ResultService resultService, TeamRepository teamRepository)
     {
-        this.searchToolService = searchToolService;
+        this.calculatedStatsService = calculatedStatsService;
         this.gameRepository = gameRepository;
         this.teamRepository = teamRepository;
         this.resultService = resultService;
@@ -55,11 +55,14 @@ public class SearchToolController {
         model.addAttribute("teams", teamRepository.findAllByIdLessThan100ByOrderByNameAsc());
         model.addAttribute("searchToolForm", searchToolForm);
 
-        List<Game> games = searchToolService.resolveSearchedGames(searchToolForm);
+        List<Game> games = calculatedStatsService.resolveSearchedGames(searchToolForm);
         model.addAttribute("games", games);
 
-        model.addAttribute("searchToolStats", searchToolService.resolveSearchToolStats(games, searchToolForm.getTeam()));
+        model.addAttribute("searchToolStats", calculatedStatsService.calculateWTLandMargins(games, searchToolForm.getTeam()));
+        System.out.print(calculatedStatsService.calculateWTLandMargins(games, searchToolForm.getTeam()));
 
+        Map<String, Long> results = new TreeMap<String, Long>(calculatedStatsService.countResults(games, searchToolForm.getTeam()));
+        model.addAttribute("results", results);
 
         return "searchToolResult";
     }
