@@ -1,5 +1,7 @@
 package fi.hockeyseer.service;
 
+import fi.hockeyseer.domain.Result;
+import fi.hockeyseer.domain.ResultsMap;
 import fi.hockeyseer.domain.StatsMap;
 import fi.hockeyseer.domain.Game;
 import fi.hockeyseer.repository.GameRepository;
@@ -44,6 +46,7 @@ public class CalculatedStatsService {
     private final String LOSS_MARGIN_1      = "lossMargin1";
     private final String LOSS_MARGIN_2      = "lossMargin2";
     private final String LOSS_MARGIN_MORE   = "lossMarginMore";
+    private final String RESULTS            = "results";
 
     @Autowired
     public CalculatedStatsService(SeasonService seasonService, GameRepository gameRepository, ResultService resultService, TeamRepository teamRepository)
@@ -69,14 +72,6 @@ public class CalculatedStatsService {
                 return gameRepository.getGamesForTeamByAgainstLeague(searchToolForm.getTeam(), searchToolForm.getSeason(),true);
         }
         return null;
-    }
-
-    private StatsMap increaseValue(StatsMap stats, String key)
-    {
-        Long value = stats.getBasicStats().get(key);
-        value = value + 1;
-        stats.getBasicStats().replace(key,value);
-        return stats;
     }
 
     public Map<String, StatsMap> calculateWTLandMargins(List<Game> games, Long team)
@@ -202,79 +197,90 @@ public class CalculatedStatsService {
         return calculatedStats;
     }
 
-    public Map<String, Long> countResults(List<Game> games, Long team)
+    private StatsMap increaseValue(StatsMap stats, String key)
     {
-        Map<String, Long> results = new HashMap<String, Long>();
+        Long value = stats.getBasicStats().get(key);
+        value = value + 1;
+        stats.getBasicStats().replace(key,value);
+        return stats;
+    }
+
+    public ResultsMap countResultDistiribution(List<Game> games, Long team)
+    {
+        ResultsMap results = new ResultsMap();
 
         games.stream().forEach(game ->
         {
+            boolean validResult = (game.getResult().getHome_total() <= 6) && (game.getResult().getVisitor_total() <= 6);
             if (game.getHomeTeam().getId() == team)
             {
-                if (game.getWinner() == 1)
+                switch (game.getWinner())
                 {
-                    if (results.containsKey("result" + game.getResult().getHome_total() + game.getResult().getVisitor_total() + "team") == false)
-                        results.put("result" + game.getResult().getHome_total() + game.getResult().getVisitor_total() + "team", 1L);
-                    else
-                    {
-                        Long resultCount = results.get("result" + game.getResult().getHome_total() + game.getResult().getVisitor_total() + "team");
-                        results.replace("result" + game.getResult().getHome_total() + game.getResult().getVisitor_total() + "team", resultCount + 1);
-                    }
-                }
-                else if (game.getWinner() == 2)
-                {
-                    if (results.containsKey("result" + game.getResult().getVisitor_total() + game.getResult().getHome_total() + "against") == false)
-                        results.put("result" + game.getResult().getVisitor_total() + game.getResult().getHome_total() + "against", 1L);
-                    else
-                    {
-                        Long resultCount = results.get("result" + game.getResult().getVisitor_total() + game.getResult().getHome_total() + "against");
-                        results.replace("result" + game.getResult().getVisitor_total() + game.getResult().getHome_total() + "against", resultCount + 1);
-                    }
-                }
-                else
-                {
-                    if (results.containsKey("result" + game.getResult().getVisitor_total() + game.getResult().getHome_total()) == false)
-                        results.put("result" + game.getResult().getVisitor_total() + game.getResult().getHome_total(), 1L);
-                    else
-                    {
-                        Long resultCount = results.get("result" + game.getResult().getVisitor_total() + game.getResult().getHome_total());
-                        results.replace("result" + game.getResult().getVisitor_total() + game.getResult().getHome_total(), resultCount + 1);
-                    }
+                    case 1:
+                        if (validResult)
+                            results.setResults(increaseValue(results.getResults(),"result" + game.getResult().getHome_total() + game.getResult().getVisitor_total() + "team"));
+                        else
+                        {
+                            results.setResults(increaseValue(results.getResults(), "resultElseTeam"));
+                        }
+                        break;
+                    case 2:
+                        if (validResult)
+                            results.setResults(increaseValue(results.getResults(),"result" + game.getResult().getVisitor_total() + game.getResult().getHome_total() + "against"));
+                        else
+                        {
+                            results.setResults(increaseValue(results.getResults(), "resultElseAgainst"));
+                        }
+                        break;
+                    default:
+                        if (validResult)
+                            results.setResults(increaseValue(results.getResults(),"result" + game.getResult().getHome_total() + game.getResult().getVisitor_total()));
+                        else
+                        {
+                            results.setResults(increaseValue(results.getResults(), "resultElseTie"));
+                        }
+                        break;
                 }
             }
             else
             {
-                if (game.getWinner() == 1)
+                switch (game.getWinner())
                 {
-                    if (results.containsKey("result" + game.getResult().getHome_total() + game.getResult().getVisitor_total() + "against") == false)
-                        results.put("result" + game.getResult().getHome_total() + game.getResult().getVisitor_total() + "against", 1L);
-                    else
-                    {
-                        Long resultCount = results.get("result" + game.getResult().getHome_total() + game.getResult().getVisitor_total() + "against");
-                        results.replace("result" + game.getResult().getHome_total() + game.getResult().getVisitor_total() + "against", resultCount + 1);
-                    }
-                }
-                else if (game.getWinner() == 2)
-                {
-                    if (results.containsKey("result" + game.getResult().getVisitor_total() + game.getResult().getHome_total() + "team") == false)
-                        results.put("result" + game.getResult().getVisitor_total() + game.getResult().getHome_total() + "team", 1L);
-                    else
-                    {
-                        Long resultCount = results.get("result" + game.getResult().getVisitor_total() + game.getResult().getHome_total() + "team");
-                        results.replace("result" + game.getResult().getVisitor_total() + game.getResult().getHome_total() + "team", resultCount + 1);
-                    }
-                }
-                else
-                {
-                    if (results.containsKey("result" + game.getResult().getVisitor_total() + game.getResult().getHome_total()) == false)
-                        results.put("result" + game.getResult().getVisitor_total() + game.getResult().getHome_total(), 1L);
-                    else
-                    {
-                        Long resultCount = results.get("result" + game.getResult().getVisitor_total() + game.getResult().getHome_total());
-                        results.replace("result" + game.getResult().getVisitor_total() + game.getResult().getHome_total(), resultCount + 1);
-                    }
+                    case 1:
+                        if (validResult)
+                            results.setResults(increaseValue(results.getResults(),"result" + game.getResult().getHome_total() + game.getResult().getVisitor_total() + "against"));
+                        else
+                        {
+                            results.setResults(increaseValue(results.getResults(), "resultElseAgainst"));
+                        }
+                        break;
+                    case 2:
+                        if (validResult)
+                            results.setResults(increaseValue(results.getResults(),"result" + game.getResult().getVisitor_total() + game.getResult().getHome_total() + "team"));
+                        else
+                        {
+                            results.setResults(increaseValue(results.getResults(), "resultElseTeam"));
+                        }
+                        break;
+                    default:
+                        if (validResult)
+                            results.setResults(increaseValue(results.getResults(),"result" + game.getResult().getHome_total() + game.getResult().getVisitor_total()));
+                        else
+                        {
+                            results.setResults(increaseValue(results.getResults(), "resultElseTie"));
+                        }
+                        break;
                 }
             }
         });
         return results;
+    }
+
+    private Map<String, Long> increaseValue(Map<String, Long> map, String key)
+    {
+        Long value = map.get(key);
+        value = value + 1;
+        map.replace(key, value);
+        return map;
     }
 }

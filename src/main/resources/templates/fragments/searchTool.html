@@ -218,8 +218,7 @@
                 <div>
                     <canvas th:id="${chartName}"></canvas>
                 </div>
-            </div>
-            <script th:inline="javascript">
+                <script th:inline="javascript">
                 /*<![CDATA[*/
 
                     var ctx = document.getElementById([[${chartName}]]).getContext('2d');
@@ -227,23 +226,275 @@
                         type: 'horizontalBar',
                         data:
                         {
-                            labels: ["All games - [[${stats.gameCount}]]", "Home games - [[${homeStats.gameCount}]]" ,"Away games - [[${visitorStats.gameCount}]]"],
+                            labels: ["1-0", "2-0", "3-0", "4-0", "5-0", "6-0",
+                                     "2-1", "3-1", "4-1", "5-1", "6-1",
+                                     "3-2", "4-2", "5-2", "6-2",
+                                     "4-3", "5-3" ,"6-3",
+                                     "5-4", "6-4",
+                                     "6-5", "Else",
+                                     "0-0", "1-1", "2-2", "3-3", "4-4", "5-5", "6-6", "Else",
+                                     "1-0", "2-0", "3-0", "4-0", "5-0", "6-0",
+                                     "2-1", "3-1", "4-1", "5-1", "6-1",
+                                     "3-2", "4-2", "5-2", "6-2",
+                                     "4-3", "5-3", "6-3",
+                                     "5-4", "6-4",
+                                     "6-5", "Else"],
                             datasets:
                             [
                             {
-                                label: "Win",
+                                label: "1-0 Win",
                                 backgroundColor: "#2ecc71",
-                                data: [ [[${stats.win}]], [[${homeStats.win}]], [[${visitorStats.win}]]]
+                                data: [ [[${results.get('result10team')}]] ]
                             },
                             {
-                                label: "Tie",
+                                label: "2-0 Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('result20team')}]] ]
+                            },
+                            {
+                                label: "3-0 Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('result30team')}]] ]
+                            },
+                            {
+                                label: "4-0 Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('result40team')}]] ]
+                            },
+                            {
+                                label: "5-0 Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('result50team')}]] ]
+                            },
+                            {
+                                label: "6-0 Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('result60team')}]] ]
+                            },
+                            {
+                                label: "2-1 Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('result21team')}]] ]
+                            },
+                            {
+                                label: "3-1 Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('result31team')}]] ]
+                            },
+                            {
+                                label: "4-1 Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('result41team')}]] ]
+                            },
+                            {
+                                label: "5-1 Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('result51team')}]] ]
+                            },
+                            {
+                                label: "6-1 Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('result61team')}]] ]
+                            },
+                            {
+                                label: "3-2 Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('result32team')}]] ]
+                            },
+                            {
+                                label: "4-2 Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('result42team')}]] ]
+                            },
+                            {
+                                label: "5-2 Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('result52team')}]] ]
+                            },
+                            {
+                                label: "6-2 Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('result62team')}]] ]
+                            },
+                            {
+                                label: "4-3 Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('result43team')}]] ]
+                            },
+                            {
+                                label: "5-3 Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('result53team')}]] ]
+                            },
+                            {
+                                label: "6-3 Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('result63team')}]] ]
+                            },
+                            {
+                                label: "5-4 Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('result54team')}]] ]
+                            },
+                            {
+                                label: "6-4 Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('result64team')}]] ]
+                            },
+                            {
+                                label: "6-5 Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('result65team')}]] ]
+                            },
+                            {
+                                label: "Else Win",
+                                backgroundColor: "#2ecc71",
+                                data: [ [[${results.get('resultElseTeam')}]] ]
+                            },
+                            {
+                                label: "1-1 Tie",
                                 backgroundColor: "#34495e",
-                                data: [ [[${stats.tie}]], [[${homeStats.tie}]], [[${visitorStats.tie}]]]
+                                data: [ [[${results.get('result11')}]] ]
                             },
                             {
-                                label: "Loss",
+                                label: "2-2 Tie",
+                                backgroundColor: "#34495e",
+                                data: [ [[${results.get('result22')}]] ]
+                            },
+                            {
+                                label: "3-3 Tie",
+                                backgroundColor: "#34495e",
+                                data: [ [[${results.get('result33')}]] ]
+                            },
+                            {
+                                label: "4-4 Tie",
+                                backgroundColor: "#34495e",
+                                data: [ [[${results.get('result44')}]] ]
+                            },
+                            {
+                                label: "5-5 Tie",
+                                backgroundColor: "#34495e",
+                                data: [ [[${results.get('result55')}]] ]
+                            },
+                            {
+                                label: "6-6 Tie",
+                                backgroundColor: "#34495e",
+                                data: [ [[${results.get('result66')}]] ]
+                            },
+                            {
+                                label: "Else Tie",
+                                backgroundColor: "#34495e",
+                                data: [ [[${results.get('resultElseTie')}]] ]
+                            },
+                            {
+                                label: "1-0 Loss",
                                 backgroundColor: "#e74c3c",
-                                data: [ [[${stats.loss}]], [[${homeStats.loss}]], [[${visitorStats.loss}]]]
+                                data: [ [[${results.get('result10against')}]] ]
+                            },
+                            {
+                                label: "2-0 Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('result20against')}]] ]
+                            },
+                            {
+                                label: "3-0 Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('result30against')}]] ]
+                            },
+                            {
+                                label: "4-0 Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('result40against')}]] ]
+                            },
+                            {
+                                label: "5-0 Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('result50against')}]] ]
+                            },
+                            {
+                                label: "6-0 Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('result60against')}]] ]
+                            },
+                            {
+                                label: "2-1 Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('result21against')}]] ]
+                            },
+                            {
+                                label: "3-1 Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('result31against')}]] ]
+                            },
+                            {
+                                label: "4-1 Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('result41against')}]] ]
+                            },
+                            {
+                                label: "5-1 Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('result51against')}]] ]
+                            },
+                            {
+                                label: "6-1 Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('result61against')}]] ]
+                            },
+                            {
+                                label: "3-2 Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('result32against')}]] ]
+                            },
+                            {
+                                label: "4-2 Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('result42against')}]] ]
+                            },
+                            {
+                                label: "5-2 Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('result52against')}]] ]
+                            },
+                            {
+                                label: "6-2 Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('result62against')}]] ]
+                            },
+                            {
+                                label: "4-3 Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('result43against')}]] ]
+                            },
+                            {
+                                label: "5-3 Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('result53against')}]] ]
+                            },
+                            {
+                                label: "6-3 Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('result63against')}]] ]
+                            },
+                            {
+                                label: "5-4 Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('result54against')}]] ]
+                            },
+                            {
+                                label: "6-4 Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('result64against')}]] ]
+                            },
+                            {
+                                label: "6-5 Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('result65against')}]] ]
+                            },
+                            {
+                                label: "Else Loss",
+                                backgroundColor: "#e74c3c",
+                                data: [ [[${results.get('resultElseAgainst')}]] ]
                             }
                             ]
                         }
@@ -251,6 +502,7 @@
 
                 /*]]>*/
             </script>
+            </div>
         </th:block>
 
     </body>

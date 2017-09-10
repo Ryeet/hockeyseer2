@@ -59,10 +59,8 @@ public class SearchToolController {
         model.addAttribute("games", games);
 
         model.addAttribute("searchToolStats", calculatedStatsService.calculateWTLandMargins(games, searchToolForm.getTeam()));
-        System.out.print(calculatedStatsService.calculateWTLandMargins(games, searchToolForm.getTeam()));
 
-        Map<String, Long> results = new TreeMap<String, Long>(calculatedStatsService.countResults(games, searchToolForm.getTeam()));
-        model.addAttribute("results", results);
+        model.addAttribute("resultDistribution", calculatedStatsService.countResultDistiribution(games, searchToolForm.getTeam()));
 
         return "searchToolResult";
     }
