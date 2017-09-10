@@ -212,7 +212,7 @@
             </script>
         </th:block>
 
-        <th:block th:fragment="resultsBar">
+        <th:block th:fragment="resultsBar2">
             <h5 class="centered" th:text="${header}"/>
             <div class="container">
                 <div>
@@ -224,6 +224,101 @@
                     var ctx = document.getElementById([[${chartName}]]).getContext('2d');
                     var myChart = new Chart(ctx, {
                         type: 'horizontalBar',
+                        data:
+                        {
+                            labels: ["1-0", "2-0", "3-0", "4-0", "5-0", "6-0",
+                                     "2-1", "3-1", "4-1", "5-1", "6-1",
+                                     "3-2", "4-2", "5-2", "6-2",
+                                     "4-3", "5-3" ,"6-3",
+                                     "5-4", "6-4",
+                                     "6-5", "Else",
+                                     "0-0", "1-1", "2-2", "3-3", "4-4", "5-5", "6-6", "Else",
+                                     "1-0", "2-0", "3-0", "4-0", "5-0", "6-0",
+                                     "2-1", "3-1", "4-1", "5-1", "6-1",
+                                     "3-2", "4-2", "5-2", "6-2",
+                                     "4-3", "5-3", "6-3",
+                                     "5-4", "6-4",
+                                     "6-5", "Else"],
+                            datasets:
+                            [
+                            {
+                                label: "Result",
+                                backgroundColor: "#34495e",
+                                data: [ [[${results.get('result10team')}]],
+                                        [[${results.get('result20team')}]],
+                                        [[${results.get('result30team')}]],
+                                        [[${results.get('result40team')}]],
+                                        [[${results.get('result50team')}]],
+                                        [[${results.get('result60team')}]],
+                                        [[${results.get('result21team')}]],
+                                        [[${results.get('result31team')}]],
+                                        [[${results.get('result41team')}]],
+                                        [[${results.get('result51team')}]],
+                                        [[${results.get('result61team')}]],
+                                        [[${results.get('result32team')}]],
+                                        [[${results.get('result42team')}]],
+                                        [[${results.get('result52team')}]],
+                                        [[${results.get('result62team')}]],
+                                        [[${results.get('result43team')}]],
+                                        [[${results.get('result53team')}]],
+                                        [[${results.get('result63team')}]],
+                                        [[${results.get('result54team')}]],
+                                        [[${results.get('result64team')}]],
+                                        [[${results.get('result65team')}]],
+                                        [[${results.get('resultElseTeam')}]],
+                                        [[${results.get('result00')}]],
+                                        [[${results.get('result11')}]],
+                                        [[${results.get('result22')}]],
+                                        [[${results.get('result33')}]],
+                                        [[${results.get('result44')}]],
+                                        [[${results.get('result55')}]],
+                                        [[${results.get('result66')}]],
+                                        [[${results.get('resultElseTie')}]],
+                                        [[${results.get('result10against')}]],
+                                        [[${results.get('result20against')}]],
+                                        [[${results.get('result30against')}]],
+                                        [[${results.get('result40against')}]],
+                                        [[${results.get('result50against')}]],
+                                        [[${results.get('result60against')}]],
+                                        [[${results.get('result21against')}]],
+                                        [[${results.get('result31against')}]],
+                                        [[${results.get('result41against')}]],
+                                        [[${results.get('result51against')}]],
+                                        [[${results.get('result61against')}]],
+                                        [[${results.get('result32against')}]],
+                                        [[${results.get('result42against')}]],
+                                        [[${results.get('result52against')}]],
+                                        [[${results.get('result62against')}]],
+                                        [[${results.get('result43against')}]],
+                                        [[${results.get('result53against')}]],
+                                        [[${results.get('result63against')}]],
+                                        [[${results.get('result54against')}]],
+                                        [[${results.get('result64against')}]],
+                                        [[${results.get('result65against')}]],
+                                        [[${results.get('resultElseAgainst')}]]
+                                      ]
+                            }
+                            ]
+                        }
+                    });
+
+                /*]]>*/
+            </script>
+            </div>
+        </th:block>
+
+        <th:block th:fragment="resultsBar">
+            <h5 class="centered" th:text="${header}"/>
+            <div class="container">
+                <div>
+                    <canvas th:id="${chartName}"></canvas>
+                </div>
+                <script th:inline="javascript">
+                /*<![CDATA[*/
+
+                    var ctx = document.getElementById([[${chartName}]]).getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
                         data:
                         {
                             labels: ["1-0", "2-0", "3-0", "4-0", "5-0", "6-0",
