@@ -49,15 +49,15 @@ public class HockeyseerApplication {
     public CommandLineRunner testing(TeamRepository teamRepository, SeasonService seasonService) {
         return (args) -> {
             log.debug("------------------------");
-//            Arrays.asList(SeasonUrl.S2013_2014,SeasonUrl.S2014_2015,SeasonUrl.S2015_2016,SeasonUrl.S2016_2017,SeasonUrl.S2017_2018)
-//                    .stream()
-//                    .forEach(season -> {
-//                        try {
-//                            seasonService.addFullSeasonResults(season);
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    });
+     //       Arrays.asList(SeasonUrl.S2016_2017)
+     //               .stream()
+     //               .forEach(season -> {
+    //                    try {
+    //                        seasonService.addFullSeasonResults(season);
+     //                   } catch (IOException e) {
+      //                      e.printStackTrace();
+       //                 }
+        //            });
         };
     }
 
