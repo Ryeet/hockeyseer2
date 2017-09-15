@@ -3,11 +3,10 @@ package fi.hockeyseer.service;
 import fi.hockeyseer.domain.*;
 import fi.hockeyseer.repository.GameRepository;
 import fi.hockeyseer.repository.TeamRepository;
-import fi.hockeyseer.service.CalculationStrategy.IncrementStrategy.IncrementContext;
 import fi.hockeyseer.service.CalculationStrategy.TeamStrategy.AwayTeamStrategy;
 import fi.hockeyseer.service.CalculationStrategy.TeamStrategy.HomeTeamStrategy;
 import fi.hockeyseer.service.CalculationStrategy.TeamStrategy.TeamContext;
-import fi.hockeyseer.service.CalculationStrategy.WinnerStrategy.GameResultContext;
+import fi.hockeyseer.service.data.TeamStats;
 import fi.hockeyseer.web.forms.SearchToolForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,14 +75,14 @@ public class CalculatedStatsService {
         return null;
     }
 
-    public Map<String, StatsMap> calculateWTLandMargins(List<Game> games, Long team) {
+    public Map<String, TeamStats> calculateWTLandMargins(List<Game> games, Long teamId) {
 
-        Map<String, StatsMap> calculatedStats = new HashMap<String, StatsMap>();
-        StatsMap allGamesMap = new StatsMap();
-        StatsMap homeGameMap = new StatsMap();
-        StatsMap visitorGameMap = new StatsMap();
+        Map<String, TeamStats> calculatedStats = new HashMap<String, TeamStats>();
+        TeamStats allStats = new TeamStats();
+        TeamStats homeGameStats = new TeamStats();
+        TeamStats visitorGameStats = new TeamStats();
 
-
+    log.debug("games length  = " + games.size());
         games.stream().forEach(game ->
         {
 
@@ -91,34 +90,32 @@ public class CalculatedStatsService {
             Integer homeScore = game.getResult().getHome_total();
             Integer awayScore = game.getResult().getVisitor_total();
             TeamContext teamContext = new TeamContext();
-            if (game.getHomeTeam().getId() == team) {
+
+            if (game.getHomeTeam().getId() == teamId) {
 
                 teamContext.setTeamStrategy(new HomeTeamStrategy());
-                teamContext.updateStats(homeGameMap, gameWinner, homeScore, awayScore);
+                teamContext.updateStats(homeGameStats, gameWinner, homeScore, awayScore);
 
             } else {
                 teamContext.setTeamStrategy(new AwayTeamStrategy());
-                teamContext.updateStats(visitorGameMap, gameWinner, homeScore, awayScore);
+                teamContext.updateStats(visitorGameStats, gameWinner, homeScore, awayScore);
             }
 
         });
 
-        log.debug("homeMap =  " +homeGameMap.toString());
-        log.debug("visitor =  " +visitorGameMap.toString());
+        allStats = TeamStats.getAllStats(homeGameStats, visitorGameStats);
 
-        calculatedStats.put("allGames", allGamesMap);
-        calculatedStats.put("homeGames", homeGameMap);
-        calculatedStats.put("visitorGames", visitorGameMap);
+        log.debug("allGames " + allStats.toString());
+        log.debug("homeGames " + homeGameStats.toString());
+        log.debug("visitorGames " + visitorGameStats.toString());
+
+        calculatedStats.put("allGames", allStats);
+        calculatedStats.put("homeGames", homeGameStats);
+        calculatedStats.put("visitorGames", visitorGameStats);
         return calculatedStats;
     }
 
 
-    private StatsMap increaseValue(StatsMap stats, String key) {
-        Long value = stats.getBasicStats().get(key);
-        value = value + 1;
-        stats.getBasicStats().replace(key, value);
-        return stats;
-    }
 
     public ResultsMap countResultDistiribution(List<Game> games, Long team) {
         ResultsMap results = new ResultsMap();

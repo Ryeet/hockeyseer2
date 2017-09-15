@@ -1,9 +1,9 @@
 package fi.hockeyseer.service.CalculationStrategy.IncrementStrategy;
 
-import fi.hockeyseer.domain.StatsMap;
+import fi.hockeyseer.service.data.TeamStats;
 
 public interface IncrementStrategy {
 
 
-    StatsMap incrementStats(StatsMap map, Integer difference);
+    TeamStats incrementStats(TeamStats teamStats, Integer difference);
 }

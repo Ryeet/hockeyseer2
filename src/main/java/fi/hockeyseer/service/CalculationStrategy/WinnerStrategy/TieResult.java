@@ -1,12 +1,15 @@
 package fi.hockeyseer.service.CalculationStrategy.WinnerStrategy;
 
-import fi.hockeyseer.domain.StatsMap;
-import fi.hockeyseer.service.CalculationStrategy.IncrementStrategy.IncrementStrategy;
+import fi.hockeyseer.service.CalculationStrategy.TeamStrategy.TeamStrategy;
+import fi.hockeyseer.service.data.TeamStats;
 
 public class TieResult implements GameResultStrategy {
 
 
-    public StatsMap getTeamWin(StatsMap map, Integer homeScore, Integer awayScore) {
-        return map;
+    public TeamStats getTeamWin(TeamStats teamStats, TeamStrategy teamStrategy, Integer homeScore, Integer awayScore) {
+
+       teamStats.increaseTies();
+       teamStats.increaseGameCount();
+        return teamStats;
     }
 }

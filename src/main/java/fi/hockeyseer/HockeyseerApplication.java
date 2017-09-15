@@ -25,6 +25,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @SpringBootApplication
 public class HockeyseerApplication {
@@ -49,15 +50,8 @@ public class HockeyseerApplication {
     public CommandLineRunner testing(TeamRepository teamRepository, SeasonService seasonService) {
         return (args) -> {
             log.debug("------------------------");
-     //       Arrays.asList(SeasonUrl.S2016_2017)
-     //               .stream()
-     //               .forEach(season -> {
-    //                    try {
-    //                        seasonService.addFullSeasonResults(season);
-     //                   } catch (IOException e) {
-      //                      e.printStackTrace();
-       //                 }
-        //            });
+         List<String> list =  Arrays.asList(SeasonUrl.S2016_2017);
+         if (!list.isEmpty())seasonService.addSeasons(list);
         };
     }
 

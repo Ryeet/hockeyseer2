@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by LickiLicki on 03-Jun-17.
@@ -41,7 +42,7 @@ public interface GameRepository extends JpaRepository<Game,Long>{
 
 
     @Query(value = "SELECT * FROM game WHERE date >= CURDATE() AND played = FALSE LIMIT 1", nativeQuery = true)
-    Game findNextUpComingGame();
+    Optional<Game> findNextUpComingGame();
 
     List<Game> findByDateAndPlayedIsFalse(LocalDate date);
 

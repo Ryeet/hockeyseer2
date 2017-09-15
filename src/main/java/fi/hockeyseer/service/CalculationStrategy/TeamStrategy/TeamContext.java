@@ -1,9 +1,6 @@
 package fi.hockeyseer.service.CalculationStrategy.TeamStrategy;
 
-import fi.hockeyseer.domain.Stats;
-import fi.hockeyseer.domain.StatsMap;
-
-import java.util.Map;
+import fi.hockeyseer.service.data.TeamStats;
 
 public class TeamContext {
 
@@ -14,7 +11,7 @@ public class TeamContext {
         this.teamStrategy = teamStrategy;
     }
 
-    public StatsMap updateStats(StatsMap statsmap, Integer gameWinner, Integer homeScore, Integer awayScore) {
+    public TeamStats updateStats(TeamStats statsmap, Integer gameWinner, Integer homeScore, Integer awayScore) {
         return teamStrategy.updateStats(statsmap, gameWinner, homeScore, awayScore);
     }
 

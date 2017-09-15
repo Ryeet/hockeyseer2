@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 
 /**
@@ -41,6 +42,17 @@ public class SeasonService {
         this.gameRepository = gameRepository;
         this.teamRepository = teamRepository;
         this.resultService = resultService;
+    }
+
+
+    public void addSeasons(List<String> seasons) throws IOException {
+        seasons.forEach(s -> {
+            try {
+                addFullSeasonResults(s);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void addFullSeasonResults(String url) throws IOException {

@@ -1,10 +1,11 @@
 package fi.hockeyseer.service.CalculationStrategy.WinnerStrategy;
 
 
-import fi.hockeyseer.domain.StatsMap;
+import fi.hockeyseer.service.CalculationStrategy.TeamStrategy.TeamStrategy;
+import fi.hockeyseer.service.data.TeamStats;
 
 public interface GameResultStrategy {
 
 
-    StatsMap getTeamWin(StatsMap map, Integer homeScore, Integer awayScore);
+    TeamStats getTeamWin(TeamStats map, TeamStrategy teamStrategy, Integer homeScore, Integer awayScore);
 }

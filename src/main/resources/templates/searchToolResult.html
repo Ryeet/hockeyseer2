@@ -17,19 +17,19 @@
         <th:block th:replace="fragments/searchTool::searchToolForm"/>
 
         <div class="row">
-            <div class="col s4" th:with="stats         = ${searchToolStats.get('allGames').basicStats},
-                                         homeStats     = ${searchToolStats.get('homeGames').basicStats},
-                                         visitorStats  = ${searchToolStats.get('visitorGames').basicStats}">
+            <div class="col s4" th:with="stats         = ${searchToolStats.get('allGames')},
+                                         homeStats     = ${searchToolStats.get('homeGames')},
+                                         visitorStats  = ${searchToolStats.get('visitorGames')}">
                 <th:block th:replace="fragments/searchTool::WTLbar(chartName='W-T-L',header='Win-Tie-Loss')"/>
             </div>
-            <div class="col s4" th:with="stats         = ${searchToolStats.get('allGames').basicStats},
-                                         homeStats     = ${searchToolStats.get('homeGames').basicStats},
-                                         visitorStats  = ${searchToolStats.get('visitorGames').basicStats}">
+            <div class="col s4" th:with="stats         = ${searchToolStats.get('allGames')},
+                                         homeStats     = ${searchToolStats.get('homeGames')},
+                                         visitorStats  = ${searchToolStats.get('visitorGames')}">
                 <th:block th:replace="fragments/searchTool::winMarginBar(chartName='winMarginBar',header='Win Margin')"/>
             </div>
-            <div class="col s4" th:with="stats         = ${searchToolStats.get('allGames').basicStats},
-                                         homeStats     = ${searchToolStats.get('homeGames').basicStats},
-                                         visitorStats  = ${searchToolStats.get('visitorGames').basicStats}">
+            <div class="col s4" th:with="stats         = ${searchToolStats.get('allGames').basitats},
+                                         homeStats     = ${searchToolStats.get('homeGames')},
+                                         visitorStats  = ${searchToolStats.get('visitorGames')}">
                 <th:block th:replace="fragments/searchTool::lossMarginBar(chartName='lossMarginBar',header='Loss Margin')"/>
             </div>
         </div>

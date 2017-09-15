@@ -5,7 +5,9 @@ import fi.hockeyseer.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GameService {
@@ -21,7 +23,11 @@ public class GameService {
 
 
     public List<Game> findUpComingGames() {
-        return gameRepository.findByDateAndPlayedIsFalse(gameRepository.findNextUpComingGame().getDate());
+        gameRepository.findNextUpComingGame().map(g -> {
+          return gameRepository.findByDateAndPlayedIsFalse(g.getDate());
+
+        });
+        return new ArrayList<>();
     }
 
 }

@@ -1,29 +1,27 @@
 package fi.hockeyseer.service.CalculationStrategy.IncrementStrategy;
 
-import fi.hockeyseer.domain.StatsMap;
-import fi.hockeyseer.service.CalculationStrategy.TeamStrategy.HomeTeamStrategy;
-import fi.hockeyseer.service.CalculationStrategy.WinnerStrategy.GameResultContext;
-import fi.hockeyseer.service.CalculationStrategy.WinnerStrategy.GameResultStrategy;
-import fi.hockeyseer.service.CalculationStrategy.WinnerStrategy.HomeTeamWin;
+import fi.hockeyseer.service.data.TeamStats;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class IncrementContext {
 
+    private static final Logger log = LoggerFactory.getLogger(IncrementContext.class);
     private IncrementStrategy incrementStrategy;
 
 
-    public IncrementContext(Integer difference) {
-        if (difference > 0) {
+    public IncrementContext(Boolean team1) {
+        log.debug("winner = " + team1);
+        if (team1 == true) {
             this.incrementStrategy = new WinMargin();
         } else {
             this.incrementStrategy = new LossMargin();
         }
     }
 
-    public StatsMap incrementStats(StatsMap map, Integer difference)
+    public TeamStats incrementStats(TeamStats teamStats, Integer difference)
     {
-        return incrementStrategy.incrementStats(
-                map, difference
-        );
+        return incrementStrategy.incrementStats(teamStats, difference);
     }
 
 }
