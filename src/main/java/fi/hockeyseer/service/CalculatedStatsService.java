@@ -91,10 +91,12 @@ public class CalculatedStatsService {
             TeamContext teamContext = new TeamContext();
 
             teamContext.setTeamStrategy(game.getHomeTeam().getId() == teamId);
-            if (game.getHomeTeam().getId() == teamId) {
+            if (game.getHomeTeam().getId() == teamId)
+            {
                 teamContext.updateStats(homeGameStats, gameWinner, homeScore, awayScore);
-
-            } else {
+            }
+            else
+            {
                 teamContext.updateStats(visitorGameStats, gameWinner, homeScore, awayScore);
             }
 

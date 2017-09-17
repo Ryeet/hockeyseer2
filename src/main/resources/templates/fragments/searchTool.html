@@ -104,23 +104,23 @@
                         type: 'bar',
                         data:
                         {
-                            labels: ["All games - [[${stats.get('gameCount')}]]", "Home games - [[${homeStats.get('gameCount')}]]" ,"Away games - [[${visitorStats.get('gameCount')}]]"],
+                            labels: ["All games - [[${stats.gameCount}]]", "Home games - [[${homeStats.gameCount}]]" ,"Away games - [[${visitorStats.gameCount}]]"],
                             datasets:
                             [
                             {
                                 label: "Win",
                                 backgroundColor: "#2ecc71",
-                                data: [ [[${stats.get('win')}]], [[${homeStats.get('win')}]], [[${visitorStats.get('win')}]]]
+                                data: [ [[${stats.wins}]], [[${homeStats.wins}]], [[${visitorStats.wins}]]]
                             },
                             {
                                 label: "Tie",
                                 backgroundColor: "#34495e",
-                                data: [ [[${stats.get('tie')}]], [[${homeStats.get('tie')}]], [[${visitorStats.get('tie')}]]]
+                                data: [ [[${stats.ties}]], [[${homeStats.ties}]], [[${visitorStats.ties}]]]
                             },
                             {
                                 label: "Loss",
                                 backgroundColor: "#e74c3c",
-                                data: [ [[${stats.get('loss')}]], [[${homeStats.get('loss')}]], [[${visitorStats.get('loss')}]]]
+                                data: [ [[${stats.losses}]], [[${homeStats.losses}]], [[${visitorStats.losses}]]]
                             }
                             ]
                         }
@@ -145,23 +145,23 @@
                         type: 'bar',
                         data:
                         {
-                            labels: ["All wins - [[${stats.get('win')}]]", "Home wins - [[${homeStats.get('win')}]]" ,"Away wins - [[${visitorStats.get('win')}]]"],
+                            labels: ["All wins - [[${stats.wins}]]", "Home wins - [[${homeStats.wins}]]" ,"Away wins - [[${visitorStats.wins}]]"],
                             datasets:
                             [
                             {
                                 label: "One",
                                 backgroundColor: "#99ffbb",
-                                data: [ [[${stats.get('winMargin1')}]], [[${homeStats.get('winMargin1')}]], [[${visitorStats.get('winMargin1')}]]]
+                                data: [ [[${stats.winsWithOneGoal}]], [[${homeStats.winsWithOneGoal}]], [[${visitorStats.winsWithOneGoal}]]]
                             },
                             {
                                 label: "Two",
                                 backgroundColor: "#00ff55",
-                                data: [ [[${stats.get('winMargin2')}]], [[${homeStats.get('winMargin2')}]], [[${visitorStats.get('winMargin2')}]]]
+                                data: [ [[${stats.winsWithTwoGoals}]], [[${homeStats.winsWithTwoGoals}]], [[${visitorStats.winsWithTwoGoals}]]]
                             },
                             {
                                 label: "More",
                                 backgroundColor: "#006622",
-                                data: [ [[${stats.get('winMarginMore')}]], [[${homeStats.get('winMarginMore')}]], [[${visitorStats.get('winMarginMore')}]]]
+                                data: [ [[${stats.winsWithMoreGoals}]], [[${homeStats.winsWithMoreGoals}]], [[${visitorStats.winsWithMoreGoals}]]]
                             }
                             ]
                         }
@@ -186,23 +186,23 @@
                         type: 'bar',
                         data:
                         {
-                            labels: ["All losses - [[${stats.get('loss')}]]", "Home losses - [[${homeStats.get('loss')}]]" ,"Away losses - [[${visitorStats.get('loss')}]]"],
+                            labels: ["All losses - [[${stats.losses}]]", "Home losses - [[${homeStats.losses}]]" ,"Away losses - [[${visitorStats.losses}]]"],
                             datasets:
                             [
                             {
                                 label: "One",
                                 backgroundColor: "#ff9999",
-                                data: [ [[${stats.get('lossMargin1')}]], [[${homeStats.get('lossMargin1')}]], [[${visitorStats.get('lossMargin1')}]]]
+                                data: [ [[${stats.lossesWithOneGoal}]], [[${homeStats.lossesWithOneGoal}]], [[${visitorStats.lossesWithOneGoal}]]]
                             },
                             {
                                 label: "Two",
                                 backgroundColor: "#ff0000",
-                                data: [ [[${stats.get('lossMargin2')}]], [[${homeStats.get('lossMargin2')}]], [[${visitorStats.get('lossMargin2')}]]]
+                                data: [ [[${stats.lossesWithTwoGoals}]], [[${homeStats.lossesWithTwoGoals}]], [[${visitorStats.lossesWithTwoGoals}]]]
                             },
                             {
                                 label: "More",
                                 backgroundColor: "#660000",
-                                data: [ [[${stats.get('lossMarginMore')}]], [[${homeStats.get('lossMarginMore')}]], [[${visitorStats.get('lossMarginMore')}]]]
+                                data: [ [[${stats.lossesWithMoreGoals}]], [[${homeStats.lossesWithMoreGoals}]], [[${visitorStats.lossesWithMoreGoals}]]]
                             }
                             ]
                         }
