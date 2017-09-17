@@ -1,6 +1,6 @@
 package fi.hockeyseer.service.CalculationStrategy;
 
-import fi.hockeyseer.service.data.TeamStats;
+import fi.hockeyseer.service.data.MarginStats;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +25,7 @@ public class WinnerContext {
         return strategy;
     }
 
-    public TeamStats getResultStrategy(TeamStats map, TeamStrategy teamStrategy, Integer homeScore, Integer awayScore) {
+    public MarginStats getResultStrategy(MarginStats map, TeamStrategy teamStrategy, Integer homeScore, Integer awayScore) {
         return strategy.getTeamWin(map, teamStrategy, homeScore, awayScore);
     }
 }

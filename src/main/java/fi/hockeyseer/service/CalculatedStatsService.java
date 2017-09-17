@@ -4,7 +4,7 @@ import fi.hockeyseer.domain.*;
 import fi.hockeyseer.repository.GameRepository;
 import fi.hockeyseer.repository.TeamRepository;
 import fi.hockeyseer.service.CalculationStrategy.TeamContext;
-import fi.hockeyseer.service.data.TeamStats;
+import fi.hockeyseer.service.data.MarginStats;
 import fi.hockeyseer.web.forms.SearchToolForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,12 +73,12 @@ public class CalculatedStatsService {
         return null;
     }
 
-    public Map<String, TeamStats> calculateWTLandMargins(List<Game> games, Long teamId) {
+    public Map<String, MarginStats> calculateWTLandMargins(List<Game> games, Long teamId) {
 
-        Map<String, TeamStats> calculatedStats = new HashMap<String, TeamStats>();
-        TeamStats allStats = new TeamStats();
-        TeamStats homeGameStats = new TeamStats();
-        TeamStats visitorGameStats = new TeamStats();
+        Map<String, MarginStats> calculatedStats = new HashMap<String, MarginStats>();
+        MarginStats allStats = new MarginStats();
+        MarginStats homeGameStats = new MarginStats();
+        MarginStats visitorGameStats = new MarginStats();
 
     log.debug("games length  = " + games.size());
         games.stream().forEach(game ->
@@ -102,7 +102,7 @@ public class CalculatedStatsService {
 
         });
 
-        allStats = TeamStats.getAllStats(homeGameStats, visitorGameStats);
+        allStats = MarginStats.getAllStats(homeGameStats, visitorGameStats);
 
         log.debug("allGames " + allStats.toString());
         log.debug("homeGames " + homeGameStats.toString());

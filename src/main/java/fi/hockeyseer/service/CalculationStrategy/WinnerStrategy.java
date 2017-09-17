@@ -1,12 +1,12 @@
 package fi.hockeyseer.service.CalculationStrategy;
 
 
-import fi.hockeyseer.service.data.TeamStats;
+import fi.hockeyseer.service.data.MarginStats;
 
 public interface WinnerStrategy {
 
 
-    TeamStats getTeamWin(TeamStats map, TeamStrategy teamStrategy, Integer homeScore, Integer awayScore);
+    MarginStats getTeamWin(MarginStats map, TeamStrategy teamStrategy, Integer homeScore, Integer awayScore);
 }
 
 
@@ -14,7 +14,7 @@ class HomeTeamWinner implements WinnerStrategy {
 
 
     @Override
-    public TeamStats getTeamWin(TeamStats stats, TeamStrategy teamStrategy, Integer homeScore, Integer awayScore) {
+    public MarginStats getTeamWin(MarginStats stats, TeamStrategy teamStrategy, Integer homeScore, Integer awayScore) {
 
         IncrementContext context = new IncrementContext(teamStrategy instanceof HomeTeamStrategy);
 
@@ -29,7 +29,7 @@ class VisitorTeamWinner implements WinnerStrategy {
 
 
     @Override
-    public TeamStats getTeamWin(TeamStats stats, TeamStrategy teamStrategy, Integer homeScore, Integer awayScore) {
+    public MarginStats getTeamWin(MarginStats stats, TeamStrategy teamStrategy, Integer homeScore, Integer awayScore) {
 
         IncrementContext context = new IncrementContext(teamStrategy instanceof VisitorTeamStrategy);
 
@@ -44,7 +44,7 @@ class VisitorTeamWinner implements WinnerStrategy {
 class TieResult implements WinnerStrategy {
 
 
-    public TeamStats getTeamWin(TeamStats stats, TeamStrategy teamStrategy, Integer homeScore, Integer awayScore) {
+    public MarginStats getTeamWin(MarginStats stats, TeamStrategy teamStrategy, Integer homeScore, Integer awayScore) {
 
         stats.increaseTies();
         stats.increaseGameCount();

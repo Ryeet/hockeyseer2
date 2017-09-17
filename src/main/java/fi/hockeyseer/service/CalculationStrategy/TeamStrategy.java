@@ -1,10 +1,11 @@
 package fi.hockeyseer.service.CalculationStrategy;
 
-import fi.hockeyseer.service.data.TeamStats;
+import fi.hockeyseer.service.data.MarginStats;
+import fi.hockeyseer.service.data.MarginStats;
 
 public interface TeamStrategy {
 
-   TeamStats updateStats(TeamStats stats, Integer gameWinner, Integer homeScore, Integer awayScore);
+   MarginStats updateStats(MarginStats stats, Integer gameWinner, Integer homeScore, Integer awayScore);
 
 }
 
@@ -13,7 +14,7 @@ class HomeTeamStrategy implements TeamStrategy {
 
 
     @Override
-    public TeamStats updateStats(TeamStats stats, Integer gameWinner, Integer homeScore, Integer awayScore) {
+    public MarginStats updateStats(MarginStats stats, Integer gameWinner, Integer homeScore, Integer awayScore) {
 
         WinnerContext gameResultContext = new WinnerContext(gameWinner);
 
@@ -27,12 +28,10 @@ class VisitorTeamStrategy implements TeamStrategy {
 
 
    @Override
-   public TeamStats updateStats(TeamStats statsmap, Integer gameWinner, Integer homeScore, Integer awayScore) {
+   public MarginStats updateStats(MarginStats marginStats, Integer gameWinner, Integer homeScore, Integer awayScore) {
 
       WinnerContext gameResultContext = new WinnerContext(gameWinner);
 
-      statsmap = gameResultContext.getResultStrategy(statsmap, this, homeScore, awayScore);
-
-      return statsmap;
+      return gameResultContext.getResultStrategy(marginStats, this, homeScore, awayScore);
    }
 }

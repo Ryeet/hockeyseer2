@@ -1,29 +1,29 @@
 package fi.hockeyseer.service.CalculationStrategy;
 
-import fi.hockeyseer.service.data.TeamStats;
+import fi.hockeyseer.service.data.MarginStats;
 
 public interface IncrementStrategy {
 
 
-    TeamStats incrementStats(TeamStats teamStats, Integer difference);
+    MarginStats incrementStats(MarginStats marginStats, Integer difference);
 }
 
 class WinMargin implements IncrementStrategy {
 
     @Override
-    public TeamStats incrementStats(TeamStats teamStats, Integer difference) {
+    public MarginStats incrementStats(MarginStats marginStats, Integer difference) {
 
         if (difference == 1) {
-            teamStats.increaseOneGoalWins();
+            marginStats.increaseOneGoalWins();
         } else if (difference == 2) {
-            teamStats.increaseTwoGoalWins();
+            marginStats.increaseTwoGoalWins();
         } else {
-            teamStats.increaseMoreGoalWins();
+            marginStats.increaseMoreGoalWins();
         }
 
-        teamStats.increaseWins();
-        teamStats.increaseGameCount();
-        return teamStats;
+        marginStats.increaseWins();
+        marginStats.increaseGameCount();
+        return marginStats;
     }
 
 
@@ -34,19 +34,19 @@ class LossMargin implements IncrementStrategy {
 
 
     @Override
-    public TeamStats incrementStats(TeamStats teamStats, Integer difference) {
+    public MarginStats incrementStats(MarginStats marginStats, Integer difference) {
 
         if (difference == 1) {
-            teamStats.increaseOneGoalLosses();
+            marginStats.increaseOneGoalLosses();
         } else if (difference == 2) {
-            teamStats.increaseTwoGoalLosses();
+            marginStats.increaseTwoGoalLosses();
         } else {
-            teamStats.increaseMoreGoalLosses();
+            marginStats.increaseMoreGoalLosses();
         }
 
-        teamStats.increaseLosses();
-        teamStats.increaseGameCount();
-        return teamStats;
+        marginStats.increaseLosses();
+        marginStats.increaseGameCount();
+        return marginStats;
     }
 
 

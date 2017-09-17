@@ -1,6 +1,6 @@
 package fi.hockeyseer.service.CalculationStrategy;
 
-import fi.hockeyseer.service.data.TeamStats;
+import fi.hockeyseer.service.data.MarginStats;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,8 +18,8 @@ public class IncrementContext {
         }
     }
 
-    public TeamStats incrementStats(TeamStats teamStats, Integer difference) {
-        return incrementStrategy.incrementStats(teamStats, difference);
+    public MarginStats incrementStats(MarginStats MarginStats, Integer difference) {
+        return incrementStrategy.incrementStats(MarginStats, difference);
     }
 
 }
