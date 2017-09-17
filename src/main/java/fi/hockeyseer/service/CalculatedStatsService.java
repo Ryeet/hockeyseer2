@@ -5,6 +5,7 @@ import fi.hockeyseer.repository.GameRepository;
 import fi.hockeyseer.repository.TeamRepository;
 import fi.hockeyseer.service.CalculationStrategy.TeamContext;
 import fi.hockeyseer.service.data.MarginStats;
+import fi.hockeyseer.service.data.PercentageStats;
 import fi.hockeyseer.web.forms.SearchToolForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,7 +100,6 @@ public class CalculatedStatsService {
             {
                 teamContext.updateStats(visitorGameStats, gameWinner, homeScore, awayScore);
             }
-
         });
 
         allStats = MarginStats.getAllStats(homeGameStats, visitorGameStats);
@@ -107,6 +107,9 @@ public class CalculatedStatsService {
         log.debug("allGames " + allStats.toString());
         log.debug("homeGames " + homeGameStats.toString());
         log.debug("visitorGames " + visitorGameStats.toString());
+
+        PercentageStats percentageStats = new PercentageStats(allStats);
+        log.debug("All Stats:"+ percentageStats.toString());
 
         calculatedStats.put("allGames", allStats);
         calculatedStats.put("homeGames", homeGameStats);

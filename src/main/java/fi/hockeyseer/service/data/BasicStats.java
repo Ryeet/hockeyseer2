@@ -11,7 +11,6 @@ public class BasicStats {
     private Integer losses = 0;
     private Integer ties = 0;
 
-
     public Integer getGameCount() {
         return gameCount;
     }

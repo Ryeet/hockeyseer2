@@ -14,13 +14,14 @@ class HomeTeamStrategy implements TeamStrategy {
 
 
     @Override
-    public MarginStats updateStats(MarginStats stats, Integer gameWinner, Integer homeScore, Integer awayScore) {
+    public MarginStats updateStats(MarginStats marginStats, Integer gameWinner, Integer homeScore, Integer awayScore) {
 
         WinnerContext gameResultContext = new WinnerContext(gameWinner);
 
-        stats = gameResultContext.getResultStrategy(stats, this, homeScore, awayScore);
+        marginStats.increaseGoalsFor(homeScore);
+        marginStats.increaseGoalsAgainst(awayScore);
 
-        return stats;
+        return gameResultContext.getResultStrategy(marginStats, this, homeScore, awayScore);
     }
 }
 
@@ -31,6 +32,9 @@ class VisitorTeamStrategy implements TeamStrategy {
    public MarginStats updateStats(MarginStats marginStats, Integer gameWinner, Integer homeScore, Integer awayScore) {
 
       WinnerContext gameResultContext = new WinnerContext(gameWinner);
+
+      marginStats.increaseGoalsFor(awayScore);
+      marginStats.increaseGoalsAgainst(homeScore);
 
       return gameResultContext.getResultStrategy(marginStats, this, homeScore, awayScore);
    }

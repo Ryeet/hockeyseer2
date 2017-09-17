@@ -11,7 +11,8 @@ public class MarginStats extends BasicStats{
     private Integer lossesWithOneGoal = 0;
     private Integer lossesWithTwoGoals = 0;
     private Integer lossesWithMoreGoals = 0;
-
+    private Integer goalsFor = 0;
+    private Integer goalsAgainst = 0;
 
     public Integer getLossesWithMoreGoals() {
         return lossesWithMoreGoals;
@@ -61,6 +62,22 @@ public class MarginStats extends BasicStats{
         this.lossesWithTwoGoals = lossesWithTwoGoals;
     }
 
+    public Integer getGoalsFor() {
+        return goalsFor;
+    }
+
+    public void setGoalsFor(Integer goalsFor) {
+        this.goalsFor = goalsFor;
+    }
+
+    public Integer getGoalsAgainst() {
+        return goalsAgainst;
+    }
+
+    public void setGoalsAgainst(Integer goalsAgainst) {
+        this.goalsAgainst = goalsAgainst;
+    }
+
     public static MarginStats getAllStats(MarginStats homeGames, MarginStats visitorGames) {
         MarginStats allGames = new MarginStats();
 
@@ -74,6 +91,8 @@ public class MarginStats extends BasicStats{
         allGames.setLossesWithOneGoal(homeGames.getLossesWithOneGoal() + visitorGames.getLossesWithOneGoal());
         allGames.setLossesWithTwoGoals(homeGames.getLossesWithTwoGoals() + visitorGames.getLossesWithTwoGoals());
         allGames.setLossesWithMoreGoals(homeGames.getLossesWithMoreGoals() + visitorGames.getLossesWithMoreGoals());
+        allGames.setGoalsFor(homeGames.getGoalsFor() + visitorGames.getGoalsFor());
+        allGames.setGoalsAgainst(homeGames.getGoalsAgainst() + visitorGames.getGoalsAgainst());
 
         return allGames;
     }
@@ -84,6 +103,8 @@ public class MarginStats extends BasicStats{
     public void increaseOneGoalLosses() { this.lossesWithOneGoal++;}
     public void increaseTwoGoalLosses() { this.lossesWithTwoGoals++;}
     public void increaseMoreGoalLosses() { this.lossesWithMoreGoals++;}
+    public void increaseGoalsFor(Integer goalsFor) { this.goalsFor += goalsFor; }
+    public void increaseGoalsAgainst(Integer goalsAgainst) { this.goalsAgainst += goalsAgainst; }
 
     @Override
     public String toString() {
