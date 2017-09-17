@@ -1,4 +1,4 @@
-package fi.hockeyseer.service.CalculationStrategy.IncrementStrategy;
+package fi.hockeyseer.service.CalculationStrategy;
 
 import fi.hockeyseer.service.data.TeamStats;
 import org.slf4j.Logger;
@@ -10,17 +10,15 @@ public class IncrementContext {
     private IncrementStrategy incrementStrategy;
 
 
-    public IncrementContext(Boolean team1) {
-        log.debug("winner = " + team1);
-        if (team1 == true) {
+    public IncrementContext(Boolean playingTeamIsWinner) {
+        if (playingTeamIsWinner == true) {
             this.incrementStrategy = new WinMargin();
         } else {
             this.incrementStrategy = new LossMargin();
         }
     }
 
-    public TeamStats incrementStats(TeamStats teamStats, Integer difference)
-    {
+    public TeamStats incrementStats(TeamStats teamStats, Integer difference) {
         return incrementStrategy.incrementStats(teamStats, difference);
     }
 

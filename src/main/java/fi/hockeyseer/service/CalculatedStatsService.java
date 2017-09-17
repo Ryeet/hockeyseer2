@@ -3,9 +3,7 @@ package fi.hockeyseer.service;
 import fi.hockeyseer.domain.*;
 import fi.hockeyseer.repository.GameRepository;
 import fi.hockeyseer.repository.TeamRepository;
-import fi.hockeyseer.service.CalculationStrategy.TeamStrategy.AwayTeamStrategy;
-import fi.hockeyseer.service.CalculationStrategy.TeamStrategy.HomeTeamStrategy;
-import fi.hockeyseer.service.CalculationStrategy.TeamStrategy.TeamContext;
+import fi.hockeyseer.service.CalculationStrategy.TeamContext;
 import fi.hockeyseer.service.data.TeamStats;
 import fi.hockeyseer.web.forms.SearchToolForm;
 import org.slf4j.Logger;
@@ -89,15 +87,14 @@ public class CalculatedStatsService {
             Integer gameWinner = game.getWinner();
             Integer homeScore = game.getResult().getHome_total();
             Integer awayScore = game.getResult().getVisitor_total();
+
             TeamContext teamContext = new TeamContext();
 
+            teamContext.setTeamStrategy(game.getHomeTeam().getId() == teamId);
             if (game.getHomeTeam().getId() == teamId) {
-
-                teamContext.setTeamStrategy(new HomeTeamStrategy());
                 teamContext.updateStats(homeGameStats, gameWinner, homeScore, awayScore);
 
             } else {
-                teamContext.setTeamStrategy(new AwayTeamStrategy());
                 teamContext.updateStats(visitorGameStats, gameWinner, homeScore, awayScore);
             }
 
