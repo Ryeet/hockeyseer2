@@ -1,6 +1,6 @@
 package fi.hockeyseer.service.CalculationStrategy;
 
-import fi.hockeyseer.service.data.MarginStats;
+import fi.hockeyseer.service.data.stats.basic.MarginStats;
 
 public interface IncrementStrategy {
 

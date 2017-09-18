@@ -1,7 +1,7 @@
 package fi.hockeyseer.service.CalculationStrategy;
 
 
-import fi.hockeyseer.service.data.MarginStats;
+import fi.hockeyseer.service.data.stats.basic.MarginStats;
 
 public interface WinnerStrategy {
 
@@ -18,9 +18,8 @@ class HomeTeamWinner implements WinnerStrategy {
 
         IncrementContext context = new IncrementContext(teamStrategy instanceof HomeTeamStrategy);
 
-        stats = context.incrementStats(stats, homeScore - awayScore);
+        return context.incrementStats(stats, homeScore - awayScore);
 
-        return stats;
 
     }
 }
@@ -33,9 +32,9 @@ class VisitorTeamWinner implements WinnerStrategy {
 
         IncrementContext context = new IncrementContext(teamStrategy instanceof VisitorTeamStrategy);
 
-        stats = context.incrementStats(stats, awayScore - homeScore);
+        return context.incrementStats(stats, awayScore - homeScore);
 
-        return stats;
+
 
     }
 }

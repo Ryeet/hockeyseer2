@@ -1,9 +1,9 @@
-package fi.hockeyseer.service.data;
+package fi.hockeyseer.service.data.stats.basic;
 
 /**
  * Created by LickiLicki on 17-Sep-17.
  */
-public class MarginStats extends BasicStats{
+public class MarginStats extends BasicStats {
 
     private Integer winsWithOneGoal = 0;
     private Integer winsWithTwoGoals = 0;

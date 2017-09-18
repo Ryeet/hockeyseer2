@@ -1,4 +1,4 @@
-package fi.hockeyseer.service.data;
+package fi.hockeyseer.service.data.stats.basic;
 
 /**
  * Created by LickiLicki on 02-Sep-17.

@@ -7,6 +7,7 @@ import fi.hockeyseer.config.ProfileUtil;
 import fi.hockeyseer.constants.SeasonUrl;
 import fi.hockeyseer.domain.enumeration.Season;
 import fi.hockeyseer.repository.TeamRepository;
+import fi.hockeyseer.service.CalculatedStatsService;
 import fi.hockeyseer.service.SeasonService;
 import fi.hockeyseer.service.json.JsonSeason;
 import fi.hockeyseer.utility.ConnUtil;
@@ -47,9 +48,10 @@ public class HockeyseerApplication {
     }
 
     @Bean
-    public CommandLineRunner testing(TeamRepository teamRepository, SeasonService seasonService) {
+    public CommandLineRunner testing(TeamRepository teamRepository, SeasonService seasonService, CalculatedStatsService calculatedStatsService) {
         return (args) -> {
             log.debug("------------------------");
+//            calculatedStatsService.generateAllStats();
 //         List<String> list =  Arrays.asList(SeasonUrl.S2016_2017);
 //         if (!list.isEmpty())seasonService.addSeasons(list);
         };

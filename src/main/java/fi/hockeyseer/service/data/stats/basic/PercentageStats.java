@@ -1,12 +1,10 @@
-package fi.hockeyseer.service.data;
+package fi.hockeyseer.service.data.stats.basic;
 
-import fi.hockeyseer.service.SeasonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.math.RoundingMode;
 
 /**
  * Created by LickiLicki on 17-Sep-17.

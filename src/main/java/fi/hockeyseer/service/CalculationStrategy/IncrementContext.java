@@ -1,6 +1,6 @@
 package fi.hockeyseer.service.CalculationStrategy;
 
-import fi.hockeyseer.service.data.MarginStats;
+import fi.hockeyseer.service.data.stats.basic.MarginStats;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
