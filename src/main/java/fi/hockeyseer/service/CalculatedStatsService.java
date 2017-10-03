@@ -1,12 +1,15 @@
 package fi.hockeyseer.service;
 
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import fi.hockeyseer.domain.*;
 import fi.hockeyseer.repository.GameRepository;
 import fi.hockeyseer.repository.TeamRepository;
 import fi.hockeyseer.service.CalculationStrategy.TeamContext;
 import fi.hockeyseer.service.data.stats.basic.MarginStats;
 import fi.hockeyseer.service.data.stats.basic.PercentageStats;
+import fi.hockeyseer.service.data.stats.team.LeagueAvgStats;
 import fi.hockeyseer.service.data.stats.team.TeamStats;
+import fi.hockeyseer.service.data.stats.team.TendencyStats;
 import fi.hockeyseer.web.forms.SearchToolForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,72 +81,23 @@ public class CalculatedStatsService {
         return null;
     }
 
-    public void generateAllStats() {
-    List<TeamStats> teamStatsList = new ArrayList<>();
-        long startTime = System.nanoTime();
-
-        ExecutorService executorService = Executors.newFixedThreadPool(20);
-
-        teamRepository.findAll().parallelStream().forEach(team -> {
-            executorService.execute(new Runnable() {
-                public void run() {
-                    List<Game> games = gameRepository.getGamesForTeamByAgainstLeague(team.getId(), Arrays.asList("20162017"), true);
-                    if (games.size() > 10) {
-                        Map<String, MarginStats> stats = calculateWTLandMargins(games, team.getId());
-                        log.debug(stats.toString());
-                        TeamStats teamStats = getTeamStats(team, stats);
-                        teamStatsList.add(teamStats);
-                    }
-                }
-            });
-        });
-        executorService.shutdown();
-
-        try {
-            executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
-            long elapsedTime = System.nanoTime() - startTime;
-
-            BigDecimal sum = teamStatsList
-                    .stream()
-                    .map(TeamStats::getPercentageStats)
-                    .map(PercentageStats::getWinPercentage)
-                    .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-            log.debug("avg win% = " + String.valueOf(sum.divide(new BigDecimal(teamStatsList.size()), MathContext.DECIMAL32)));
-            log.debug("Games ending.." + ((double) elapsedTime / 1000000000.0));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
-    public TeamStats getTeamStats(Team team, Map<String, MarginStats> stats) {
-        TeamStats teamStats = new TeamStats();
-
-        teamStats.setMarginStats(stats);
-        teamStats.setPercentageStats(new PercentageStats(stats.get("homeGames")));
-
-        log.debug(team.getName() + " - " + teamStats.getPercentageStats().getWinPercentage());
-        return teamStats;
-    }
-
     public Map<String, MarginStats> calculateWTLandMargins(List<Game> games, Long teamId) {
         Map<String, MarginStats> calculatedStats = new HashMap<String, MarginStats>();
 
         MarginStats homeGameStats = new MarginStats();
         MarginStats visitorGameStats = new MarginStats();
 
-
         games.forEach(game -> {
-//d
             TeamContext teamContext = new TeamContext();
 
             teamContext.setTeamStrategy(game.getHomeTeam().getId() == teamId);
-            if (game.getHomeTeam().getId() == teamId) {
-                teamContext.updateStats(homeGameStats, game.getWinner(), game.getResult().getHome_total(), game.getResult().getVisitor_total());
-            } else {
-                teamContext.updateStats(visitorGameStats, game.getWinner(),  game.getResult().getHome_total(), game.getResult().getVisitor_total());
+            if (game.getHomeTeam().getId() == teamId)
+            {
+                teamContext.updateStats(homeGameStats, game.getWinner(), game.getResult().getHome_total(), game.getResult().getVisitor_total(), game.getVisitorTeam());
+            }
+            else
+            {
+                teamContext.updateStats(visitorGameStats, game.getWinner(),  game.getResult().getHome_total(), game.getResult().getVisitor_total(), game.getHomeTeam());
             }
         });
 

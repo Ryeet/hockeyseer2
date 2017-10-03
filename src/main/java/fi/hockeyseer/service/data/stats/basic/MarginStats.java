@@ -1,5 +1,12 @@
 package fi.hockeyseer.service.data.stats.basic;
 
+import fi.hockeyseer.domain.Team;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
  * Created by LickiLicki on 17-Sep-17.
  */
@@ -13,6 +20,7 @@ public class MarginStats extends BasicStats {
     private Integer lossesWithMoreGoals = 0;
     private Integer goalsFor = 0;
     private Integer goalsAgainst = 0;
+    private List<Team> opponents = new ArrayList<Team>();
 
     public Integer getLossesWithMoreGoals() {
         return lossesWithMoreGoals;
@@ -78,6 +86,14 @@ public class MarginStats extends BasicStats {
         this.goalsAgainst = goalsAgainst;
     }
 
+    public List<Team> getOpponents() {
+        return opponents;
+    }
+
+    public void setOpponents(List<Team> opponents) {
+        this.opponents = opponents;
+    }
+
     public static MarginStats getAllStats(MarginStats homeGames, MarginStats visitorGames) {
         MarginStats allGames = new MarginStats();
 
@@ -93,6 +109,9 @@ public class MarginStats extends BasicStats {
         allGames.setLossesWithMoreGoals(homeGames.getLossesWithMoreGoals() + visitorGames.getLossesWithMoreGoals());
         allGames.setGoalsFor(homeGames.getGoalsFor() + visitorGames.getGoalsFor());
         allGames.setGoalsAgainst(homeGames.getGoalsAgainst() + visitorGames.getGoalsAgainst());
+        allGames.setOpponents(Stream
+                                .concat(homeGames.getOpponents().stream(), visitorGames.getOpponents().stream())
+                                .collect(Collectors.toList()));
 
         return allGames;
     }
@@ -105,6 +124,7 @@ public class MarginStats extends BasicStats {
     public void increaseMoreGoalLosses() { this.lossesWithMoreGoals++;}
     public void increaseGoalsFor(Integer goalsFor) { this.goalsFor += goalsFor; }
     public void increaseGoalsAgainst(Integer goalsAgainst) { this.goalsAgainst += goalsAgainst; }
+    public void addOpponent(Team team) { this.opponents.add(team);}
 
     @Override
     public String toString() {
@@ -115,6 +135,9 @@ public class MarginStats extends BasicStats {
                 ", lossesWithOneGoal=" + lossesWithOneGoal +
                 ", lossesWithTwoGoals=" + lossesWithTwoGoals +
                 ", lossesWithMoreGoals=" + lossesWithMoreGoals +
+                ", goalsFor=" + goalsFor +
+                ", goalsAgainst=" + goalsAgainst +
+                ", opponents=" + opponents +
                 '}';
     }
 }

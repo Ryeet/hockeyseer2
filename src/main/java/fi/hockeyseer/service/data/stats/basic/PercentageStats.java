@@ -1,5 +1,6 @@
 package fi.hockeyseer.service.data.stats.basic;
 
+import fi.hockeyseer.service.data.stats.team.TendencyStats;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +20,8 @@ public class PercentageStats extends BasicStats{
     private BigDecimal goalsForAverage;
     private BigDecimal goalsAgainstAverage;
 
-    public PercentageStats(MarginStats marginStats) {
+    public PercentageStats(MarginStats marginStats)
+    {
         this.winPercentage = BigDecimal.valueOf(marginStats.getWins()).divide(BigDecimal.valueOf(marginStats.getGameCount()), MathContext.DECIMAL32);
         this.lossPercentage = BigDecimal.valueOf(marginStats.getLosses()).divide(BigDecimal.valueOf(marginStats.getGameCount()), MathContext.DECIMAL32);
         this.tiePercentage = BigDecimal.valueOf(marginStats.getTies()).divide(BigDecimal.valueOf(marginStats.getGameCount()), MathContext.DECIMAL32);

@@ -3,6 +3,7 @@ package fi.hockeyseer.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 import fi.hockeyseer.domain.enumeration.*;
+import fi.hockeyseer.service.data.stats.team.TeamStats;
 
 /**
  * Created by alekstu on 31.5.2017.
