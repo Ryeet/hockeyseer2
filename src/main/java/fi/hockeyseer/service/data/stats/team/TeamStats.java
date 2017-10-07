@@ -20,7 +20,6 @@ public class TeamStats {
     private AdjustedPowers adjustedPowersAll;
     private AdjustedPowers adjustedPowersHome;
     private AdjustedPowers adjustedPowersVisitor;
-    private List<TeamStats> opponentStats;
 
     public Team getTeam() {
         return team;

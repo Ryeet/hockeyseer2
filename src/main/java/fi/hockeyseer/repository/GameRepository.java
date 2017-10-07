@@ -40,6 +40,12 @@ public interface GameRepository extends JpaRepository<Game,Long>{
                                               @Param("season")List<String> season,
                                               @Param("played")boolean played);
 
+    @Query(value = "SELECT * FROM game WHERE (homeTeam_id = :team AND season IN :season AND played = :played AND date < :date) OR (visitorTeam_id = :team AND season IN :season AND played = :played AND date < :date) ORDER BY date ASC", nativeQuery = true)
+    List<Game> getGamesForTeamByAgainstLeagueWithDate(@Param("team") Long team,
+                                                      @Param("season")List<String> season,
+                                                      @Param("played")boolean played,
+                                                      @Param("date")LocalDate date);
+
 
     @Query(value = "SELECT * FROM game WHERE date >= CURDATE() AND played = FALSE LIMIT 1", nativeQuery = true)
     Optional<Game> findNextUpComingGame();
@@ -47,4 +53,8 @@ public interface GameRepository extends JpaRepository<Game,Long>{
     List<Game> findByDateAndPlayedIsFalse(LocalDate date);
 
     List<Game> findBySeason(String season);
+
+
+    @Query(value = "SELECT * FROM game WHERE homeTeam_id < 100 AND season = :season ", nativeQuery = true)
+    List<Game> getGamesBySeasonAndRealTeams(@Param("season") String season);
 }

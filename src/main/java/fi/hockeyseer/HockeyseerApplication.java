@@ -51,9 +51,8 @@ public class HockeyseerApplication {
     public CommandLineRunner testing(TeamRepository teamRepository, SeasonService seasonService, CalculatedStatsService calculatedStatsService) {
         return (args) -> {
             log.debug("------------------------");
-//            calculatedStatsService.generateAllStats();
-//         List<String> list =  Arrays.asList(SeasonUrl.S2016_2017);
-//         if (!list.isEmpty())seasonService.addSeasons(list);
+         List<String> list =  Arrays.asList(SeasonUrl.S2016_2017);
+         if (!list.isEmpty())seasonService.addSeasons(list);
         };
     }
 
