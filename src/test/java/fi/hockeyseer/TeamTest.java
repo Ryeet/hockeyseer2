@@ -4,7 +4,7 @@ import fi.hockeyseer.domain.Team;
 import fi.hockeyseer.domain.enumeration.Conference;
 import fi.hockeyseer.domain.enumeration.Division;
 import fi.hockeyseer.repository.TeamRepository;
-import fi.hockeyseer.service.TeamService;
+import fi.hockeyseer.service.shared.TeamService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

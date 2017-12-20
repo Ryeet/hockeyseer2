@@ -1,16 +1,11 @@
 package fi.hockeyseer;
 
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fi.hockeyseer.config.ProfileUtil;
 import fi.hockeyseer.constants.SeasonUrl;
-import fi.hockeyseer.domain.enumeration.Season;
 import fi.hockeyseer.repository.TeamRepository;
-import fi.hockeyseer.service.CalculatedStatsService;
-import fi.hockeyseer.service.SeasonService;
-import fi.hockeyseer.service.json.JsonSeason;
-import fi.hockeyseer.utility.ConnUtil;
+import fi.hockeyseer.service.calc.CalculatedStatsService;
+import fi.hockeyseer.service.dataimport.ImportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -20,8 +15,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
@@ -48,11 +41,11 @@ public class HockeyseerApplication {
     }
 
     @Bean
-    public CommandLineRunner testing(TeamRepository teamRepository, SeasonService seasonService, CalculatedStatsService calculatedStatsService) {
+    public CommandLineRunner testing(TeamRepository teamRepository, ImportService importService, CalculatedStatsService calculatedStatsService) {
         return (args) -> {
             log.debug("------------------------");
          List<String> list =  Arrays.asList(SeasonUrl.S2016_2017);
-         if (!list.isEmpty())seasonService.addSeasons(list);
+         if (!list.isEmpty()) importService.importSeasons(list);
         };
     }
 

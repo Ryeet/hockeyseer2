@@ -1,16 +1,12 @@
 package fi.hockeyseer.web;
 
-import fi.hockeyseer.domain.AdjustedPowerForOlli;
-import fi.hockeyseer.domain.Game;
 import fi.hockeyseer.domain.Team;
 import fi.hockeyseer.repository.AdjustedPowerForOlliRepository;
 import fi.hockeyseer.repository.GameRepository;
 import fi.hockeyseer.repository.TeamRepository;
-import fi.hockeyseer.service.CalculatedStatsService;
-import fi.hockeyseer.service.ResultService;
-import fi.hockeyseer.service.TeamStatsService;
-import fi.hockeyseer.service.data.stats.team.TeamStats;
-import fi.hockeyseer.web.forms.SearchToolForm;
+import fi.hockeyseer.service.shared.ResultService;
+import fi.hockeyseer.service.calc.TeamStatsService;
+import fi.hockeyseer.service.calc.stats.team.TeamStats;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 

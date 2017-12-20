@@ -3,8 +3,8 @@ package fi.hockeyseer.web;
 import fi.hockeyseer.domain.Game;
 import fi.hockeyseer.repository.GameRepository;
 import fi.hockeyseer.repository.TeamRepository;
-import fi.hockeyseer.service.ResultService;
-import fi.hockeyseer.service.CalculatedStatsService;
+import fi.hockeyseer.service.shared.ResultService;
+import fi.hockeyseer.service.calc.CalculatedStatsService;
 import fi.hockeyseer.web.forms.SearchToolForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Created by LickiLicki on 06-Jul-17.
