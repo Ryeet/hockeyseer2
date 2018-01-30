@@ -10,93 +10,85 @@
         <th:block th:replace="fragments/default::navbar"/>
 
         <div class="row">
-            <th:block th:each="teamStats : ${finalTeamStats}">
-                <th:block th:if="${game.homeTeam.id == teamStats.team.id}">
-                    <h2 th:text="${teamStats.team.name}"/>
-                    <div class="col s6">
-                        <table class="bordered">
-                            <thead>
-                            <tr>
-                                <th/>
-                                <th>All Games</th>
-                                <th>Home Games</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th>adjustedWinTendency</th>
-                                <td th:text="${teamStats.adjustedPowersAll.adjustedWinTendency}"/>
-                                <td th:text="${teamStats.adjustedPowersHome.adjustedWinTendency}"/>
-                            </tr>
-                            <tr>
-                                <th>adjustedLossTendency</th>
-                                <td th:text="${teamStats.adjustedPowersAll.adjustedLossTendency}"/>
-                                <td th:text="${teamStats.adjustedPowersHome.adjustedLossTendency}"/>
-                            </tr>
-                            <tr>
-                                <th>adjustedTieTendency</th>
-                                <td th:text="${teamStats.adjustedPowersAll.adjustedTieTendency}"/>
-                                <td th:text="${teamStats.adjustedPowersHome.adjustedTieTendency}"/>
-                            </tr>
-                            <tr>
-                                <th>adjustedScorePower</th>
-                                <td th:text="${teamStats.adjustedPowersAll.adjustedScorePower}"/>
-                                <td th:text="${teamStats.adjustedPowersHome.adjustedScorePower}"/>
-                            </tr>
-                            <tr>
-                                <th>adjustedDefenseSuck</th>
-                                <td th:text="${teamStats.adjustedPowersAll.adjustedDefenseSuck}"/>
-                                <td th:text="${teamStats.adjustedPowersHome.adjustedDefenseSuck}"/>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </th:block>
-            </th:block>
+            <div class="col s6">
+                <h2 th:text="${finalHomeTeamStats[0].team.name}"/>
+                <table class="bordered">
+                    <thead>
+                    <tr>
+                        <th/>
+                        <th>All Games</th>
+                        <th>Home Games</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th>adjustedWinTendency</th>
+                        <td th:text="${finalHomeTeamStats[0].adjustedPowersAll.adjustedWinTendency}"/>
+                        <td th:text="${finalHomeTeamStats[0].adjustedPowersHome.adjustedWinTendency}"/>
+                    </tr>
+                    <tr>
+                        <th>adjustedLossTendency</th>
+                        <td th:text="${finalHomeTeamStats[0].adjustedPowersAll.adjustedLossTendency}"/>
+                        <td th:text="${finalHomeTeamStats[0].adjustedPowersHome.adjustedLossTendency}"/>
+                    </tr>
+                    <tr>
+                        <th>adjustedTieTendency</th>
+                        <td th:text="${finalHomeTeamStats[0].adjustedPowersAll.adjustedTieTendency}"/>
+                        <td th:text="${finalHomeTeamStats[0].adjustedPowersHome.adjustedTieTendency}"/>
+                    </tr>
+                    <tr>
+                        <th>adjustedScorePower</th>
+                        <td th:text="${finalHomeTeamStats[0].adjustedPowersAll.adjustedScorePower}"/>
+                        <td th:text="${finalHomeTeamStats[0].adjustedPowersHome.adjustedScorePower}"/>
+                    </tr>
+                    <tr>
+                        <th>adjustedDefenseSuck</th>
+                        <td th:text="${finalHomeTeamStats[0].adjustedPowersAll.adjustedDefenseSuck}"/>
+                        <td th:text="${finalHomeTeamStats[0].adjustedPowersHome.adjustedDefenseSuck}"/>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <th:block th:each="teamStats : ${finalTeamStats}">
-                <th:block th:if="${game.visitorTeam.id == teamStats.team.id}">
-                    <h2 th:text="${teamStats.team.name}"/>
-                    <div class="col s6">
-                        <table class="bordered">
-                            <thead>
-                            <tr>
-                                <th/>
-                                <th>All Games</th>
-                                <th>Visitor Games</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th>adjustedWinTendency</th>
-                                <td th:text="${teamStats.adjustedPowersAll.adjustedWinTendency}"/>
-                                <td th:text="${teamStats.adjustedPowersVisitor.adjustedWinTendency}"/>
-                            </tr>
-                            <tr>
-                                <th>adjustedLossTendency</th>
-                                <td th:text="${teamStats.adjustedPowersAll.adjustedLossTendency}"/>
-                                <td th:text="${teamStats.adjustedPowersVisitor.adjustedLossTendency}"/>
-                            </tr>
-                            <tr>
-                                <th>adjustedTieTendency</th>
-                                <td th:text="${teamStats.adjustedPowersAll.adjustedTieTendency}"/>
-                                <td th:text="${teamStats.adjustedPowersVisitor.adjustedTieTendency}"/>
-                            </tr>
-                            <tr>
-                                <th>adjustedScorePower</th>
-                                <td th:text="${teamStats.adjustedPowersAll.adjustedScorePower}"/>
-                                <td th:text="${teamStats.adjustedPowersVisitor.adjustedScorePower}"/>
-                            </tr>
-                            <tr>
-                                <th>adjustedDefenseSuck</th>
-                                <td th:text="${teamStats.adjustedPowersAll.adjustedDefenseSuck}"/>
-                                <td th:text="${teamStats.adjustedPowersVisitor.adjustedDefenseSuck}"/>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </th:block>
-            </th:block>
+            <div class="col s6">
+                <h2 th:text="${finalVisitorTeamStats[0].team.name}"/>
+                <table class="bordered">
+                    <thead>
+                    <tr>
+                        <th/>
+                        <th>All Games</th>
+                        <th>Visitor Games</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th>adjustedWinTendency</th>
+                        <td th:text="${finalVisitorTeamStats[0].adjustedPowersAll.adjustedWinTendency}"/>
+                        <td th:text="${finalVisitorTeamStats[0].adjustedPowersVisitor.adjustedWinTendency}"/>
+                    </tr>
+                    <tr>
+                        <th>adjustedLossTendency</th>
+                        <td th:text="${finalVisitorTeamStats[0].adjustedPowersAll.adjustedLossTendency}"/>
+                        <td th:text="${finalVisitorTeamStats[0].adjustedPowersVisitor.adjustedLossTendency}"/>
+                    </tr>
+                    <tr>
+                        <th>adjustedTieTendency</th>
+                        <td th:text="${finalVisitorTeamStats[0].adjustedPowersAll.adjustedTieTendency}"/>
+                        <td th:text="${finalVisitorTeamStats[0].adjustedPowersVisitor.adjustedTieTendency}"/>
+                    </tr>
+                    <tr>
+                        <th>adjustedScorePower</th>
+                        <td th:text="${finalVisitorTeamStats[0].adjustedPowersAll.adjustedScorePower}"/>
+                        <td th:text="${finalVisitorTeamStats[0].adjustedPowersVisitor.adjustedScorePower}"/>
+                    </tr>
+                    <tr>
+                        <th>adjustedDefenseSuck</th>
+                        <td th:text="${finalVisitorTeamStats[0].adjustedPowersAll.adjustedDefenseSuck}"/>
+                        <td th:text="${finalVisitorTeamStats[0].adjustedPowersVisitor.adjustedDefenseSuck}"/>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     </body>
