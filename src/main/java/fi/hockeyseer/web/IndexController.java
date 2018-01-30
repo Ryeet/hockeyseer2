@@ -1,6 +1,6 @@
 package fi.hockeyseer.web;
 
-import fi.hockeyseer.service.shared.GameService;
+import fi.hockeyseer.service.GameService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

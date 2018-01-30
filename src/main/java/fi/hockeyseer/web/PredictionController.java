@@ -1,5 +1,6 @@
 package fi.hockeyseer.web;
 
+import fi.hockeyseer.domain.Game;
 import fi.hockeyseer.domain.Team;
 import fi.hockeyseer.repository.AdjustedPowerForOlliRepository;
 import fi.hockeyseer.repository.GameRepository;
@@ -45,17 +46,21 @@ public class PredictionController {
         this.adjustedPowerForOlliRepository = adjustedPowerForOlliRepository;
     }
 
-    @GetMapping(value = "/prediction", params = {"home", "visitor"})
+    @GetMapping(value = "/prediction", params = {"game"})
     public String getPrediction(Model model,
-                                @RequestParam(value = "home") Long homeId,
-                                @RequestParam(value = "visitor") Long visitorId)
+                                @RequestParam(value = "game") Long gameId)
     {
-        List<Team> teams = Arrays.asList(teamRepository.getOne(homeId), teamRepository.getOne((visitorId)));
-        List<String> seasons = Arrays.asList("20162017");
+        Game game = gameRepository.getOne(gameId);
+        List<Team> teams = Arrays.asList(game.getHomeTeam(), game.getVisitorTeam());
+        List<String> seasons = Arrays.asList(game.getSeason());
 
-        List<TeamStats> teamsStatsBase = teamStatsService.calculateTeamStatsBase(seasons, null);
-        List<TeamStats> finalTeamStats = teamStatsService.calculateFinalTeamStats(teams, teamsStatsBase);
+        List<TeamStats> teamsStatsBase = teamStatsService.calculateTeamStatsBase(seasons);
+        List<TeamStats> finalHomeTeamStats = teamStatsService.calculateFinalTeamStats(Arrays.asList(game.getHomeTeam()), teamsStatsBase);
+        List<TeamStats> finalVisitorTeamStats = teamStatsService.calculateFinalTeamStats(Arrays.asList(game.getVisitorTeam()), teamsStatsBase);
 
+        model.addAttribute("finalHomeTeamStats", finalHomeTeamStats);
+        model.addAttribute("finalVisitorTeamStats", finalVisitorTeamStats);
+        model.addAttribute("game", game);
 
         return "prediction";
     }

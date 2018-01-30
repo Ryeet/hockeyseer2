@@ -58,7 +58,7 @@ public class TeamStatsService {
         this.leagueAvgsForOlliRepository = leagueAvgsForOlliRepository;
     }
 
-    public List<TeamStats> calculateTeamStatsBase(List<String> seasons, LocalDate date) {
+    public List<TeamStats> calculateTeamStatsBase(List<String> seasons) {
         //Basic Tier
         List<TeamStats> teamStatsList = new ArrayList<>();
 
@@ -71,7 +71,7 @@ public class TeamStatsService {
         teamRepository.findAllByIdLessThan100ByOrderByNameAsc().parallelStream().forEach(team -> {
             executorService.execute(new Runnable() {
                 public void run() {
-                    List<Game> games = gameRepository.getGamesForTeamByAgainstLeagueWithDate(team.getId(), seasons, true, date);
+                    List<Game> games = gameRepository.getGamesForTeamByAgainstLeagueWithDate(team.getId(), seasons, true);
                     if (games.size() > 10) {
                         Map<String, MarginStats> stats = calculatedStatsService.calculateWTLandMargins(games, team.getId());
                         TeamStats teamStats = getTeamStats(team, stats);
@@ -129,7 +129,8 @@ public class TeamStatsService {
         leagueAvgsForOlliRepository.save(leagueAvgsForOlli);
     }
 
-    private TeamStats getTeamStats(Team team, Map<String, MarginStats> stats) {
+    private TeamStats getTeamStats(Team team, Map<String, MarginStats> stats)
+    {
         TeamStats teamStats = new TeamStats();
 
         teamStats.setTeam(team);

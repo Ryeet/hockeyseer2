@@ -81,7 +81,7 @@ public class ImportService {
                     .forEach(game -> {
                         Game newGame =
                                 new Game()
-                                        .date(ZonedDateTime.parse(game.getGameDate()).toLocalDate())
+                                        .date(ZonedDateTime.parse(game.getGameDate()).toLocalDateTime().plusHours(2))
                                         .homeTeam(teamRepository.findByName(game.getJsonGameScore().getTeams().getHome().getTeam().getName()))
                                         .visitorTeam(teamRepository.findByName(game.getJsonGameScore().getTeams().getAway().getTeam().getName()))
                                         .season(game.getSeason())

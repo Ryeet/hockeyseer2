@@ -11,27 +11,18 @@
 <th:block th:replace="fragments/default::navbar"/>
 
 <div class="row">
-    <div class="col s12">This div is 12-columns wide on all screen sizes</div>
-
-</div>
-
-<div class="row">
-    <div class="col s4">6-columns (one-half)</div>
-    <div class="col s4">
-
-
-    </div>
-    <div class="col s4">
+    <div class="col s6">
 
         <h2>Upcoming games</h2>
 
         <table class="bordered">
             <thead>
-            <tr>
-                <th th:text="'Date'"/>
-                <th th:text="'Home'"/>
-                <th th:text="'Away'"/>
-            </tr>
+                <tr>
+                    <th th:text="'Date'"/>
+                    <th th:text="'Home'"/>
+                    <th th:text="'Away'"/>
+                    <th th:text="'Action'"/>
+                </tr>
             </thead>
 
             <tbody>
@@ -40,11 +31,18 @@
                     <td th:text="${game.date}"/>
                     <td th:text="${game.homeTeam.name}"/>
                     <td th:text="${game.visitorTeam.name}"/>
+                    <td>
+                        <a class    = "waves-effect waves-light btn"
+                           th:href  = "@{/prediction(game=${game.id})}"
+                           th:text  = "'View prediction'"/>
+                    </td>
                 </tr>
             </th:block>
             </tbody>
         </table>
     </div>
+
+    <div class="col s6">Something something...</div>
 </div>
 
 </body>

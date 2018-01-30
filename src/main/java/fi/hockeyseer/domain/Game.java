@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 /**
@@ -33,7 +34,7 @@ public class Game implements Serializable {
     private Team visitorTeam;
 
     @Column(name = "date", nullable = false)
-    private LocalDate date;
+    private LocalDateTime date;
 
 
     @Column(name = "played", nullable = false, columnDefinition = "TINYINT")
@@ -80,7 +81,7 @@ public class Game implements Serializable {
         this.visitorTeam = visitorTeam;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
@@ -108,7 +109,7 @@ public class Game implements Serializable {
         this.stats = stats;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -136,7 +137,7 @@ public class Game implements Serializable {
         return this;
     }
 
-    public Game date(LocalDate date) {
+    public Game date(LocalDateTime date) {
         this.date = date;
         return this;
     }
