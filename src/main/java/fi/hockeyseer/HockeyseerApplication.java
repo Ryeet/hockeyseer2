@@ -42,10 +42,12 @@ public class HockeyseerApplication {
 
     @Bean
     public CommandLineRunner testing(TeamRepository teamRepository, ImportService importService, CalculatedStatsService calculatedStatsService) {
-        return (args) -> {
-            log.debug("------------------------");
-         List<String> list =  Arrays.asList(SeasonUrl.S2017_2018);
-         if (!list.isEmpty()) importService.importSeasons(list);
+        return (args) ->
+        {
+            log.debug("----------IMPORT DATA START--------------");
+            List<String> list =  Arrays.asList(SeasonUrl.S2018_2019);
+            if (!list.isEmpty()) importService.importSeasons(list);
+            log.debug("----------IMPORT DATA END--------------");
         };
     }
 

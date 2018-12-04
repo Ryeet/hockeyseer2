@@ -152,6 +152,8 @@ public class ImportService {
 
         switch (url.toString()) {
 
+            case SeasonUrl.S2018_2019:
+                return !gameRepository.findBySeason("20182019").isEmpty();
             case SeasonUrl.S2017_2018:
                 return !gameRepository.findBySeason("20172018").isEmpty();
             case SeasonUrl.S2016_2017:
