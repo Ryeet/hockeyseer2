@@ -41,25 +41,17 @@ public interface GameRepository extends JpaRepository<Game,Long>{
                                               @Param("season")List<String> season,
                                               @Param("played")boolean played);
 
-    @Query(value = "SELECT * FROM game WHERE (homeTeam_id = :team AND season IN :season AND played = :played) OR (visitorTeam_id = :team AND season IN :season AND played = :played) ORDER BY date ASC", nativeQuery = true)
+    @Query(value = "SELECT * FROM game WHERE (homeTeam_id = :team AND season IN :season AND played = :played AND date < :date) OR (visitorTeam_id = :team AND season IN :season AND played = :played AND date < :date) ORDER BY date ASC", nativeQuery = true)
     List<Game> getGamesForTeamByAgainstLeagueWithDate(@Param("team") Long team,
-                                                      @Param("season")List<String> season,
-                                                      @Param("played")boolean played);
+                                                      @Param("season") List<String> season,
+                                                      @Param("played") boolean played,
+                                                      @Param("date") LocalDateTime date);
 
+    @Query(value = "SELECT * FROM game WHERE date >= :date LIMIT 50", nativeQuery = true)
+    List<Game> find50NextUpComingGames(@Param("date") LocalDateTime date);
 
-    @Query(value = "SELECT * FROM game WHERE date >= CURDATE() AND played = FALSE LIMIT 1", nativeQuery = true)
-    Optional<Game> findNextUpComingGame();
-
-    @Query(value = "SELECT * FROM game WHERE date >= :date LIMIT 20", nativeQuery = true)
-    List<Game> find20NextUpComingGames(@Param("date") LocalDateTime date);
-
-    List<Game> findByDate(LocalDate date);
-
-    List<Game> findByDateAndPlayedIsFalse(LocalDate date);
+    @Query(value = "SELECT * FROM game WHERE played = :played order by date desc limit 50", nativeQuery = true)
+    List<Game> find50LatestPlayedGames(@Param("played") boolean played);
 
     List<Game> findBySeason(String season);
-
-
-    @Query(value = "SELECT * FROM game WHERE homeTeam_id < 100 AND season = :season ", nativeQuery = true)
-    List<Game> getGamesBySeasonAndRealTeams(@Param("season") String season);
 }

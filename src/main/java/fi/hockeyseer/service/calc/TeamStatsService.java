@@ -1,7 +1,6 @@
 package fi.hockeyseer.service.calc;
 
 import fi.hockeyseer.domain.Game;
-import fi.hockeyseer.domain.LeagueAvgsForOlli;
 import fi.hockeyseer.domain.Team;
 import fi.hockeyseer.repository.GameRepository;
 import fi.hockeyseer.repository.LeagueAvgsForOlliRepository;
@@ -20,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +58,7 @@ public class TeamStatsService {
         this.leagueAvgsForOlliRepository = leagueAvgsForOlliRepository;
     }
 
-    public List<TeamStats> calculateTeamStatsBase(List<String> seasons) {
+    public List<TeamStats> calculateTeamStatsBase(List<String> seasons, LocalDateTime date) {
         //Basic Tier
         List<TeamStats> teamStatsList = new ArrayList<>();
 
@@ -71,8 +71,9 @@ public class TeamStatsService {
         teamRepository.findAllByIdLessThan100ByOrderByNameAsc().parallelStream().forEach(team -> {
             executorService.execute(new Runnable() {
                 public void run() {
-                    List<Game> games = gameRepository.getGamesForTeamByAgainstLeagueWithDate(team.getId(), seasons, true);
-                    if (games.size() > 10) {
+                    List<Game> games = gameRepository.getGamesForTeamByAgainstLeagueWithDate(team.getId(), seasons, true, date);
+                    if (games.size() > 10)
+                    {
                         Map<String, MarginStats> stats = calculatedStatsService.calculateWTLandMargins(games, team.getId());
                         TeamStats teamStats = getTeamStats(team, stats);
                         teamStatsList.add(teamStats);
@@ -95,8 +96,6 @@ public class TeamStatsService {
             leagueAvgStats.put(HOME_GAMES, homeStats.setAverages(teamStatsList.size()));
             leagueAvgStats.put(VISITOR_GAMES, visitorStats.setAverages(teamStatsList.size()));
 
-//            saveLeagueHomeAvgStatsToDB(homeStats, date);
-
             for (TeamStats teamStats : teamStatsList) {
                 TendencyStats tendencyStatsAll = new TendencyStats();
                 teamStats.setTendencyStatsAll(tendencyStatsAll.setTendencies(teamStats.getPercentageStatsAll(), leagueAvgStats.get(ALL_GAMES)));
@@ -114,19 +113,6 @@ public class TeamStatsService {
             e.printStackTrace();
         }
         return teamStatsList;
-    }
-
-    private void saveLeagueHomeAvgStatsToDB(LeagueAvgStats homeStats, LocalDate date)
-    {
-        LeagueAvgsForOlli leagueAvgsForOlli = new LeagueAvgsForOlli();
-        leagueAvgsForOlli.setDate(date);
-        leagueAvgsForOlli.setHomeWinPercentage(homeStats.getAvgWinPercentage());
-        leagueAvgsForOlli.setHomeTiePercentage(homeStats.getAvgTiePercentage());
-        leagueAvgsForOlli.setHomeLossPercentage(homeStats.getAvgLossPercentage());
-        leagueAvgsForOlli.setHomegfa(homeStats.getAvgGoalsFor());
-        leagueAvgsForOlli.setHomegaa(homeStats.getAvgGoalsAgainst());
-
-        leagueAvgsForOlliRepository.save(leagueAvgsForOlli);
     }
 
     private TeamStats getTeamStats(Team team, Map<String, MarginStats> stats)

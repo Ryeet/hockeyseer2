@@ -1,4 +1,4 @@
-package fi.hockeyseer.service;
+package fi.hockeyseer.service.shared;
 
 import fi.hockeyseer.domain.Game;
 import fi.hockeyseer.repository.GameRepository;
@@ -27,6 +27,12 @@ public class GameService {
     public List<Game> findUpComingGames()
     {
         LocalDateTime date = LocalDateTime.now().atZone(ZoneId.of("Europe/Helsinki")).minusHours(9).toLocalDateTime();
-        return gameRepository.find20NextUpComingGames(date);
+        return gameRepository.find50NextUpComingGames(date);
+    }
+
+    public List<Game> findLatestPlayedGames()
+    {
+        LocalDateTime date = LocalDateTime.now().atZone(ZoneId.of("Europe/Helsinki")).minusHours(9).toLocalDateTime();
+        return gameRepository.find50LatestPlayedGames(true);
     }
 }

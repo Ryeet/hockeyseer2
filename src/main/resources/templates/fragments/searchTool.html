@@ -65,6 +65,8 @@
                             <div class="input-field col s6">
                                 <h4 th:text="'Season'"/>
                                 <select multiple="multiple" th:field="*{season}">
+                                    <option th:value="''" th:text="'-- choose --'" disabled="disabled"/>
+                                    <option th:value="'20192020'" th:text="'2019 - 2020'"/>
                                     <option th:value="'20182019'" th:text="'2018 - 2019'"/>
                                     <option th:value="'20172018'" th:text="'2017 - 2018'"/>
                                     <option th:value="'20162017'" th:text="'2016 - 2017'"/>
@@ -225,6 +227,21 @@
                     var ctx = document.getElementById([[${chartName}]]).getContext('2d');
                     var myChart = new Chart(ctx, {
                         type: 'horizontalBar',
+                        options:
+                        {
+                            scales:
+                            {
+                                xAxes:
+                                [
+                                    {
+                                        beginAtZero:true,
+                                        fixedStepSize: 1
+                                    }
+                                ]
+                            },
+                            legend:{display: false},
+                            title:{display: false}
+                        },
                         data:
                         {
                             labels: ["1-0", "2-0", "3-0", "4-0", "5-0", "6-0",
@@ -232,19 +249,32 @@
                                      "3-2", "4-2", "5-2", "6-2",
                                      "4-3", "5-3" ,"6-3",
                                      "5-4", "6-4",
-                                     "6-5", "Else",
-                                     "0-0", "1-1", "2-2", "3-3", "4-4", "5-5", "6-6", "Else",
+                                     "6-5", "Other Win",
+                                     "0-0", "1-1", "2-2", "3-3", "4-4", "5-5", "6-6", "Other Tie",
                                      "1-0", "2-0", "3-0", "4-0", "5-0", "6-0",
                                      "2-1", "3-1", "4-1", "5-1", "6-1",
                                      "3-2", "4-2", "5-2", "6-2",
                                      "4-3", "5-3", "6-3",
                                      "5-4", "6-4",
-                                     "6-5", "Else"],
+                                     "6-5", "Other Loss"],
                             datasets:
                             [
                             {
-                                label: "Result",
-                                backgroundColor: "#34495e",
+                                label: "Count",
+                                backgroundColor: ["#2ecc71","#2ecc71","#2ecc71","#2ecc71","#2ecc71","#2ecc71",
+                                                  "#2ecc71","#2ecc71","#2ecc71","#2ecc71","#2ecc71",
+                                                  "#2ecc71","#2ecc71","#2ecc71","#2ecc71",
+                                                  "#2ecc71","#2ecc71","#2ecc71",
+                                                  "#2ecc71","#2ecc71",
+                                                  "#2ecc71","#2ecc71",
+                                                  "#34495e","#34495e","#34495e","#34495e","#34495e","#34495e","#34495e","#34495e",
+                                                  "#e74c3c","#e74c3c","#e74c3c","#e74c3c","#e74c3c","#e74c3c",
+                                                  "#e74c3c","#e74c3c","#e74c3c","#e74c3c","#e74c3c",
+                                                  "#e74c3c","#e74c3c","#e74c3c","#e74c3c",
+                                                  "#e74c3c","#e74c3c","#e74c3c",
+                                                  "#e74c3c","#e74c3c",
+                                                  "#e74c3c","#e74c3c",
+                                                  ],
                                 data: [ [[${results.get('result10team')}]],
                                         [[${results.get('result20team')}]],
                                         [[${results.get('result30team')}]],
@@ -338,34 +368,9 @@
                             datasets:
                             [
                             {
-                                label: "1-0 Win",
+                                label: "Win",
                                 backgroundColor: "#2ecc71",
-                                data: [ [[${results.get('result10team')}]] ]
-                            },
-                            {
-                                label: "2-0 Win",
-                                backgroundColor: "#2ecc71",
-                                data: [ [[${results.get('result20team')}]] ]
-                            },
-                            {
-                                label: "3-0 Win",
-                                backgroundColor: "#2ecc71",
-                                data: [ [[${results.get('result30team')}]] ]
-                            },
-                            {
-                                label: "4-0 Win",
-                                backgroundColor: "#2ecc71",
-                                data: [ [[${results.get('result40team')}]] ]
-                            },
-                            {
-                                label: "5-0 Win",
-                                backgroundColor: "#2ecc71",
-                                data: [ [[${results.get('result50team')}]] ]
-                            },
-                            {
-                                label: "6-0 Win",
-                                backgroundColor: "#2ecc71",
-                                data: [ [[${results.get('result60team')}]] ]
+                                data: [ [[${results.get('result10team')}]], [[${results.get('result20team')}]], [[${results.get('result30team')}]], [[${results.get('result40team')}]], [[${results.get('result50team')}]], [[${results.get('result60team')}]] ]
                             },
                             {
                                 label: "2-1 Win",

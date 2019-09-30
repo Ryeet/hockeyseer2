@@ -46,10 +46,9 @@ public class PredictionController {
     public String getPrediction(Model model, @RequestParam(value = "game") Long gameId)
     {
         Game game = gameRepository.getOne(gameId);
-        List<Team> teams = Arrays.asList(game.getHomeTeam(), game.getVisitorTeam());
         List<String> seasons = Arrays.asList(game.getSeason());
 
-        List<TeamStats> teamsStatsBase = teamStatsService.calculateTeamStatsBase(seasons);
+        List<TeamStats> teamsStatsBase = teamStatsService.calculateTeamStatsBase(seasons, game.getDate());
         List<TeamStats> finalHomeTeamStats = teamStatsService.calculateFinalTeamStats(Arrays.asList(game.getHomeTeam()), teamsStatsBase);
         List<TeamStats> finalVisitorTeamStats = teamStatsService.calculateFinalTeamStats(Arrays.asList(game.getVisitorTeam()), teamsStatsBase);
 

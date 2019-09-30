@@ -26,7 +26,7 @@
             </thead>
 
             <tbody>
-            <th:block th:each="game : ${games}">
+            <th:block th:each="game : ${upcomingGames}">
                 <tr>
                     <td th:text="${game.date}"/>
                     <td th:text="${game.homeTeam.name}"/>
@@ -42,7 +42,37 @@
         </table>
     </div>
 
-    <div class="col s6">Something something...</div>
+    <div class="col s6">
+
+        <h2>Played games</h2>
+        <h4>Check your predictions boi</h4>
+
+        <table class="bordered">
+            <thead>
+            <tr>
+                <th th:text="'Date'"/>
+                <th th:text="'Home'"/>
+                <th th:text="'Away'"/>
+                <th th:text="'Action'"/>
+            </tr>
+            </thead>
+
+            <tbody>
+            <th:block th:each="game : ${playedGames}">
+                <tr>
+                    <td th:text="${game.date}"/>
+                    <td th:text="${game.homeTeam.name}"/>
+                    <td th:text="${game.visitorTeam.name}"/>
+                    <td>
+                        <a class    = "waves-effect waves-light btn"
+                           th:href  = "@{/prediction(game=${game.id})}"
+                           th:text  = "'View prediction'"/>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 </body>
