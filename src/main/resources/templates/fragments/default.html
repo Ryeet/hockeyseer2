@@ -4,26 +4,30 @@
     <head>
         <th:block th:fragment="head">
             <title th:text = "${title}"/>
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+                  rel="stylesheet"/>
 
             <link th:href="@{/webjars/jquery-ui/1.11.4/jquery-ui.min.css}"
                   rel="stylesheet"
                   media="screen" />
 
-            <link th:href="@{/webjars/materializecss/0.99.0/css/materialize.min.css}"
+            <link th:href="@{/webjars/materializecss/1.0.0/css/materialize.min.css}"
                   rel="stylesheet"
                   media="screen" />
 
             <script th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"/>
             <script th:src="@{/webjars/jquery-ui/1.11.4/jquery-ui.min.js}"/>
-            <script th:src="@{/webjars/materializecss/0.99.0/js/materialize.min.js}"/>
+            <script th:src="@{/webjars/materializecss/1.0.0/js/materialize.min.js}"/>
             <script th:src="@{/webjars/chart.js/2.6.0/dist/Chart.min.js}"/>
 
 
             <script th:inline="javascript">
                 /*<![CDATA[*/
                     $(document).ready(function() {
-                        $('select').material_select();
+                        $('select').formSelect();
+                        $('.dropdown-trigger').dropdown();
                     });
                 /*]]>*/
             </script>
@@ -32,12 +36,22 @@
 
     <body>
         <th:block th:fragment="navbar">
+            <!-- Dropdown Structure -->
+            <ul id="dropdown1" class="dropdown-content">
+                <li><a th:href  = "@{/seasonStats(season=20162017)}">2016 - 2017</a></li>
+                <li><a th:href  = "@{/seasonStats(season=20172018)}">2017 - 2018</a></li>
+                <li><a th:href  = "@{/seasonStats(season=20182019)}">2018 - 2019</a></li>
+                <li><a th:href  = "@{/seasonStats(season=20192020)}">2019 - 2020</a></li>
+            </ul>
             <nav>
                 <div class="nav-wrapper">
                     <a href="#" class="brand-logo center">HockeySeer</a>
                     <ul id="nav-mobile" class="left hide-on-med-and-down">
                         <li><a href="/">Home</a></li>
                         <li><a href="/searchtool">Search tool</a></li>
+                        <li>
+                            <a class="dropdown-trigger" href="#!" data-target="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a>
+                        </li>
                     </ul>
                 </div>
             </nav>

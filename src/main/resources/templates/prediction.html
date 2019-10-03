@@ -12,6 +12,7 @@
         <div class="row">
             <div class="col s6">
                 <h2 th:text="${finalHomeTeamStats[0].team.name}"/>
+                <h3 th:if="${played}" th:text="${home_total}"/>
                 <table class="bordered">
                     <thead>
                     <tr>
@@ -52,6 +53,7 @@
 
             <div class="col s6">
                 <h2 th:text="${finalVisitorTeamStats[0].team.name}"/>
+                <h3 th:if="${played}" th:text="${visitor_total}"/>
                 <table class="bordered">
                     <thead>
                     <tr>
@@ -88,6 +90,18 @@
                     </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s4">
+                <h2 th:text="${predictionStats.homeWin}"/>
+            </div>
+            <div class="col s4">
+                <h2 th:text="${predictionStats.tie}"/>
+            </div>
+            <div class="col s4">
+                <h2 th:text="${predictionStats.awayWin}"/>
             </div>
         </div>
 

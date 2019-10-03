@@ -2,6 +2,7 @@ package fi.hockeyseer.web;
 
 import fi.hockeyseer.domain.Game;
 import fi.hockeyseer.domain.Team;
+import fi.hockeyseer.domain.enumeration.Season;
 import fi.hockeyseer.repository.GameRepository;
 import fi.hockeyseer.repository.TeamRepository;
 import fi.hockeyseer.service.calc.TeamStatsService;
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,22 +43,13 @@ public class AdminController
         this.resultService = resultService;
     }
 
-    @GetMapping(value = "/asdfasdf", params = {"game"})
-    public String getPrediction(Model model, @RequestParam(value = "game") Long gameId)
+    @GetMapping(value = "seasonStats")
+    public String showSeasonStats(Model model, @RequestParam(value = "season") String season)
     {
-        Game game = gameRepository.getOne(gameId);
-        List<Team> teams = Arrays.asList(game.getHomeTeam(), game.getVisitorTeam());
-        List<String> seasons = Arrays.asList(game.getSeason());
+        List<TeamStats> teamsStats = teamStatsService.calculateTeamStatsBase(Arrays.asList(season), LocalDateTime.now());
 
-        List<TeamStats> teamsStatsBase = teamStatsService.calculateTeamStatsBase(seasons, game.getDate());
-        List<TeamStats> finalHomeTeamStats = teamStatsService.calculateFinalTeamStats(Arrays.asList(game.getHomeTeam()), teamsStatsBase);
-        List<TeamStats> finalVisitorTeamStats = teamStatsService.calculateFinalTeamStats(Arrays.asList(game.getVisitorTeam()), teamsStatsBase);
+        model.addAttribute("teamsStats", teamsStats);
 
-        model.addAttribute("finalHomeTeamStats", finalHomeTeamStats);
-        model.addAttribute("finalVisitorTeamStats", finalVisitorTeamStats);
-        model.addAttribute("game", game);
-
-        return "prediction";
+        return "seasonStats";
     }
-
 }

@@ -18,15 +18,11 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by LickiLicki on 03-Oct-17.
@@ -62,55 +58,40 @@ public class TeamStatsService {
         //Basic Tier
         List<TeamStats> teamStatsList = new ArrayList<>();
 
-        ExecutorService executorService = Executors.newFixedThreadPool(20);
-
         LeagueAvgStats allStats = new LeagueAvgStats();
         LeagueAvgStats homeStats = new LeagueAvgStats();
         LeagueAvgStats visitorStats = new LeagueAvgStats();
 
-        teamRepository.findAllByIdLessThan100ByOrderByNameAsc().parallelStream().forEach(team -> {
-            executorService.execute(new Runnable() {
-                public void run() {
-                    List<Game> games = gameRepository.getGamesForTeamByAgainstLeagueWithDate(team.getId(), seasons, true, date);
-                    if (games.size() > 10)
-                    {
-                        Map<String, MarginStats> stats = calculatedStatsService.calculateWTLandMargins(games, team.getId());
-                        TeamStats teamStats = getTeamStats(team, stats);
-                        teamStatsList.add(teamStats);
+        teamRepository.findAllByIdLessThan100ByOrderByNameAsc().forEach(team ->
+        {
+            List<Game> games = gameRepository.getGamesForTeamByAgainstLeagueWithDate(team.getId(), seasons, true, date);
+            if (games.size() > 10)
+            {
+                Map<String, MarginStats> stats = calculatedStatsService.calculateWTLandMargins(games, team.getId());
+                TeamStats teamStats = getTeamStats(team, stats);
+                teamStatsList.add(teamStats);
 
-                        allStats.increaseAvgSums(teamStats.getPercentageStatsAll());
-                        homeStats.increaseAvgSums(teamStats.getPercentageStatsHome());
-                        visitorStats.increaseAvgSums(teamStats.getPercentageStatsVisitor());
-                    }
-                }
-            });
+                allStats.increaseAvgSums(teamStats.getPercentageStatsAll());
+                homeStats.increaseAvgSums(teamStats.getPercentageStatsHome());
+                visitorStats.increaseAvgSums(teamStats.getPercentageStatsVisitor());
+            }
         });
-        executorService.shutdown();
 
         //Tendency Tier
-        try {
-            executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        Map<String, LeagueAvgStats> leagueAvgStats = new HashMap<String, LeagueAvgStats>();
+        leagueAvgStats.put(ALL_GAMES, allStats.setAverages(teamStatsList.size()));
+        leagueAvgStats.put(HOME_GAMES, homeStats.setAverages(teamStatsList.size()));
+        leagueAvgStats.put(VISITOR_GAMES, visitorStats.setAverages(teamStatsList.size()));
 
-            Map<String, LeagueAvgStats> leagueAvgStats = new HashMap<String, LeagueAvgStats>();
-            leagueAvgStats.put(ALL_GAMES, allStats.setAverages(teamStatsList.size()));
-            leagueAvgStats.put(HOME_GAMES, homeStats.setAverages(teamStatsList.size()));
-            leagueAvgStats.put(VISITOR_GAMES, visitorStats.setAverages(teamStatsList.size()));
+        for (TeamStats teamStats : teamStatsList) {
+            TendencyStats tendencyStatsAll = new TendencyStats();
+            teamStats.setTendencyStatsAll(tendencyStatsAll.setTendencies(teamStats.getPercentageStatsAll(), leagueAvgStats.get(ALL_GAMES)));
 
-            for (TeamStats teamStats : teamStatsList) {
-                TendencyStats tendencyStatsAll = new TendencyStats();
-                teamStats.setTendencyStatsAll(tendencyStatsAll.setTendencies(teamStats.getPercentageStatsAll(), leagueAvgStats.get(ALL_GAMES)));
+            TendencyStats tendencyStatsHome = new TendencyStats();
+            teamStats.setTendencyStatsHome(tendencyStatsHome.setTendencies(teamStats.getPercentageStatsHome(), leagueAvgStats.get(HOME_GAMES)));
 
-                TendencyStats tendencyStatsHome = new TendencyStats();
-                teamStats.setTendencyStatsHome(tendencyStatsHome.setTendencies(teamStats.getPercentageStatsHome(), leagueAvgStats.get(HOME_GAMES)));
-
-                TendencyStats tendencyStatsVisitor = new TendencyStats();
-                teamStats.setTendencyStatsVisitor(tendencyStatsVisitor.setTendencies(teamStats.getPercentageStatsVisitor(), leagueAvgStats.get(VISITOR_GAMES)));
-            }
-            return teamStatsList;
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
+            TendencyStats tendencyStatsVisitor = new TendencyStats();
+            teamStats.setTendencyStatsVisitor(tendencyStatsVisitor.setTendencies(teamStats.getPercentageStatsVisitor(), leagueAvgStats.get(VISITOR_GAMES)));
         }
         return teamStatsList;
     }

@@ -25,6 +25,9 @@ public class Game implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "externalId", nullable = false)
+    private Long externalId;
+
     @ManyToOne
     @NotNull
     private Team homeTeam;
@@ -64,6 +67,10 @@ public class Game implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Long getExternalId() { return externalId; }
+
+    public void setExternalId(Long externalId) { this.externalId = externalId; }
 
     public Team getHomeTeam() {
         return homeTeam;
@@ -129,7 +136,6 @@ public class Game implements Serializable {
         this.winner = winner;
     }
 
-
     public Game homeTeam(Team homeTeam) { this.homeTeam = homeTeam; return this;}
 
     public Game visitorTeam(Team visitorTeam) {
@@ -167,10 +173,17 @@ public class Game implements Serializable {
         return this;
     }
 
+    public Game externalId(Long externalId)
+    {
+        this.externalId = externalId;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "Game{" +
                 "id=" + id +
+                ", externalId=" + externalId +
                 ", homeTeam=" + homeTeam +
                 ", visitorTeam=" + visitorTeam +
                 ", date=" + date +

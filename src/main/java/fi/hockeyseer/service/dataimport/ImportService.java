@@ -58,9 +58,8 @@ public class ImportService {
         });
     }
 
-    private void importSingleSeason(String url) throws IOException {
-
-
+    private void importSingleSeason(String url) throws IOException
+    {
         if (!seasonIsInDatabase(url)) {
 
             String json = ConnUtil.getResponseBody(
@@ -71,7 +70,6 @@ public class ImportService {
             ObjectMapper mapper = new ObjectMapper();
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             JsonSeason season = mapper.readValue(json, JsonSeason.class);
-            Integer totalGames = getSeasonGameAmount(season);
             final DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MMM-dd");
 
             season.getJsonGameDates()
@@ -79,27 +77,29 @@ public class ImportService {
                     .map(dates -> dates.getJsonGames())
                     .flatMap(games -> games.stream())
                     .forEach(game -> {
-                        Game newGame =
-                                new Game()
-                                        .date(ZonedDateTime.parse(game.getGameDate()).toLocalDateTime().plusHours(2))
-                                        .homeTeam(teamRepository.findByName(game.getJsonGameScore().getTeams().getHome().getTeam().getName()))
-                                        .visitorTeam(teamRepository.findByName(game.getJsonGameScore().getTeams().getAway().getTeam().getName()))
-                                        .season(game.getSeason())
-                                        .played(false);
+                        if ("R".equals(game.getGameType()))
+                        {
+                            Game newGame =
+                                    new Game()
+                                            .externalId(Long.valueOf(game.getGamePk()))
+                                            .date(ZonedDateTime.parse(game.getGameDate()).toLocalDateTime().plusHours(2))
+                                            .homeTeam(teamRepository.findByName(game.getJsonGameScore().getTeams().getHome().getTeam().getName()))
+                                            .visitorTeam(teamRepository.findByName(game.getJsonGameScore().getTeams().getAway().getTeam().getName()))
+                                            .season(game.getSeason())
+                                            .played(false);
 
-                        if (game.getJsonGameScore().getJsonGamePeriods().size() != 0) {
+                            if (game.getJsonGameScore().getJsonGamePeriods().size() != 0) {
 
-                            newGame.played(true)
-                                    .result(getGameResult(game.getJsonGameScore()))
-                                    .winner(determineWinner(newGame.getResult().getHome_total(), newGame.getResult().getVisitor_total()));
+                                newGame.played(true)
+                                        .result(getGameResult(game.getJsonGameScore()))
+                                        .winner(determineWinner(newGame.getResult().getHome_total(), newGame.getResult().getVisitor_total()));
+                            }
+                            Game saved = gameRepository.save(newGame);
+                            log.debug("Season: " + saved.getSeason() + " Game: " + saved.getId());
                         }
-                        Game saved = gameRepository.save(newGame);
-                        log.debug("Game> " + saved.getId() + "/" + totalGames);
                     });
         }
     }
-
-
 
     private Result getGameResult(JsonGameScore jsonGameScore) {
         Result result = new Result();
@@ -129,23 +129,9 @@ public class ImportService {
         return saved;
     }
 
-
     private Integer determineWinner(Integer home_total, Integer visitor_total) {
         if (home_total == visitor_total) return 0;
         return (home_total > visitor_total) ? 1 : 2;
-    }
-
-    private Integer getSeasonGameAmount(JsonSeason season) {
-        Integer count = 0;
-        for (JsonGameDate date : season.getJsonGameDates()) {
-            for (JsonGame game : date.getJsonGames()) {
-                count++;
-            }
-        }
-        Long repSize = gameRepository.count();
-        Integer i = repSize != null ? repSize.intValue() : null;
-        return count + i;
-
     }
 
     private Boolean seasonIsInDatabase(String url) {

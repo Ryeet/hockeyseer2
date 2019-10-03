@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th          = "http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="fragments/default::head"/>
+
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/seasonStats.css}"/>
+
+</head>
+
+    <body>
+
+        <th:block th:replace="fragments/default::navbar"/>
+
+        <div class="row">
+            <table id="seasonStats" class="highlight">
+                <thead>
+                <tr>
+                    <th th:text="'Team'"/>
+                    <th th:text="'Games'"/>
+                </tr>
+                </thead>
+
+                <tbody>
+                <th:block th:each="teamStats : ${teamsStats}">
+                    <tr>
+                        <td th:text="${teamStats.team.name}"/>
+                        <td th:text="${teamStats.marginStats.get('allGames').gameCount}"/>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+
+    </body>
+</html>

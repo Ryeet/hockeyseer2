@@ -29,7 +29,7 @@
         showAndHideAgainstContainers();
         $("#againstSelect").change(showAndHideAgainstContainers);
 
-        $('.datepicker').pickadate({
+        $('.datepicker').datepicker({
             selectMonths: true,
             selectYears: 10,
             today: 'Today',

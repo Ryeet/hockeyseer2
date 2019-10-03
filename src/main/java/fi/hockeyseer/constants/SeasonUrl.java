@@ -5,13 +5,13 @@ package fi.hockeyseer.constants;
  */
 public final class SeasonUrl {
 
-    public static final String S2019_2020 = "startDate=2019-10-02&endDate=2020-04-05";
+    public static final String S2019_2020 = "startDate=2019-10-01&endDate=2020-04-07";
 
-    public static final String S2018_2019 = "startDate=2018-10-04&endDate=2019-04-07";
+    public static final String S2018_2019 = "startDate=2018-10-02&endDate=2019-04-09";
 
-    public static final String S2017_2018 = "startDate=2017-10-04&endDate=2018-04-07";
+    public static final String S2017_2018 = "startDate=2017-10-02&endDate=2018-04-09";
 
-    public static final String S2016_2017 = "startDate=2016-10-12&endDate=2017-04-11";
+    public static final String S2016_2017 = "startDate=2016-10-10&endDate=2017-04-13";
 
     public static final String S2015_2016 = "startDate=2015-10-07&endDate=2016-04-11";
 

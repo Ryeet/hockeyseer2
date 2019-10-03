@@ -46,7 +46,7 @@ public class HockeyseerApplication {
         {
             log.debug("----------IMPORT DATA START--------------");
 //            Arrays.asList(SeasonUrl.S2019_2020,SeasonUrl.S2018_2019,SeasonUrl.S2017_2018,SeasonUrl.S2016_2017);
-            List<String> list =  Arrays.asList(SeasonUrl.S2019_2020,SeasonUrl.S2018_2019);
+            List<String> list =  Arrays.asList(SeasonUrl.S2016_2017);
             if (!list.isEmpty()) importService.importSeasons(list);
             log.debug("----------IMPORT DATA END--------------");
         };
