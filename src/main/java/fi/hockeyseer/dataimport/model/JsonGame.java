@@ -1,5 +1,5 @@
 
-package fi.hockeyseer.service.dataimport.json;
+package fi.hockeyseer.dataimport.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

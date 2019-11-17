@@ -3,9 +3,10 @@ package fi.hockeyseer;
 
 import fi.hockeyseer.config.ProfileUtil;
 import fi.hockeyseer.constants.SeasonUrl;
+import fi.hockeyseer.dataimport.DataImportService;
 import fi.hockeyseer.repository.TeamRepository;
 import fi.hockeyseer.service.calc.CalculatedStatsService;
-import fi.hockeyseer.service.dataimport.ImportService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -37,20 +38,8 @@ public class HockeyseerApplication {
     public void initApplication() {
         Collection<String> profiles = Arrays.asList(env.getActiveProfiles());
         log.debug("profiles" + profiles.toString());
-
     }
 
-    @Bean
-    public CommandLineRunner testing(TeamRepository teamRepository, ImportService importService, CalculatedStatsService calculatedStatsService) {
-        return (args) ->
-        {
-            log.debug("----------IMPORT DATA START--------------");
-//            Arrays.asList(SeasonUrl.S2019_2020,SeasonUrl.S2018_2019,SeasonUrl.S2017_2018,SeasonUrl.S2016_2017);
-            List<String> list =  Arrays.asList(SeasonUrl.S2016_2017);
-            if (!list.isEmpty()) importService.importSeasons(list);
-            log.debug("----------IMPORT DATA END--------------");
-        };
-    }
 
 	public static void main(String[] args) throws UnknownHostException {
         SpringApplication application =  new SpringApplication(HockeyseerApplication.class);

@@ -1,5 +1,5 @@
 
-package fi.hockeyseer.service.dataimport.json;
+package fi.hockeyseer.dataimport.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "id",
     "name"
 })
-public class JsonGameHomeTeamDetails {
+public class JsonGameAwayTeamDetails {
 
     @JsonProperty("id")
     private Integer id;
@@ -40,7 +40,7 @@ public class JsonGameHomeTeamDetails {
 
     @Override
     public String toString() {
-        return "JsonGameHomeTeamDetails{" +
+        return "JsonGameAwayTeamDetails{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

@@ -1,12 +1,12 @@
 package fi.hockeyseer.service.calc;
 
+import fi.hockeyseer.dataimport.DataImportService;
 import fi.hockeyseer.domain.*;
 import fi.hockeyseer.repository.GameRepository;
 import fi.hockeyseer.repository.TeamRepository;
 import fi.hockeyseer.service.shared.ResultService;
 import fi.hockeyseer.service.calc.strategy.TeamContext;
 import fi.hockeyseer.service.calc.stats.basic.MarginStats;
-import fi.hockeyseer.service.dataimport.ImportService;
 import fi.hockeyseer.web.forms.SearchToolForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +22,9 @@ import java.util.*;
 public class CalculatedStatsService {
 
 
-    private static Logger log = LoggerFactory.getLogger(ImportService.class);
+    private static Logger log = LoggerFactory.getLogger(DataImportService.class);
 
-    private final ImportService importService;
+    private final DataImportService importService;
 
     private final GameRepository gameRepository;
 
@@ -49,7 +49,7 @@ public class CalculatedStatsService {
 
 
     @Autowired
-    public CalculatedStatsService(ImportService importService, GameRepository gameRepository, ResultService resultService, TeamRepository teamRepository) {
+    public CalculatedStatsService(DataImportService importService, GameRepository gameRepository, ResultService resultService, TeamRepository teamRepository) {
         this.importService = importService;
         this.gameRepository = gameRepository;
         this.teamRepository = teamRepository;
