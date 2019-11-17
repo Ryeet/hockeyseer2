@@ -5,20 +5,18 @@ import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import javax.annotation.PreDestroy;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.boot.context.event.ApplicationStartingEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import fi.hockeyseer.constants.SeasonUrl;
 import fi.hockeyseer.dataimport.model.JsonGame;
 import fi.hockeyseer.dataimport.model.JsonGameDate;
 import fi.hockeyseer.dataimport.model.JsonGameScore;
@@ -29,7 +27,6 @@ import fi.hockeyseer.domain.Team;
 import fi.hockeyseer.repository.GameRepository;
 import fi.hockeyseer.repository.TeamRepository;
 import fi.hockeyseer.service.shared.ResultService;
-import okhttp3.OkHttpClient;
 
 /**
  * Created by alekstu on 5.6.2017.
@@ -39,7 +36,6 @@ import okhttp3.OkHttpClient;
 public class DataImportService {
 
 	private static Logger log = LoggerFactory.getLogger(DataImportService.class);
-	private final static String USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.92 Safari/537.36";
 
 	private final GameRepository gameRepository;
 
@@ -49,11 +45,14 @@ public class DataImportService {
 
 	private final NhlApiClient nhlApiClient;
 	
-	private	final Executor executor = Executors.newFixedThreadPool(3);
+	private	final ExecutorService executorService = Executors.newFixedThreadPool(3);
 
 	@Autowired
-	public DataImportService(final GameRepository gameRepository, final ResultService resultService,
-			final TeamRepository teamRepository, final NhlApiClient nhlApiClient) {
+	public DataImportService(
+			final GameRepository gameRepository, 
+			final ResultService resultService,
+			final TeamRepository teamRepository, 
+			final NhlApiClient nhlApiClient) {
 		this.gameRepository = gameRepository;
 		this.teamRepository = teamRepository;
 		this.resultService = resultService;
@@ -67,11 +66,17 @@ public class DataImportService {
 		importSeasons(listImportSeasons);
 		log.debug("----------IMPORT DATA END--------------");
 	}
+	
+	@PreDestroy
+	public void destruct() {
+		log.debug("Destroying executor");
+		this.executorService.shutdownNow();
+	}
 
 	public void importSeasons(final List<ImportSeason> seasons) {
 		
-		for (ImportSeason season : seasons) {
-			executor.execute(() ->  {
+		for (final ImportSeason season : seasons) {
+			executorService.submit(() -> {
 				try {
 					importSingleSeason(season);
 				} catch (IOException e) {
@@ -82,6 +87,11 @@ public class DataImportService {
 		}
 	}
 
+	/**
+	 * Call API and import single season to database
+	 * @param importSeason
+	 * @throws IOException
+	 */
 	private void importSingleSeason(final ImportSeason importSeason) throws IOException {
 		if (seasonIsInDatabase(importSeason)) {
 			return;
@@ -99,12 +109,22 @@ public class DataImportService {
 			.forEach(this::logGame);	
 	}
 	
+	
+	/**
+	 * Return true if database contains game(s) for this season.
+	 * @param season
+	 * @return
+	 */
 	public boolean seasonIsInDatabase(final ImportSeason season) {
 		return gameRepository.existsBySeason(season.getDatabaseFormat());
 	}
 	
 
-	
+	/**
+	 * Convert JsonGame to Game.
+	 * @param game
+	 * @return
+	 */
 	private Game jsonGameToGame(final JsonGame game) {
 		final Game newGame = new Game()
 				.externalId(Long.valueOf(game.getGamePk()))
