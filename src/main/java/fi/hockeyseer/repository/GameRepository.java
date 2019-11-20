@@ -54,4 +54,6 @@ public interface GameRepository extends JpaRepository<Game,Long>{
     List<Game> find50LatestPlayedGames(@Param("played") boolean played);
 
     List<Game> findBySeason(String season);
+    
+    boolean existsBySeason(final String season);
 }

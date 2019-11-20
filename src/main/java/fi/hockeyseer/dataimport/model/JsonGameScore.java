@@ -1,5 +1,5 @@
 
-package fi.hockeyseer.service.dataimport.json;
+package fi.hockeyseer.dataimport.model;
 
 import java.util.List;
 

@@ -1,8 +1,9 @@
 package fi.hockeyseer.service.shared;
 
+import fi.hockeyseer.dataimport.model.JsonGameScore;
 import fi.hockeyseer.domain.Result;
 import fi.hockeyseer.repository.ResultRepository;
-import fi.hockeyseer.service.dataimport.json.JsonGameScore;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
